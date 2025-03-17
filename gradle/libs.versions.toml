@@ -1,0 +1,82 @@
+[versions]
+agp = "8.7.3"
+cameraCamera2 = "1.4.1"
+cameraView = "1.4.1"
+converterMoshi = "2.9.0"
+converterGson = "2.9.0"
+espressoIdlingResource = "3.6.1"
+firebaseBom = "33.10.0"
+gson = "2.12.1"
+hiltAndroid = "2.53.1"
+hiltAndroidCompiler = "2.53.1"
+hiltAndroidTestingVersion = "2.51.1"
+kotlin = "2.1.0"
+coreKtx = "1.15.0"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+kotlinxCoroutinesCore = "1.9.0"
+kotlinxCoroutinesAndroid = "1.9.0"
+kotlinxCoroutinesCoreCommon = "1.3.2"
+kotlinxSerializationJson = "1.0.1"
+loggingInterceptor = "4.10.0"
+material = "1.12.0"
+google-services = "4.4.2"
+google-firebase-crashlytics = "3.0.3"
+navigation ="2.8.9"
+navigationFragmentKtx = "2.8.9"
+navigationUiKtx = "2.8.9"
+okhttp = "4.12.0"
+rxjava = "3.0.4"
+rxandroid = "3.0.0"
+rxjava3RetrofitAdapter = "3.0.0"
+sandwich = "1.2.1"
+securityCrypto = "1.0.0"
+ksp = "2.0.21-1.0.27"
+timber = "5.0.0"
+
+[libraries]
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraCamera2" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-espresso-idling-resource = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "espressoIdlingResource" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshi" }
+dagger-hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTestingVersion" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-coroutines-core-common = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common", version.ref = "kotlinxCoroutinesCoreCommon" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterMoshi" }
+rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
+rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
+rxjava3-retrofit-adapter = { module = "com.github.akarnokd:rxjava3-retrofit-adapter", version.ref = "rxjava3RetrofitAdapter" }
+sandwich = { module = "com.github.skydoves:sandwich", version.ref = "sandwich" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-services-plugin = { id = "com.google.gms.google-services", version.ref = "google-services" }
+google-firebase-crashlytics = {id="com.google.firebase.crashlytics", version.ref = "google-firebase-crashlytics"}
+navigation= {id="androidx.navigation.safeargs.kotlin", version.ref="navigation"}
+ksp = {id="com.google.devtools.ksp", version.ref="ksp"}

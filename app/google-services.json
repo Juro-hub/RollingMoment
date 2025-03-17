@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "19384388026",
+    "project_id": "rolling-moment",
+    "storage_bucket": "rolling-moment.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19384388026:android:baf6c713fe37e6ed5d7583",
+        "android_client_info": {
+          "package_name": "kr.co.rolling.moment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF_OXcZWRct25gbpuMv_Ldg6vopbzpxYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
