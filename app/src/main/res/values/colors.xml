@@ -7,4 +7,39 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Primary Color -->
+    <color name="C0066FF">#0066FF</color>
+    <color name="C005EEB">#005EEB</color>
+    <color name="C0054D1">#0054D1</color>
+
+    <!-- Gray Color -->
+    <color name="C171719">#171719</color>
+    <color name="C333333">#333333</color>
+    <color name="C4C4C4C">#4C4C4C</color>
+    <color name="C7F7F7F">#7F7F7F</color>
+    <color name="C999999">#999999</color>
+    <color name="CB2B2B2">#B2B2B2</color>
+    
+    <!-- Background Color -->
+    <color name="CF0F0F0">#F0F0F0</color>
+    <color name="CF6F6F6">#F6F6F6</color>
+    <color name="CFAFAFA">#FAFAFA</color>
+    
+    <!-- Line Color -->
+    <color name="C70737C38">#70737C38</color>
+    <color name="C70737C29">#70737C29</color>
+    <color name="C70737C14">##70737C14</color>
+
+    <!-- Status Color -->
+    <color name="C00BF40">#00BF40</color>
+    <color name="CFF9200">#FF9200</color>
+    <color name="CFF4242">#FF4242</color>
+
+    <!-- Static Color -->
+    <color name="CFFFFFF">#FFFFFF</color>
+    <color name="C000000">#000000</color>
+
+    <!-- Dimd(Material) -->
+    <color name="C17171985">#17171985</color>
 </resources>
