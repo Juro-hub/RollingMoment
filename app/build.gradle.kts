@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.navigation)
     alias(libs.plugins.ksp)
     alias(libs.plugins.parcelize)
+    alias(libs.plugins.hiltAndroid)
 }
 
 android {
@@ -24,8 +25,12 @@ android {
 
     buildTypes {
         release {
+            isDebuggable = false
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        debug{
+            isDebuggable = true
         }
     }
     compileOptions {
@@ -37,6 +42,7 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -109,4 +115,10 @@ dependencies {
 
     // Timber (log)
     implementation (libs.timber)
+
+    // 카카오 로그인 API 모듈
+    implementation (libs.v2.user)
+
+    // Naver 로그인 API 모듈
+    implementation(libs.oauth)
 }

@@ -8,6 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- SNS Login -->
+    <color name="kakao">#FAE100</color>
+    <color name="naver">#03CF5D</color>
+    <color name="email">#FFFFFF</color>
+
     <!-- Primary Color -->
     <color name="C0066FF">#0066FF</color>
     <color name="C005EEB">#005EEB</color>
@@ -20,12 +25,12 @@
     <color name="C7F7F7F">#7F7F7F</color>
     <color name="C999999">#999999</color>
     <color name="CB2B2B2">#B2B2B2</color>
-    
+
     <!-- Background Color -->
     <color name="CF0F0F0">#F0F0F0</color>
     <color name="CF6F6F6">#F6F6F6</color>
     <color name="CFAFAFA">#FAFAFA</color>
-    
+
     <!-- Line Color -->
     <color name="CE0E0E2">#E0E0E2</color>
     <color name="CE8E8EA">#E8E8EA</color>

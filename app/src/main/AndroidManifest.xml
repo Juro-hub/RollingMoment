@@ -11,13 +11,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RollingMoment"
-        tools:targetApi="31" >
-        
-        <activity android:name="kr.co.rolling.moment.feature.intro.ui.MomentActivity"
-            android:exported="true">
+        android:name=".feature.MomentApplication"
+        tools:targetApi="31">
+
+        <activity
+            android:name="kr.co.rolling.moment.feature.MomentActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|fontScale|density|colorMode|uiMode|locale|keyboard|keyboardHidden"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="oauth"
+                    android:scheme="kakao1888a889e7ea1a4e154040e65c5032ae" />
             </intent-filter>
         </activity>
     </application>

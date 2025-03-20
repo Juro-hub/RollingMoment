@@ -28,6 +28,7 @@
             android:id="@+id/etData"
             android:layout_width="match_parent"
             android:layout_height="52dp"
+            android:layout_marginStart="16dp"
             android:background="@null"
             android:cursorVisible="false"
             app:layout_constraintTop_toTopOf="parent" />
@@ -60,37 +61,37 @@
     <TextView
         android:id="@+id/tvError"
         style="@style/L612Medium"
-        app:layout_constraintEnd_toStartOf="@id/tvMaxLength"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/CFF4242"
         android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/tvMaxLength"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutInput"
         tools:text="이메일 형식이 올바르지 않습니다." />
 
     <TextView
+        android:id="@+id/tvMaxLength"
+        style="@style/L612Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layoutInput"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
         android:textColor="@color/C7F7F7F"
-        style="@style/L612Medium"
-        android:id="@+id/tvMaxLength"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutInput" />
 
     <TextView
+        android:id="@+id/tvGuide"
+        style="@style/L612Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvError"
-        android:id="@+id/tvGuide"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        style="@style/L612Medium"
-        android:visibility="gone"
         android:textColor="@color/C7F7F7F"
-        tools:text="한글, 영어, 숫자를 포함하여 10자 이내로 작성해주세요."/>
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvError"
+        tools:text="한글, 영어, 숫자를 포함하여 10자 이내로 작성해주세요." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,4 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.google.services.plugin) apply false
     alias(libs.plugins.google.firebase.crashlytics) apply false
+    alias(libs.plugins.hiltAndroid) apply false
+    alias(libs.plugins.ksp) apply false
 }
