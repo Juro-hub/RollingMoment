@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">롤링모먼츠</string>
+
+    <string name="edit_text_length_check">%d/%d</string>
 </resources>
