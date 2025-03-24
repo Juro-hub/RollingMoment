@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.google.firebase.crashlytics)
     alias(libs.plugins.navigation)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.parcelize)
 }
 
 android {

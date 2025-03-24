@@ -1,8 +1,13 @@
 package kr.co.rolling.moment.ui.util
 
 import android.app.Service
+import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import kr.co.rolling.moment.ui.component.CommonDialog
+import kr.co.rolling.moment.ui.component.CommonDialogData
 
 /**
  * SingleClickListener 을 설정한다.
@@ -60,4 +65,36 @@ fun View.invisible() {
  */
 fun View.hide() {
     visibility = View.GONE
+}
+
+fun Fragment.showDialog(
+    dialogData: CommonDialogData, positiveCallback: (() -> Unit)? = null,
+    negativeCallback: (() -> Unit)? = null,
+) {
+    val bundle = Bundle()
+    bundle.putParcelable(CommonDialog.ARG_DIALOG_DATA, dialogData)
+
+    val commonDialog = CommonDialog().apply {
+        setPositiveListener(positiveCallback)
+        setNegativeListener(negativeCallback)
+    }
+
+    commonDialog.arguments = bundle
+    commonDialog.show(parentFragmentManager, "newAlert")
+}
+
+fun AppCompatActivity.showDialog(
+    dialogData: CommonDialogData, positiveCallback: (() -> Unit)? = null,
+    negativeCallback: (() -> Unit)? = null,
+) {
+    val bundle = Bundle()
+    bundle.putParcelable(CommonDialog.ARG_DIALOG_DATA, dialogData)
+
+    val commonDialog = CommonDialog().apply {
+        setPositiveListener(positiveCallback)
+        setNegativeListener(negativeCallback)
+    }
+
+    commonDialog.arguments = bundle
+    commonDialog.show(supportFragmentManager, "newAlert")
 }

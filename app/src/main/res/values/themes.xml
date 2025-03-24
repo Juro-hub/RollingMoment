@@ -31,7 +31,11 @@
 
     <style name="T320Bold" parent="BoldTextView">
         <item name="android:textSize">20dp</item>
-    </style>
+    </style>/
+
+    <style name="T418Bold" parent="BoldTextView">
+        <item name="android:textSize">18dp</item>
+    </style>/
 
     <style name="B116Medium" parent="MediumTextView">
         <item name="android:textSize">16dp</item>

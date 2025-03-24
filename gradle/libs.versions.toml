@@ -80,3 +80,4 @@ google-services-plugin = { id = "com.google.gms.google-services", version.ref = 
 google-firebase-crashlytics = {id="com.google.firebase.crashlytics", version.ref = "google-firebase-crashlytics"}
 navigation= {id="androidx.navigation.safeargs.kotlin", version.ref="navigation"}
 ksp = {id="com.google.devtools.ksp", version.ref="ksp"}
+parcelize = {id="org.jetbrains.kotlin.plugin.parcelize"}
