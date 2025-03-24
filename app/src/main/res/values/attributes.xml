@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommonEditTextAttributes">
+        <attr name="inputMaxLength" format="integer" />
+        <attr name="inputImeOptions" format="enum">
+            <enum name="actionDone" value="0" />
+            <enum name="actionNext" value="1" />
+        </attr>
+        <attr name="helperText" format="string" />
+        <attr name="hintText" format="string" />
+        <attr name="errorMessage" format="string" />
+        <attr name="guideText" format="string"/>
+        <attr name="isVisibleMaxLength" format="boolean"/>
+    </declare-styleable>
+</resources>

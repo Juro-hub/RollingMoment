@@ -27,9 +27,9 @@
     <color name="CFAFAFA">#FAFAFA</color>
     
     <!-- Line Color -->
-    <color name="C70737C38">#70737C38</color>
-    <color name="C70737C29">#70737C29</color>
-    <color name="C70737C14">##70737C14</color>
+    <color name="CE0E0E2">#E0E0E2</color>
+    <color name="CE8E8EA">#E8E8EA</color>
+    <color name="CF4F4F5">#F4F4F5</color>
 
     <!-- Status Color -->
     <color name="C00BF40">#00BF40</color>
