@@ -72,4 +72,20 @@
     <style name="L612Medium" parent="MediumTextView">
         <item name="android:textSize">12dp</item>
     </style>
+
+    <style name="L718Bold" parent="BoldTextView">
+        <item name="android:textSize">18dp</item>
+    </style>
+
+    <style name="L813Bold" parent="BoldTextView">
+        <item name="android:textSize">13dp</item>
+    </style>
+
+    <style name="L911Medium" parent="MediumTextView">
+        <item name="android:textSize">11dp</item>
+    </style>
+
+    <style name="L910Bold" parent="BoldTextView">
+        <item name="android:textSize">11dp</item>
+    </style>
 </resources>

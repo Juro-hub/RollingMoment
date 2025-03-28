@@ -3,6 +3,7 @@ package kr.co.rolling.moment.ui.component
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.InputFilter
+import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,10 @@ import androidx.core.widget.addTextChangedListener
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.LayoutCommonEditTextBinding
 import kr.co.rolling.moment.ui.util.focusAndShowKeyboard
-import kr.co.rolling.moment.ui.util.hideKeyboard
+import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.show
+import java.util.regex.Pattern
 
 /**
  * 공통 입력 EditText
@@ -33,11 +35,40 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         ACTION_NEXT(1)
     }
 
-    private var maxLength = 0
+    /**
+     * EditText 입력 타입
+     *
+     * @property value 입력 Type 별 value
+     */
+    private enum class TextInputType(val value: Int) {
+        /** 기본 입력(1줄) */
+        TEXT(0),
+
+        /** 기본 입력(여러줄) */
+        TEXT_MULTILINE(1),
+
+        /** 숫자만 입력 가능 */
+        NUMBER_SIGNED(2),
+
+        /** 패스워드 입력 */
+        PASSWORD(3),
+
+        /** 숫자, 영문만 입력 가능 */
+        NUMBER_ENGLISH_ONLY(4),
+    }
+
+
     private lateinit var binding: LayoutCommonEditTextBinding
+
+    /** Focus Change Listener */
+    private var focusChangeListener: OnFocusChangeListener? = null
 
     /** Text Change Listener */
     private var textChangeListener: (data: String) -> Unit = {}
+
+    private var isValid = false
+
+    private var maxLength = 0
 
     override fun clearFocus() {
         binding.etData.clearFocus()
@@ -62,7 +93,7 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         if (hasFocus) {
             requestFocused()
         } else {
-            view?.hideKeyboard()
+            binding.ivCancel.hide()
         }
 
         val backgroundColor = if (hasFocus) {
@@ -71,7 +102,11 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
             R.drawable.shape_8_e8e8ea_ffffff
         }
 
-        binding.etData.setBackgroundResource(backgroundColor)
+        binding.layoutInput.setBackgroundResource(backgroundColor)
+
+        if (focusChangeListener != null) {
+            focusChangeListener?.onFocusChange(view, hasFocus)
+        }
     }
 
     private fun init() {
@@ -96,7 +131,7 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
 
         binding.ivCancel.setOnSingleClickListener {
             binding.etData.setText("")
-            showErrorCase(false)
+            setError(false)
         }
     }
 
@@ -134,6 +169,9 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         }
 
         binding.etData.onFocusChangeListener = this
+
+        val inputType = TextInputType.entries[attribute.getInt(R.styleable.CommonEditTextAttributes_inputTypes, TextInputType.TEXT.value)]
+        setEditTextInputType(inputType)
     }
 
     private fun changeUiVisible() {
@@ -145,11 +183,11 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
      * View 에 대해 Focus 처리한다.
      */
     private fun requestFocused() {
-        binding.etData.setBackgroundResource(R.drawable.shape_8_171719_ffffff)
+        binding.layoutInput.setBackgroundResource(R.drawable.shape_8_171719_ffffff)
         changeUiVisible()
     }
 
-    fun getData() = binding.etData.text
+    fun getData() = binding.etData.text.toString()
 
     /**
      * @param listener EditText Text Change Listener
@@ -158,7 +196,50 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         textChangeListener = listener
     }
 
-    fun showErrorCase(isError: Boolean) {
+    fun setError(isError: Boolean) {
         binding.tvError.isVisible = isError
+
+        isValid = !isError
+    }
+
+    fun isValid() = isValid
+
+    private fun setEditTextInputType(inputType: TextInputType) {
+        val editText = binding.etData
+        when (inputType) {
+            TextInputType.TEXT -> {
+                editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+            }
+
+            TextInputType.TEXT_MULTILINE -> {
+                editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            }
+
+            TextInputType.NUMBER_SIGNED -> {
+                editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+            }
+
+            TextInputType.PASSWORD -> {
+                editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+
+            TextInputType.NUMBER_ENGLISH_ONLY -> {
+                editText.filters += InputFilter.AllCaps()
+                editText.filters += InputFilter { source, _, _, _, _, _ ->
+                    val pattern = Pattern.compile("^[a-zA-Z0-9]+$")
+
+                    return@InputFilter if (!pattern.matcher(source).matches()) {
+                        val regex = Regex("[^a-zA-Z0-9\\s]")
+                        source.toString().replace(regex, "").trim()
+                    } else {
+                        null
+                    }
+                }
+            }
+        }
+    }
+
+    fun setFocusListener(focusChangeListener: OnFocusChangeListener) {
+        this.focusChangeListener = focusChangeListener
     }
 }

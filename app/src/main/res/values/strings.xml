@@ -1,5 +1,43 @@
 <resources>
-    <string name="app_name">롤링모먼츠</string>
+    <string name="app_name">RollingMoment</string>
+
+    <!-- Common -->
+    <string name="confirm">확인</string>
+
+    <!-- SNS Login KEY -->
+    <string name="kakao_native_key">1888a889e7ea1a4e154040e65c5032ae</string>
+    <string name="naver_client_secret">m1EX5x0CVz</string>
+    <string name="naver_client_id">6OCYBAX301BROwx2VYzj</string>
+
+    <string name="no_internet_exception">인터넷에 연결되지 않았습니다.</string>
+
+    <string name="sign_in_kakao">카카오로 로그인</string>
+    <string name="sign_in_naver">네이버로 로그인</string>
+    <string name="sign_in_email">이메일로 로그인</string>
 
     <string name="edit_text_length_check">%d/%d</string>
+
+    <!-- 로그인 -->
+    <string name="email">이메일</string>
+    <string name="email_hint">이메일을 입력해주세요.</string>
+    <string name="email_error">이메일 형식을 확인해주세요.</string>
+    <string name="password">비밀번호</string>
+    <string name="password_hint">비밀번호를 입력해주세요.</string>
+    <string name="login">로그인</string>
+    <string name="sign_up_description">아직 롤링모먼트 회원이 아니신가요? <b><u>이메일로 회원가입</u></b> </string>
+    <string name="sign_up_under_line"><u>이메일로 회원가입</u></string>
+
+    <!-- 회원가입 -->
+    <string name="sign_up">회원가입</string>
+    <string name="nickname">닉네임</string>
+    <string name="nickname_hint">10자 이내로 작성해주세요.</string>
+    <string name="sex">성별</string>
+    <string name="sex_male">남자</string>
+    <string name="sex_female">여자</string>
+    <string name="sex_none">비밀</string>
+    <string name="password_confirm">비밀번호 확인</string>
+    <string name="password_confirm_hint">비밀번호를 한번 더 입력해주세요.</string>
+    <string name="password_error">영문 대/소문자, 숫자, 특수문자를 조합한 8~16자의\n비밀번호를 입력해주세요. (연속하는 문자, 숫자 금지)</string>
+    <string name="password_confirm_error">비밀번호를 다시 확인해주세요.</string>
+    <string name="complete">완료</string>
 </resources>

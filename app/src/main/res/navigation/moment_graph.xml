@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/IntroFragment"
+    android:id="@+id/moment_graph">
+    <fragment
+        android:id="@+id/SignFragment"
+        tools:layout="@layout/fragment_sign"
+        android:name="kr.co.rolling.moment.feature.sign.ui.SignFragment">
+        <action
+            android:id="@+id/action_SignFragment_to_SignInFragment"
+            app:destination="@id/SignInFragment" />
+        <action
+            android:id="@+id/action_SignFragment_to_SignUpFragment"
+            app:destination="@id/SignUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/IntroFragment"
+        tools:layout="@layout/fragment_intro"
+        android:name="kr.co.rolling.moment.feature.intro.ui.IntroFragment">
+        <action
+            android:id="@+id/action_IntroFragment_to_SignInFragment"
+            app:destination="@id/SignFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SignInFragment"
+        tools:layout="@layout/fragment_sign_in"
+        android:name="kr.co.rolling.moment.feature.sign.ui.SignInFragment">
+        <action
+            android:id="@+id/action_SignInFragment_to_SignUpFragment"
+            app:destination="@id/SignUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SignUpFragment"
+        tools:layout="@layout/fragment_sign_up"
+        android:name="kr.co.rolling.moment.feature.sign.ui.SignUpFragment">
+    </fragment>
+
+</navigation>
