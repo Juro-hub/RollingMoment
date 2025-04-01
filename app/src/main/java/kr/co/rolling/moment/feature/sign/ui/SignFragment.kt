@@ -63,7 +63,8 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
         initSnsLogin()
 
         binding.layoutEmail.root.setOnSingleClickListener {
-            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToSignInFragment())
+//            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToSignInFragment())
+            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToMomentCreateFragment())
         }
 
         binding.layoutKakao.root.setOnSingleClickListener {
@@ -110,10 +111,12 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
     }
 
     private fun kakaoLogin() {
+        UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoLoginCallback)
+        return
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
             UserApiClient.instance.loginWithKakaoTalk(requireContext(), callback = kakaoLoginCallback)
         } else {
-            UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoLoginCallback)
         }
+
     }
 }

@@ -2,8 +2,11 @@ package kr.co.rolling.moment.ui.util
 
 import android.animation.ObjectAnimator
 import android.app.Service
+import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
@@ -11,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import kr.co.rolling.moment.R
+import kr.co.rolling.moment.library.data.Constants
 import kr.co.rolling.moment.ui.component.CommonDialog
 import kr.co.rolling.moment.ui.component.CommonDialogData
 import kotlin.math.abs
@@ -146,6 +151,34 @@ fun Fragment.showDialog(
     commonDialog.show(parentFragmentManager, "newAlert")
 }
 
+fun Fragment.showPermissionDialog(
+    type: Constants.PermissionType
+) {
+    var title: String
+    var content: String
+
+    when (type) {
+        Constants.PermissionType.CAMERA_PERMISSION -> {
+            title = getString(R.string.permission_title_camera)
+            content = getString(R.string.permission_content_camera)
+        }
+
+        Constants.PermissionType.STORAGE_PERMISSION -> {
+            title = getString(R.string.permission_title_storage)
+            content = getString(R.string.permission_content_storage)
+        }
+
+        Constants.PermissionType.ALARM_PERMISSION -> {
+            title = getString(R.string.permission_title_alarm)
+            content = getString(R.string.permission_content_alarm)
+        }
+    }
+
+    showDialog(CommonDialogData(title = title, contents = content, positiveText = getString(R.string.permission_button), negativeText = getString(R.string.clsoe)), positiveCallback = {
+        startActivity(getPermissionSettingIntent())
+    })
+}
+
 fun AppCompatActivity.showDialog(
     dialogData: CommonDialogData, positiveCallback: (() -> Unit)? = null,
     negativeCallback: (() -> Unit)? = null,
@@ -160,4 +193,15 @@ fun AppCompatActivity.showDialog(
 
     commonDialog.arguments = bundle
     commonDialog.show(supportFragmentManager, "newAlert")
+}
+
+/**
+ * 시스템 권한 설정 화면 Intent 정보 생성
+ *
+ * @return 시스템 권한 설정 Intent 정보
+ */
+fun Fragment.getPermissionSettingIntent(): Intent {
+    return Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${requireActivity().packageName}")).apply {
+        addCategory(Intent.CATEGORY_DEFAULT)
+    }
 }
