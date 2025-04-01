@@ -2,24 +2,27 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/IntroFragment"
-    android:id="@+id/moment_graph">
+    android:id="@+id/moment_graph"
+    app:startDestination="@id/IntroFragment">
     <fragment
         android:id="@+id/SignFragment"
-        tools:layout="@layout/fragment_sign"
-        android:name="kr.co.rolling.moment.feature.sign.ui.SignFragment">
+        android:name="kr.co.rolling.moment.feature.sign.ui.SignFragment"
+        tools:layout="@layout/fragment_sign">
         <action
             android:id="@+id/action_SignFragment_to_SignInFragment"
             app:destination="@id/SignInFragment" />
         <action
             android:id="@+id/action_SignFragment_to_SignUpFragment"
             app:destination="@id/SignUpFragment" />
+        <action
+            android:id="@+id/action_SignFragment_to_MomentCreateFragment"
+            app:destination="@id/MomentCreateFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/IntroFragment"
-        tools:layout="@layout/fragment_intro"
-        android:name="kr.co.rolling.moment.feature.intro.ui.IntroFragment">
+        android:name="kr.co.rolling.moment.feature.intro.ui.IntroFragment"
+        tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_IntroFragment_to_SignInFragment"
             app:destination="@id/SignFragment" />
@@ -27,8 +30,8 @@
 
     <fragment
         android:id="@+id/SignInFragment"
-        tools:layout="@layout/fragment_sign_in"
-        android:name="kr.co.rolling.moment.feature.sign.ui.SignInFragment">
+        android:name="kr.co.rolling.moment.feature.sign.ui.SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_SignInFragment_to_SignUpFragment"
             app:destination="@id/SignUpFragment" />
@@ -36,8 +39,33 @@
 
     <fragment
         android:id="@+id/SignUpFragment"
-        tools:layout="@layout/fragment_sign_up"
-        android:name="kr.co.rolling.moment.feature.sign.ui.SignUpFragment">
+        android:name="kr.co.rolling.moment.feature.sign.ui.SignUpFragment"
+        tools:layout="@layout/fragment_sign_up" />
+
+    <fragment
+        android:id="@+id/MomentCreateFragment"
+        android:name="kr.co.rolling.moment.feature.moment.MomentCreateFragment"
+        tools:layout="@layout/fragment_moment_create" >
+        <action
+            android:id="@+id/action_MomentCreateFragment_to_MomentCoverBottomSheet"
+            app:destination="@id/MomentCoverBottomSheet" />
+        <action
+            android:id="@+id/action_MomentCreateFragment_to_MomentCategoryBottomSheet"
+            app:destination="@id/MomentCategoryBottomSheet" />
     </fragment>
 
+    <dialog
+        android:id="@+id/MomentCoverBottomSheet"
+        android:name="kr.co.rolling.moment.feature.moment.MomentCoverBottomSheetFragment"
+        tools:layout="@layout/bottom_sheet_moment_cover" />
+
+    <dialog
+        android:id="@+id/MomentCategoryBottomSheet"
+        android:name="kr.co.rolling.moment.feature.moment.MomentCategoryBottomSheetFragment"
+        tools:layout="@layout/bottom_sheet_moment_cover" >
+        <argument
+            android:name="selectedItem"
+            android:defaultValue=""
+            app:argType="string"/>
+    </dialog>
 </navigation>

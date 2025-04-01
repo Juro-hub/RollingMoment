@@ -11,6 +11,8 @@
         <attr name="errorMessage" format="string" />
         <attr name="guideText" format="string"/>
         <attr name="isVisibleMaxLength" format="boolean"/>
+        <attr name="isClickable" format="boolean"/>
+        <attr name="iconDrawable" format="reference" />
 
         <attr name="inputTypes" format="enum">
             <enum name="text" value="0" />

@@ -57,8 +57,21 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         NUMBER_ENGLISH_ONLY(4),
     }
 
-
     private lateinit var binding: LayoutCommonEditTextBinding
+
+    /** 전체영역 클릭 리스너 */
+    private var rootClickListener: ((View) -> Unit)? = null
+
+    /**
+     * EditText 클릭 시 동작
+     */
+    private val viewClickListener: (View) -> Unit = {
+        if (rootClickListener != null) {
+            rootClickListener?.invoke(binding.root)
+        } else {
+            binding.etData.focusAndShowKeyboard()
+        }
+    }
 
     /** Focus Change Listener */
     private var focusChangeListener: OnFocusChangeListener? = null
@@ -114,9 +127,9 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         binding = LayoutCommonEditTextBinding.inflate(inflater, this, true)
         binding.etData.id = generateViewId()
 
-        binding.root.setOnSingleClickListener {
-            binding.etData.focusAndShowKeyboard()
-        }
+        binding.root.setOnSingleClickListener(viewClickListener)
+        binding.tvHint.setOnSingleClickListener(viewClickListener)
+        binding.etData.setOnSingleClickListener(viewClickListener)
 
         binding.etData.text.clear()
         binding.etData.addTextChangedListener {
@@ -170,6 +183,20 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
 
         binding.etData.onFocusChangeListener = this
 
+        val isClickable = attribute.getBoolean(R.styleable.CommonEditTextAttributes_isClickable, false)
+        if (isClickable) {
+            binding.etData.isFocusable = false
+            binding.etData.isCursorVisible = false
+        }
+
+        // Icon 존재 시 설정
+        val drawableImage = attribute.getDrawable(R.styleable.CommonEditTextAttributes_iconDrawable)
+        drawableImage?.let {
+            binding.ivCancel.show()
+            binding.ivCancel.setImageDrawable(it)
+        }
+
+
         val inputType = TextInputType.entries[attribute.getInt(R.styleable.CommonEditTextAttributes_inputTypes, TextInputType.TEXT.value)]
         setEditTextInputType(inputType)
     }
@@ -186,23 +213,6 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         binding.layoutInput.setBackgroundResource(R.drawable.shape_8_171719_ffffff)
         changeUiVisible()
     }
-
-    fun getData() = binding.etData.text.toString()
-
-    /**
-     * @param listener EditText Text Change Listener
-     */
-    fun setTextChangeListener(listener: (data: String) -> Unit) {
-        textChangeListener = listener
-    }
-
-    fun setError(isError: Boolean) {
-        binding.tvError.isVisible = isError
-
-        isValid = !isError
-    }
-
-    fun isValid() = isValid
 
     private fun setEditTextInputType(inputType: TextInputType) {
         val editText = binding.etData
@@ -242,4 +252,29 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
     fun setFocusListener(focusChangeListener: OnFocusChangeListener) {
         this.focusChangeListener = focusChangeListener
     }
+
+    fun setClickListener(listener: (View) -> Unit) {
+        this.rootClickListener = listener
+    }
+
+    fun setText(text: String) {
+        binding.etData.setText(text)
+    }
+
+    fun getData() = binding.etData.text.toString()
+
+    /**
+     * @param listener EditText Text Change Listener
+     */
+    fun setTextChangeListener(listener: (data: String) -> Unit) {
+        textChangeListener = listener
+    }
+
+    fun setError(isError: Boolean) {
+        binding.tvError.isVisible = isError
+
+        isValid = !isError
+    }
+
+    fun isValid() = isValid
 }

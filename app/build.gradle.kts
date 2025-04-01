@@ -121,4 +121,11 @@ dependencies {
 
     // Naver 로그인 API 모듈
     implementation(libs.oauth)
+
+    // glide
+    implementation (libs.glide)
+    ksp (libs.glide.compier)
+
+    // Recycler View
+    implementation (libs.androidx.recyclerview)
 }

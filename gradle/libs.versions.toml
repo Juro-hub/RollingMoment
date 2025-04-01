@@ -2,6 +2,7 @@
 agp = "8.7.3"
 cameraCamera2 = "1.4.1"
 cameraView = "1.4.1"
+compiler = "4.15.1"
 converterMoshi = "2.9.0"
 converterGson = "2.9.0"
 espressoIdlingResource = "3.6.1"
@@ -29,6 +30,7 @@ navigationFragmentKtx = "2.8.9"
 navigationUiKtx = "2.8.9"
 oauth = "5.10.0"
 okhttp = "4.12.0"
+recyclerview = "1.4.0"
 rxjava = "3.0.4"
 rxandroid = "3.0.0"
 rxjava3RetrofitAdapter = "3.0.0"
@@ -47,13 +49,16 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-espresso-idling-resource = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "espressoIdlingResource" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+glide-compier = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshi" }
 dagger-hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTestingVersion" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "compiler" }
 google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
