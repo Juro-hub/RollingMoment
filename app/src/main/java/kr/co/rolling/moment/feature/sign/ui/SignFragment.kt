@@ -68,7 +68,8 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
         }
 
         binding.layoutKakao.root.setOnSingleClickListener {
-            kakaoLogin()
+//            kakaoLogin()
+            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToTraceCreateFragment())
         }
 
         binding.layoutNaver.root.setOnSingleClickListener {

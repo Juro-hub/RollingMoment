@@ -2,6 +2,7 @@ package kr.co.rolling.moment.ui.component
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.text.InputFilter
 import android.text.InputType
 import android.util.AttributeSet
@@ -10,10 +11,12 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.EditorInfo
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.LayoutCommonEditTextBinding
+import kr.co.rolling.moment.library.data.TraceFontType
 import kr.co.rolling.moment.ui.util.focusAndShowKeyboard
 import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
@@ -58,6 +61,9 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
     }
 
     private lateinit var binding: LayoutCommonEditTextBinding
+
+    /** CustomDrawable 속성 객체 */
+    private var drawable: Drawable? = null
 
     /** 전체영역 클릭 리스너 */
     private var rootClickListener: ((View) -> Unit)? = null
@@ -187,11 +193,13 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         if (isClickable) {
             binding.etData.isFocusable = false
             binding.etData.isCursorVisible = false
+            binding.ivCancel.setOnSingleClickListener { }
         }
 
         // Icon 존재 시 설정
         val drawableImage = attribute.getDrawable(R.styleable.CommonEditTextAttributes_iconDrawable)
         drawableImage?.let {
+            drawable = it
             binding.ivCancel.show()
             binding.ivCancel.setImageDrawable(it)
         }
@@ -203,7 +211,7 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
 
     private fun changeUiVisible() {
         binding.tvHint.isVisible = binding.etData.text.isEmpty()
-        binding.ivCancel.isVisible = (binding.etData.text.isNotEmpty() && binding.etData.hasFocus())
+        binding.ivCancel.isVisible = (binding.etData.text.isNotEmpty() && binding.etData.hasFocus()) || isCustomIconDrawable()
     }
 
     /**
@@ -249,6 +257,13 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         }
     }
 
+    /**
+     * @return Custom Icon 이 존재하는지 여/부
+     */
+    private fun isCustomIconDrawable(): Boolean {
+        return drawable != null
+    }
+
     fun setFocusListener(focusChangeListener: OnFocusChangeListener) {
         this.focusChangeListener = focusChangeListener
     }
@@ -274,6 +289,10 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         binding.tvError.isVisible = isError
 
         isValid = !isError
+    }
+
+    fun setFont(font: TraceFontType) {
+        binding.etData.typeface = ResourcesCompat.getFont(binding.root.context, font.fontRes)
     }
 
     fun isValid() = isValid

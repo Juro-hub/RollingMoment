@@ -1,8 +1,11 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.RollingMoment" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/CFFFFFF</item>
-        <item name="colorPrimaryDark">@color/CFFFFFF</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/CFFFFFF</item>
+        <!--Status Bar 아이콘의 색상 true:검은 아이콘, false:흰 아이콘-->
+        <item name="android:windowLightStatusBar">true</item>
 
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:actionBarItemBackground">@android:color/transparent</item>
@@ -13,12 +16,16 @@
     <!-- Font Family -->
     <style name="BoldTextView" parent="Widget.AppCompat.TextView">
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
 
     <style name="MediumTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="RegularTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
 
     <style name="T124Bold" parent="BoldTextView">
@@ -31,11 +38,13 @@
 
     <style name="T320Bold" parent="BoldTextView">
         <item name="android:textSize">20dp</item>
-    </style>/
+    </style>
+    /
 
     <style name="T418Bold" parent="BoldTextView">
         <item name="android:textSize">18dp</item>
-    </style>/
+    </style>
+    /
 
     <style name="B116Medium" parent="MediumTextView">
         <item name="android:textSize">16dp</item>
@@ -86,6 +95,10 @@
     </style>
 
     <style name="L910Bold" parent="BoldTextView">
+        <item name="android:textSize">11dp</item>
+    </style>
+
+    <style name="L1011Medium" parent="BoldTextView">
         <item name="android:textSize">11dp</item>
     </style>
 </resources>
