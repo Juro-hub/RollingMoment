@@ -79,4 +79,18 @@
     <string name="permission_content_storage">앨범에 대한 권한 사용을 거부하였습니다.\n기능 사용을 위해 권한을 허용해주세요.</string>
     <string name="permission_content_alarm">알림에 대한 권한 사용을 거부하였습니다.\n기능 사용을 위해 권한을 허용해주세요.</string>
     <string name="permission_button">설정하러 가기</string>
+
+    <!-- 흔적 남기기 -->
+    <string name="trace_create_toolbar">흔적 작성</string>
+    <string name="trace_create_info">한번 작성된 흔적은 수정 및 삭제가 불가합니다.</string>
+    <string name="trace_create_edit_hint">남기고 싶은 흔적을 작성해주세요.</string>
+    <string name="trace_create_ai_title">어떤 말로 시작해야할지 모르겠다면?</string>
+    <string name="trace_create_ai_button">AI로 제안받기</string>
+    <string name="trace_create_alignment_title">텍스트 정렬</string>
+    <string name="trace_create_alignment_left">좌측 정렬</string>
+    <string name="trace_create_alignment_right">우측 정렬</string>
+    <string name="trace_create_alignment_center">중앙 정렬</string>
+    <string name="trace_create_font_helper">폰트 선택</string>
+    <string name="trace_create_font_hint">폰트를 선택해주세요</string>
+    <string name="trace_create_background">배경 컬러</string>
 </resources>

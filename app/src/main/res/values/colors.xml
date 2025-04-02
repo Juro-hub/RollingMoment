@@ -17,6 +17,7 @@
     <color name="C0066FF">#0066FF</color>
     <color name="C005EEB">#005EEB</color>
     <color name="C0054D1">#0054D1</color>
+    <color name="C874FFF">#874FFF</color>
 
     <!-- Gray Color -->
     <color name="C171719">#171719</color>
@@ -47,4 +48,15 @@
 
     <!-- Dimd(Material) -->
     <color name="C17171985">#17171985</color>
+
+    <!-- Trace Background Color -->
+    <color name="CFBD4D4">#FBD4D4</color>
+    <color name="CFFEBC6">#FFEBC6</color>
+    <color name="CFEF8CC">#FEF8CC</color>
+    <color name="CDDEFFB">#DDEFFB</color>
+    <color name="CD9F5ED">#D9F5ED</color>
+    <color name="CE6F5E7">#E6F5E7</color>
+    <color name="CFFE4FA">#FFE4FA</color>
+    <color name="CE3E1EF">#E3E1EF</color>
+    <color name="CD8E2F3">#D8E2F3</color>
 </resources>

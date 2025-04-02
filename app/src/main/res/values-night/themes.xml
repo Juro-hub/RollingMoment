@@ -1,7 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.RollingMoment" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/CFFFFFF</item>
-        <item name="colorPrimaryDark">@color/CFFFFFF</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/CFFFFFF</item>
+        <!--Status Bar 아이콘의 색상 true:검은 아이콘, false:흰 아이콘-->
+        <item name="android:windowLightStatusBar">true</item>
 
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:actionBarItemBackground">@android:color/transparent</item>
