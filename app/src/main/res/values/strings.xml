@@ -7,11 +7,6 @@
     <string name="no">아니요</string>
     <string name="clsoe">닫기</string>
 
-    <!-- SNS Login KEY -->
-    <string name="kakao_native_key">1888a889e7ea1a4e154040e65c5032ae</string>
-    <string name="naver_client_secret">m1EX5x0CVz</string>
-    <string name="naver_client_id">6OCYBAX301BROwx2VYzj</string>
-
     <string name="no_internet_exception">인터넷에 연결되지 않았습니다.</string>
 
     <string name="sign_in_kakao">카카오로 로그인</string>

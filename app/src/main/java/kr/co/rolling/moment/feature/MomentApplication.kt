@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDialog
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.HiltAndroidApp
+import kr.co.rolling.moment.BuildConfig
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.ActivityLoadingPopupBinding
 import timber.log.Timber
@@ -28,8 +29,8 @@ class MomentApplication @Inject constructor() : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        KakaoSdk.init(this, getString(R.string.kakao_native_key))
-        NaverIdLoginSDK.initialize(this, getString(R.string.naver_client_id), getString(R.string.naver_client_secret), getString(R.string.app_name))
+        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_KEY)
+        NaverIdLoginSDK.initialize(this, BuildConfig.NAVER_CLIENT_ID, BuildConfig.NAVER_CLIENT_KEY, getString(R.string.app_name))
     }
 
     /**
