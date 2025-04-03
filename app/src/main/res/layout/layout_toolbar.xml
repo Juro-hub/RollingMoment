@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvToolbarTitle"
         style="@style/T320Bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

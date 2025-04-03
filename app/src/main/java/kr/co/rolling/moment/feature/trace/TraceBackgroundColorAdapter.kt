@@ -45,7 +45,7 @@ class TraceBackgroundColorAdapter : ListAdapter<TraceBackgroundColor, BaseViewHo
 
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
         override fun bind(item: TraceBackgroundColor) = with(binding) {
-            var drawable = if ((absoluteAdapterPosition == selectedPosition) || (absoluteAdapterPosition == 0 && selectedPosition == RecyclerView.NO_POSITION)) {
+            val drawable = if ((absoluteAdapterPosition == selectedPosition) || (absoluteAdapterPosition == 0 && selectedPosition == RecyclerView.NO_POSITION)) {
                 GradientDrawable().apply {
                     shape = GradientDrawable.RECTANGLE
                     setStroke(2, binding.root.context.getColor(R.color.C171719))

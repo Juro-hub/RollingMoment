@@ -38,7 +38,7 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
     }
 
     private fun initToolbar() {
-        binding.layoutToolBar.tvTitle.text = getString(R.string.moment_create_toolbar)
+        binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.moment_create_toolbar)
         binding.layoutToolBar.ivBack.setOnSingleClickListener { handleBackPressed() }
     }
 

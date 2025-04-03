@@ -1,6 +1,7 @@
 package kr.co.rolling.moment.ui.util
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.graphics.Rect
@@ -10,6 +11,7 @@ import android.provider.Settings
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.widget.NestedScrollView
@@ -204,4 +206,42 @@ fun Fragment.getPermissionSettingIntent(): Intent {
     return Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${requireActivity().packageName}")).apply {
         addCategory(Intent.CATEGORY_DEFAULT)
     }
+}
+
+@SuppressLint("SetTextI18n")
+fun TextView.showExpandableText(
+    fullText: String,
+    maxLinesCollapsed: Int = 2,
+) {
+    // 초기 상태 설정
+    this.text = fullText
+    this.maxLines = Int.MAX_VALUE
+
+    post {
+        if (lineCount <= maxLinesCollapsed) return@post
+
+        // 텍스트 줄이기
+        val truncatedText = getTruncatedText(fullText, maxLinesCollapsed)
+        val collapsedText = "$truncatedText..."
+
+        this.text = collapsedText
+        this.maxLines = maxLinesCollapsed
+        this.setOnClickListener {
+            this.text = "$fullText"
+            this.maxLines = Int.MAX_VALUE
+
+            this.setOnClickListener {
+                this.text = collapsedText
+                this.maxLines = maxLinesCollapsed
+                this.showExpandableText(fullText, maxLinesCollapsed)
+            }
+        }
+    }
+}
+
+// 내부에서 사용할 잘라진 텍스트 계산 함수
+private fun TextView.getTruncatedText(text: String, maxLines: Int): String {
+    val layout = layout ?: return text
+    val endIndex = layout.getLineEnd(maxLines - 1).coerceAtMost(text.length)
+    return text.substring(0, endIndex).trim()
 }

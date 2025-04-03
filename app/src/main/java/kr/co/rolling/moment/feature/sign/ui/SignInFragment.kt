@@ -18,7 +18,7 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     override fun initViewBinding(view: View) {
         binding = FragmentSignInBinding.bind(view)
 
-        binding.layoutToolBar.tvTitle.text = getString(R.string.sign_in_email)
+        binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.sign_in_email)
         binding.layoutToolBar.ivBack.setOnSingleClickListener {
             finishFragment()
         }

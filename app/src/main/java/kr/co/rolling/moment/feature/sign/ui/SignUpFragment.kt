@@ -32,7 +32,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun initToolBar() {
-        binding.layoutToolBar.tvTitle.text = getString(R.string.sign_up)
+        binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.sign_up)
         binding.layoutToolBar.ivBack.setOnSingleClickListener { finishFragment() }
     }
 
