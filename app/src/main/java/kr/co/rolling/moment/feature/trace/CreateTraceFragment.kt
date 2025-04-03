@@ -42,7 +42,7 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
     @SuppressLint("ClickableViewAccessibility")
     private fun initUI() {
         binding.layoutToolBar.ivBack.setOnSingleClickListener { finishFragment() }
-        binding.layoutToolBar.tvTitle.text = getString(R.string.trace_create_toolbar)
+        binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.trace_create_toolbar)
 
         binding.tvLength.text = getString(R.string.edit_text_length_check, 0, 500)
 

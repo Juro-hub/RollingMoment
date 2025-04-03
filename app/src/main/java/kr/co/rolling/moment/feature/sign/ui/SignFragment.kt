@@ -73,7 +73,8 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
         }
 
         binding.layoutNaver.root.setOnSingleClickListener {
-            NaverIdLoginSDK.authenticate(requireContext(), naverLoginCallback)
+//            NaverIdLoginSDK.authenticate(requireContext(), naverLoginCallback)
+            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToMomentEnrollFragment())
         }
 
         binding.tvSIgnUp.setOnSingleClickListener {

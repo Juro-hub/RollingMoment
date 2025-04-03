@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_SignFragment_to_TraceCreateFragment"
             app:destination="@id/TraceCreateFragment" />
+        <action
+            android:id="@+id/action_SignFragment_to_MomentEnrollFragment"
+            app:destination="@id/MomentEnrollFragment" />
     </fragment>
 
     <fragment
@@ -90,4 +93,18 @@
             app:argType="kr.co.rolling.moment.library.data.TraceFontType"
             app:nullable="true" />
     </dialog>
+
+    <fragment
+        android:id="@+id/MomentDetailFragment"
+        android:name="kr.co.rolling.moment.feature.moment.MomentDetailFragment"
+        tools:layout="@layout/fragment_moment_detail" />
+
+    <fragment
+        android:id="@+id/MomentEnrollFragment"
+        android:name="kr.co.rolling.moment.feature.moment.MomentEnrollFragment"
+        tools:layout="@layout/fragment_moment_enroll" >
+        <action
+            android:id="@+id/action_MomentEnrollFragment_to_MomentDetailFragment"
+            app:destination="@id/MomentDetailFragment" />
+    </fragment>
 </navigation>
