@@ -2,6 +2,7 @@ package kr.co.rolling.moment.feature.main
 
 import android.view.View
 import androidx.core.view.isVisible
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentNotificationBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
@@ -11,6 +12,7 @@ import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 /**
  * 알림함
  */
+@AndroidEntryPoint
 class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
     private lateinit var binding: FragmentNotificationBinding
     val dummyPushList = listOf(

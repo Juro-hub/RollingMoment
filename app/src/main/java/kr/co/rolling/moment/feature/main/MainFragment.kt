@@ -4,6 +4,7 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMainBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
@@ -13,6 +14,7 @@ import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 /**
  * Main 화면
  */
+@AndroidEntryPoint
 class MainFragment : BaseFragment(R.layout.fragment_main) {
     private lateinit var binding: FragmentMainBinding
 

@@ -7,6 +7,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.BottomSheetMomentCategoryBinding
 import kr.co.rolling.moment.feature.base.BaseBottomSheetFragment
@@ -17,6 +18,7 @@ import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 /**
  * 모먼트 카테고리 설정 BototmSheetFragment
  */
+@AndroidEntryPoint
 class MomentCategoryBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMomentCategoryBinding>() {
     private val args by navArgs<MomentCategoryBottomSheetFragmentArgs>()
 

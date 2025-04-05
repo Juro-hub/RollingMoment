@@ -4,6 +4,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentHomeBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
@@ -16,6 +17,7 @@ import kr.co.rolling.moment.ui.util.show
 /**
  * Home 화면
  */
+@AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
 
