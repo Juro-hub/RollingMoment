@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">RollingMoment</string>
+    <string name="app_push_name">롤링 모먼트 Push</string>
+    <string name="app_push_channel_name">롤링 모먼트 알림</string>
 
     <!-- Common -->
     <string name="confirm">확인</string>
@@ -108,4 +110,8 @@
     <string name="moment_public">공개된 모먼트</string>
     <string name="moment_edit">모먼트 수정하기</string>
     <string name="moment_delete">모먼트 삭제하기</string>
+
+    <!-- 알림함 -->
+    <string name="notification_title">알림</string>
+    <string name="notification_info">30일 이내의 알림만 확인할 수 있어요.</string>
 </resources>

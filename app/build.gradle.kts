@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.google.firebase.analytics)
+    implementation (libs.firebase.messaging)
 
     // Navigation
     implementation (libs.androidx.navigation.fragment.ktx)

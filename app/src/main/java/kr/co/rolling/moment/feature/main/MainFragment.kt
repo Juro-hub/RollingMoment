@@ -7,9 +7,11 @@ import androidx.navigation.ui.setupWithNavController
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMainBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.util.navigateSafe
+import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 
 /**
- *
+ * Main 화면
  */
 class MainFragment : BaseFragment(R.layout.fragment_main) {
     private lateinit var binding: FragmentMainBinding
@@ -41,7 +43,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             }
         }
 
-        binding.bottomNavView.selectedItemId = R.id.HomeFragment
+        binding.ivAlarm.setOnSingleClickListener {
+            findNavController().navigateSafe(MainFragmentDirections.actionMainFragmentToNotificationFragment())
+        }
     }
 
 

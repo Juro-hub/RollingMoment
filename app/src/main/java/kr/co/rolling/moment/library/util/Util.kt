@@ -2,7 +2,9 @@ package kr.co.rolling.moment.library.util
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.Spanned
 import androidx.core.os.BundleCompat
+import androidx.core.text.HtmlCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
@@ -39,4 +41,13 @@ fun NavController.navigateSafe(
     if (action != null && currentDestination?.id != action.destinationId) {
         navigate(navDirections.actionId, navDirections.arguments, navOptions, navExtras)
     }
+}
+
+/**
+ * Strings Xml 에서의 CData 속성 적용
+ *
+ * @return Spanned 처리 된 Text
+ */
+fun String.htmlToSpanned(): Spanned {
+    return HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }

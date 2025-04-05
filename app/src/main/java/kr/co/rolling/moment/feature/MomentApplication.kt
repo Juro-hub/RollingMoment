@@ -7,12 +7,14 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDialog
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.HiltAndroidApp
 import kr.co.rolling.moment.BuildConfig
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.ActivityLoadingPopupBinding
+import kr.co.rolling.moment.library.util.PreferenceManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,6 +28,9 @@ class MomentApplication @Inject constructor() : Application() {
     private lateinit var binding: ActivityLoadingPopupBinding
     private var dialogActivityName: String? = null
 
+    @Inject
+    lateinit var preferenceManager: PreferenceManager
+
     override fun onCreate() {
         super.onCreate()
 
@@ -33,8 +38,28 @@ class MomentApplication @Inject constructor() : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
+        /**
+         * SNS Login 관련 Initialize
+         */
         KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_KEY)
         NaverIdLoginSDK.initialize(this, BuildConfig.NAVER_CLIENT_ID, BuildConfig.NAVER_CLIENT_KEY, getString(R.string.app_name))
+
+        preferenceManager.init(this)
+
+        // Firebase Push Token 획득
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            Timber.d("Firebase Message task isSuccess : ${task.isSuccessful}")
+            if (!task.isSuccessful) {
+                return@addOnCompleteListener
+            }
+
+            task.result?.let { token ->
+                if (token.isNotEmpty()) {
+                    preferenceManager.setPushToken(token)
+                }
+                Timber.d("Firebase Message pushToken: $token")
+            }
+        }
     }
 
     /**

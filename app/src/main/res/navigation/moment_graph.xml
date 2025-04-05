@@ -114,5 +114,15 @@
     <fragment
         android:id="@+id/MainFragment"
         android:name="kr.co.rolling.moment.feature.main.MainFragment"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_MainFragment_to_NotificationFragment"
+            app:destination="@id/NotificationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/NotificationFragment"
+        android:name="kr.co.rolling.moment.feature.main.NotificationFragment"
+        tools:layout="@layout/fragment_notification" />
+
 </navigation>
