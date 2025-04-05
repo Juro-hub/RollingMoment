@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.RollingMoment" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.RollingMoment" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="android:statusBarColor">@color/CFFFFFF</item>

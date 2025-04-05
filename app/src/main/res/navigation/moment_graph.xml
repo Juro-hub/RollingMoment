@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_SignInFragment_to_SignUpFragment"
             app:destination="@id/SignUpFragment" />
+        <action
+            android:id="@+id/action_SignInFragment_to_MainFragment"
+            app:destination="@id/MainFragment" />
     </fragment>
 
     <fragment
@@ -107,4 +110,9 @@
             android:id="@+id/action_MomentEnrollFragment_to_MomentDetailFragment"
             app:destination="@id/MomentDetailFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/MainFragment"
+        android:name="kr.co.rolling.moment.feature.main.MainFragment"
+        tools:layout="@layout/fragment_main" />
 </navigation>

@@ -23,8 +23,6 @@ class IntroFragment : BaseFragment(R.layout.fragment_intro) {
     private val viewModel: SignViewModel by activityViewModels()
 
     override fun initViewBinding(view: View) {
-        super.initViewBinding(view)
-
         Timber.d("MINSEOK ${KakaoSdk.keyHash}")
         //TODO Intro API 연동 필요
         CoroutineScope(Dispatchers.IO).launch {

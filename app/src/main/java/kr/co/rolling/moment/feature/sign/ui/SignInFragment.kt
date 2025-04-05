@@ -20,7 +20,8 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
         binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.sign_in_email)
         binding.layoutToolBar.ivBack.setOnSingleClickListener {
-            finishFragment()
+//            finishFragment()
+            findNavController().navigateSafe(SignInFragmentDirections.actionSignInFragmentToMainFragment())
         }
 
         binding.tvSignUp.setOnSingleClickListener {

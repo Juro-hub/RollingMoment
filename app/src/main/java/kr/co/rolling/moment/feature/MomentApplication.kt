@@ -29,6 +29,10 @@ class MomentApplication @Inject constructor() : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+
         KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_KEY)
         NaverIdLoginSDK.initialize(this, BuildConfig.NAVER_CLIENT_ID, BuildConfig.NAVER_CLIENT_KEY, getString(R.string.app_name))
     }

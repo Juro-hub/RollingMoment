@@ -1,14 +1,14 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.RollingMoment" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@android:color/transparent</item>
-        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
         <item name="android:statusBarColor">@color/CFFFFFF</item>
         <!--Status Bar 아이콘의 색상 true:검은 아이콘, false:흰 아이콘-->
         <item name="android:windowLightStatusBar">true</item>
 
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:actionBarItemBackground">@android:color/transparent</item>
+        <item name="android:actionBarItemBackground">@android:color/white</item>
         <item name="buttonStyle">?android:attr/borderlessButtonStyle</item>
         <item name="checkboxStyle">?android:attr/borderlessButtonStyle</item>
     </style>
@@ -100,5 +100,13 @@
 
     <style name="L1011Medium" parent="BoldTextView">
         <item name="android:textSize">11dp</item>
+    </style>
+
+    <style name="bottom_active_text" parent="L910Bold">
+        <item name="android:textColor">@color/C999999</item>
+    </style>
+
+    <style name="bottom_in_active_text" parent="L910Bold">
+        <item name="android:textColor">@color/C999999</item>
     </style>
 </resources>

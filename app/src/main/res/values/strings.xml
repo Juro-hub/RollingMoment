@@ -97,4 +97,15 @@
     <string name="moment_detail_invite">초대하기</string>
     <string name="moment_detail_trace_date_user">%s・%s</string>
     <string name="moment_detail_plus_trace">흔적남기기</string>
+
+    <!-- 메인 화면 -->
+    <string name="bottom_menu_home">홈</string>
+    <string name="bottom_menu_search">탐색</string>
+    <string name="bottom_menu_my_info">마이</string>
+    <string name="process_ing">진행</string>
+    <string name="process_end">완료</string>
+    <string name="moment_user_trace_count">참여자 %s・흔적 %s・</string>
+    <string name="moment_public">공개된 모먼트</string>
+    <string name="moment_edit">모먼트 수정하기</string>
+    <string name="moment_delete">모먼트 삭제하기</string>
 </resources>
