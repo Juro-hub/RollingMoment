@@ -88,7 +88,7 @@ data class ResponseReactions(
 data class MomentInfo(
     val inviteCode: String = "",
 
-    val isExpired: String = "",
+    val isExpired: Boolean = false,
 
     val deadLine: String = "",
 

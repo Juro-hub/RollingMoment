@@ -50,7 +50,7 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
 
     val dummyMoment = MomentInfo(
         inviteCode = "ABC123XYZ",
-        isExpired = "false",
+        isExpired = false,
         coverImage = "https://media.istockphoto.com/id/1482199015/ko/%EC%82%AC%EC%A7%84/%ED%96%89%EB%B3%B5%ED%95%9C-%EA%B0%95%EC%95%84%EC%A7%80-%EC%9B%A8%EC%9D%BC%EC%8A%A4-%EC%96%B4-%EC%BD%94%EA%B8%B0-14-%EC%A3%BC%EB%A0%B9-%EA%B0%9C%EA%B0%80-%EC%9C%99%ED%81%AC%ED%95%98%EA%B3%A0-%ED%97%90%EB%96%A1%EC%9D%B4%EA%B3%A0-%ED%9D%B0%EC%83%89%EC%97%90-%EA%B3%A0%EB%A6%BD%EB%90%98%EC%96%B4-%EC%95%89%EC%95%84-%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.jpg?s=612x612&w=0&k=20&c=vW29tbABUS2fEJvPi8gopZupfTKErCDMfeq5rrOaAME=",
         deadLine = "D-7", // UNIX 타임스탬프 예시
         category = "여행",
@@ -75,7 +75,6 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
 
     @SuppressLint("SetTextI18n")
     private fun initUI() {
-
         Glide.with(requireContext())
             .load(dummyMoment.coverImage)
             .fitCenter()

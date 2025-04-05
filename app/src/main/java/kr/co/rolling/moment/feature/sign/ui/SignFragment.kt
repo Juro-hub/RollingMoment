@@ -63,8 +63,8 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
         initSnsLogin()
 
         binding.layoutEmail.root.setOnSingleClickListener {
-//            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToSignInFragment())
-            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToMomentCreateFragment())
+            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToSignInFragment())
+//            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToMomentCreateFragment())
         }
 
         binding.layoutKakao.root.setOnSingleClickListener {

@@ -30,10 +30,6 @@ class MomentActivity : BaseActivity() {
     override fun initViewBinding() {
         binding = ActivityMomentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
     }
 
     override fun observeViewModel() {
