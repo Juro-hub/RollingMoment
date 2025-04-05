@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentTraceCreateBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
@@ -21,8 +22,9 @@ import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 
 
 /**
- *
+ * 흔적 작성 화면
  */
+@AndroidEntryPoint
 class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
     private lateinit var binding: FragmentTraceCreateBinding
 

@@ -2,6 +2,7 @@ package kr.co.rolling.moment.feature.main
 
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentSearchBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
@@ -12,6 +13,7 @@ import kr.co.rolling.moment.library.util.navigateSafe
 /**
  * 탐색 탭 UI
  */
+@AndroidEntryPoint
 class SearchFragment : BaseFragment(R.layout.fragment_search) {
     val dummyMomentList = listOf(
         MomentInfo(

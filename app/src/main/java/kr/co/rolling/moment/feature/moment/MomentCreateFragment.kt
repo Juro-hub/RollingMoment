@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMomentCreateBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
@@ -19,6 +20,7 @@ import kr.co.rolling.moment.ui.util.showDialog
 /**
  * 모먼트 만들기
  */
+@AndroidEntryPoint
 class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
     private lateinit var binding: FragmentMomentCreateBinding
     override fun handleBackPressed() {

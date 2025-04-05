@@ -12,7 +12,7 @@ import kr.co.rolling.moment.library.data.MomentCategoryType
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 
 /**
- *
+ * 모먼트 카테고리 선택 Adapter
  */
 class MomentCategoryAdapter : ListAdapter<MomentCategoryType, BaseViewHolder<MomentCategoryType>>(DiffCallback()) {
     private var itemClickListener: ((title: String) -> Unit)? = null
