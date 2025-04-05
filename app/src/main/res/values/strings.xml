@@ -114,4 +114,11 @@
     <!-- 알림함 -->
     <string name="notification_title">알림</string>
     <string name="notification_info">30일 이내의 알림만 확인할 수 있어요.</string>
+
+    <!-- 내정보 -->
+    <string name="my_info_alarm">알림</string>
+    <string name="my_info_service">서비스 이용 약관</string>
+    <string name="my_info_policy">개인정보처리방침</string>
+    <string name="my_info_logout">로그아웃</string>
+    <string name="my_info_withdraw">회원탈퇴</string>
 </resources>

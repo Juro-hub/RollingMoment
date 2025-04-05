@@ -27,7 +27,7 @@ import java.io.File
 import javax.inject.Inject
 
 /**
- *
+ * 모먼트 커버 설정 바텀시트
  */
 @AndroidEntryPoint
 class MomentCoverBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMomentCoverBinding>() {

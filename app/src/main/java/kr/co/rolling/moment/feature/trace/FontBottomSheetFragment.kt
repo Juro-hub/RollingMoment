@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.databinding.BottomSheetSelectFontBinding
 import kr.co.rolling.moment.feature.base.BaseBottomSheetFragment
 import kr.co.rolling.moment.library.data.TraceFontType
@@ -13,6 +14,7 @@ import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 /**
  * 흔적 작성 - 폰트 선택 BottomSheet Fragment
  */
+@AndroidEntryPoint
 class FontBottomSheetFragment : BaseBottomSheetFragment<BottomSheetSelectFontBinding>() {
     private val args by navArgs<FontBottomSheetFragmentArgs>()
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.View
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMomentDetailBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
@@ -17,6 +18,7 @@ import kr.co.rolling.moment.ui.util.showExpandableText
 /**
  * 모먼트 상세 조회 화면
  */
+@AndroidEntryPoint
 class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
     private lateinit var binding: FragmentMomentDetailBinding
 

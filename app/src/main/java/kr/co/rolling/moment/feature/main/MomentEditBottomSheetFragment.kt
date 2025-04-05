@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.databinding.BottomSheetMomentEditBinding
 import kr.co.rolling.moment.feature.base.BaseBottomSheetFragment
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
@@ -13,6 +14,7 @@ import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 /**
  * 모먼트 수정 관련 바텀 시트
  */
+@AndroidEntryPoint
 class MomentEditBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMomentEditBinding>() {
     private val args by navArgs<MomentEditBottomSheetFragmentArgs>()
 
