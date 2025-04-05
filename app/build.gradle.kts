@@ -1,3 +1,7 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -21,6 +25,7 @@ android {
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["kakao_key"] = getApiKey("KAKAO_API_KEY")
     }
 
     buildTypes {
@@ -28,9 +33,17 @@ android {
             isDebuggable = false
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+
+            buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("KAKAO_API_KEY"))
+            buildConfigField("String", "NAVER_CLIENT_KEY", getApiKey("NAVER_CLIENT_KEY"))
+            buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
         }
         debug{
             isDebuggable = true
+
+            buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("KAKAO_API_KEY"))
+            buildConfigField("String", "NAVER_CLIENT_KEY", getApiKey("NAVER_CLIENT_KEY"))
+            buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
         }
     }
     compileOptions {
@@ -44,6 +57,13 @@ android {
         viewBinding = true
         buildConfig = true
     }
+}
+
+fun getApiKey(propertyKey: String): String {
+    val properties = Properties().apply {
+        load(FileInputStream(rootProject.file("local.properties")))
+    }
+    return properties.getProperty(propertyKey) ?: ""
 }
 
 dependencies {

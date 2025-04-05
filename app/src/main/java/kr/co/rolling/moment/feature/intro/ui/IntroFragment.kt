@@ -13,7 +13,6 @@ import kr.co.rolling.moment.R
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
 import kr.co.rolling.moment.library.util.navigateSafe
-import kr.co.rolling.moment.library.util.observeEvent
 import timber.log.Timber
 
 /**
