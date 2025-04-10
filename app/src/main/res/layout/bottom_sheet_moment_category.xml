@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/shape_top_20_ffffff"
     android:maxHeight="350dp"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="20dp"
+    android:paddingBottom="20dp">
 
     <TextView
         android:id="@+id/tvMomentTitle"

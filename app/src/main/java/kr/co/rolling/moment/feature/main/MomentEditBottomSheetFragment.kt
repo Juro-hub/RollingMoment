@@ -22,6 +22,7 @@ class MomentEditBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMomentE
         const val BUNDLE_KEY_EDIT = "bundle_key_edit"
         const val BUNDLE_KEY_EDIT_CODE = "bundle_key_edit_code"
         const val BUNDLE_KEY_EDIT_TYPE = "isDelete"
+        const val BUNDLE_KEY_SAVE = "isSave"
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetMomentEditBinding {
@@ -30,15 +31,22 @@ class MomentEditBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMomentE
 
     override fun init() {
         binding.tvEdit.setOnSingleClickListener {
-            setFragmentResult(BUNDLE_KEY_EDIT, bundleOf(BUNDLE_KEY_EDIT_CODE to args.inviteCode, BUNDLE_KEY_EDIT_TYPE to false))
+            setFragmentResult(BUNDLE_KEY_EDIT, bundleOf(BUNDLE_KEY_EDIT_CODE to args.momentCode, BUNDLE_KEY_EDIT_TYPE to true))
             dismiss()
         }
 
         binding.tvDelete.setOnSingleClickListener {
-            setFragmentResult(BUNDLE_KEY_EDIT, bundleOf(BUNDLE_KEY_EDIT_CODE to args.inviteCode, BUNDLE_KEY_EDIT_TYPE to true))
+            setFragmentResult(BUNDLE_KEY_EDIT, bundleOf(BUNDLE_KEY_EDIT_CODE to args.momentCode))
             dismiss()
         }
 
-        binding.tvEdit.isVisible = args.isExpired
+        binding.tvSave.setOnSingleClickListener {
+            setFragmentResult(BUNDLE_KEY_EDIT, bundleOf(BUNDLE_KEY_SAVE to true))
+            dismiss()
+        }
+
+        binding.tvDelete.isVisible = args.isOwner
+        binding.tvEdit.isVisible = !args.isExpired && args.isOwner
+        binding.tvSave.isVisible = args.isDetail
     }
 }

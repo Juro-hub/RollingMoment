@@ -11,7 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.BottomSheetMomentCategoryBinding
 import kr.co.rolling.moment.feature.base.BaseBottomSheetFragment
-import kr.co.rolling.moment.library.data.MomentCategoryType
 import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 
@@ -36,14 +35,15 @@ class MomentCategoryBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMom
 
         val adapter = MomentCategoryAdapter()
         adapter.setSelectedItem(args.selectedItem)
-        adapter.setClickListener { title ->
-            setFragmentResult(BUNDLE_KEY_TITLE, bundleOf(BUNDLE_KEY_TITLE_DATA to title))
+
+        adapter.setClickListener { category ->
+            setFragmentResult(BUNDLE_KEY_TITLE, bundleOf(BUNDLE_KEY_TITLE_DATA to category))
             dismiss()
         }
 
         val gridLayoutManager = GridLayoutManager(context, 3, LinearLayoutManager.VERTICAL, false)
-        val data = MomentCategoryType.entries
-        adapter.submitList(data)
+        val data = args.categoryList
+        adapter.submitList(data.toMutableList())
         binding.rvAdapter.layoutManager = gridLayoutManager
         binding.rvAdapter.adapter = adapter
         binding.rvAdapter.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_8), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_8), spanCount = 3))

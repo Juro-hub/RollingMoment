@@ -17,11 +17,15 @@ data class RequestSignUp(
     @SerializedName("password")
     val password: String,
 
+    /** 비밀번호 */
+    @SerializedName("confirmPassword")
+    val passwordConfirm: String,
+
     /** 성별 */
     @SerializedName("gender")
     val gender: String,
 
     /** 별명 */
-    @SerializedName("nickName")
+    @SerializedName("nickname")
     val nickName: String,
 ): Parcelable

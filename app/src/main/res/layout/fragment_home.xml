@@ -21,10 +21,46 @@
         android:id="@+id/layoutEmpty"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/gradient_moment_list_background"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvProcess">
 
+        <ImageView
+            android:id="@+id/ivEmpty"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/empty_img_01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvEmptyTitle"
+            style="@style/T320Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/moment_empty_title"
+            android:textAlignment="center"
+            android:textColor="@color/C171719"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivEmpty" />
+
+        <TextView
+            style="@style/L414Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/moment_empty_description"
+            android:textAlignment="center"
+            android:textColor="@color/C7F7F7F"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/tvEmptyDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEmptyTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvProcess">
 
@@ -63,6 +100,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCreate"
         style="@style/L314Bold"
         android:layout_width="wrap_content"
         android:layout_height="44dp"

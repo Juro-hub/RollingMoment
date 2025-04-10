@@ -8,18 +8,12 @@
         android:id="@+id/HomeFragment"
         android:name="kr.co.rolling.moment.feature.main.HomeFragment"
         tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_HomeFragment_to_MomentEditBottomSheetFragment"
-            app:destination="@id/MomentEditBottomSheetFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/SearchFragment"
         android:name="kr.co.rolling.moment.feature.main.SearchFragment"
         tools:layout="@layout/fragment_search">
-        <action
-            android:id="@+id/action_SearchFragment_to_MomentEditBottomSheetFragment"
-            app:destination="@id/MomentEditBottomSheetFragment" />
     </fragment>
 
     <fragment
@@ -27,16 +21,4 @@
         android:name="kr.co.rolling.moment.feature.main.MyInfoFragment"
         tools:layout="@layout/fragment_my_info" />
 
-    <dialog
-        android:id="@+id/MomentEditBottomSheetFragment"
-        android:name="kr.co.rolling.moment.feature.main.MomentEditBottomSheetFragment"
-        tools:layout="@layout/bottom_sheet_moment_edit">
-        <argument
-            android:name="inviteCode"
-            android:defaultValue=""
-            app:argType="string" />
-        <argument
-            android:name="isExpired"
-            app:argType="boolean" />
-    </dialog>
 </navigation>

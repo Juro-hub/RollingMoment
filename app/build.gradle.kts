@@ -37,6 +37,8 @@ android {
             buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("KAKAO_API_KEY"))
             buildConfigField("String", "NAVER_CLIENT_KEY", getApiKey("NAVER_CLIENT_KEY"))
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
+            buildConfigField("String", "AES_KEY", getApiKey("AES_KEY"))
+            buildConfigField("String", "AES_VECTOR_KEY", getApiKey("AES_VECTOR_KEY"))
         }
         debug{
             isDebuggable = true
@@ -44,6 +46,8 @@ android {
             buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("KAKAO_API_KEY"))
             buildConfigField("String", "NAVER_CLIENT_KEY", getApiKey("NAVER_CLIENT_KEY"))
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
+            buildConfigField("String", "AES_KEY", getApiKey("AES_KEY"))
+            buildConfigField("String", "AES_VECTOR_KEY", getApiKey("AES_VECTOR_KEY"))
         }
     }
     compileOptions {
@@ -70,6 +74,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.firebase.crashlytics.buildtools)
 
 
     testImplementation(libs.junit)

@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
 import androidx.navigation.fragment.findNavController
+import kr.co.rolling.moment.library.util.AndroidInfo
+import kr.co.rolling.moment.library.util.EncryptManager
+import kr.co.rolling.moment.library.util.PreferenceManager
+import javax.inject.Inject
 
 /**
  *
@@ -14,6 +18,15 @@ import androidx.navigation.fragment.findNavController
 abstract class BaseFragment(
     @LayoutRes val layoutId: Int
 ) : BaseAbstractFragment() {
+    @Inject
+    lateinit var preferenceManager: PreferenceManager
+
+    @Inject
+    lateinit var encryptManager: EncryptManager
+
+    @Inject
+    lateinit var androidInfo: AndroidInfo
+
     /**
      * 화면 Init
      * @param view 현재 노출되는 View

@@ -53,16 +53,25 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
         override fun bind(item: MomentInfo) = with(binding) {
             Glide.with(ivImage)
-                .load(item.coverImage)
+                .load(item.coverImgUrl)
                 .transform(CenterInside(), RoundedCorners(8))
                 .into(ivImage)
 
-            tvEndDate.text = item.deadLine
-            tvCategory.text = item.category
+            tvEndDate.text = item.deadline
+            tvCategory.text = root.context.getString(item.category.textId)
             tvTitle.text = item.title
-            tvContent.text = item.content
-            tvInfo.text = root.context.getString(R.string.moment_user_trace_count, "100", "100")
-            ivMore.isVisible = item.isMine
+            tvContent.text = item.comment
+            tvInfo.text = item.traceCnt
+            ivMore.isVisible = item.isOwner
+            if (item.isExpired) {
+                tvEndDate.setBackgroundResource(R.drawable.shape_4_e7f5e7)
+                tvEndDate.setTextColor(root.context.getColor(R.color.C00BF40))
+            } else {
+                tvEndDate.setBackgroundResource(R.drawable.shape_4_eae4f8)
+                tvEndDate.setTextColor(root.context.getColor(R.color.C874FFF))
+            }
+
+
 
             root.setOnSingleClickListener {
                 rootClickListener?.invoke(item)

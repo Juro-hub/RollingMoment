@@ -6,14 +6,21 @@ import android.util.Patterns
 import android.view.View
 import android.widget.RadioButton
 import androidx.core.view.children
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentSignUpBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.network.NetworkConstants
+import kr.co.rolling.moment.library.network.data.request.RequestSignUp
+import kr.co.rolling.moment.library.network.data.response.SignUpResponse
+import kr.co.rolling.moment.library.network.util.SingleEvent
+import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
+import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.component.CommonEditText
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.smoothScrollToView
-import timber.log.Timber
+
 
 /**
  * 회원가입 화면
@@ -21,6 +28,8 @@ import timber.log.Timber
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     private lateinit var binding: FragmentSignUpBinding
+    private val viewModel: SignViewModel by activityViewModels()
+
     override fun initViewBinding(view: View) {
         binding = FragmentSignUpBinding.bind(view)
 
@@ -29,6 +38,13 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     override fun observeViewModel() {
+        viewLifecycleOwner.observeEvent(viewModel.signUpInfo, ::handleSignUp)
+    }
+
+    private fun handleSignUp(event: SingleEvent<SignUpResponse>) {
+        event.getContentIfNotHandled()?.let {
+            finishFragment()
+        }
     }
 
     private fun initToolBar() {
@@ -46,12 +62,16 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         }
 
         binding.btnSignUp.setOnSingleClickListener {
-            Timber.d("nickName : ${binding.etNickName.getData()}")
-            val selectText = binding.root.findViewById<RadioButton>(binding.radioGroup.checkedRadioButtonId).text
-            Timber.d("sex : ${selectText}")
-            Timber.d("email : ${binding.etEmail.getData()}")
-            Timber.d("pw : ${binding.etPassword.getData()}")
-            Timber.d("pwConf : ${binding.etPasswordConfirm.getData()}")
+            val selectGender = binding.root.findViewById<RadioButton>(binding.radioGroup.checkedRadioButtonId).text.toString()
+            val data = RequestSignUp(
+                userId = binding.etEmail.getData(),
+                password = encryptManager.setCBCMsg(binding.etPassword.getData()),
+                passwordConfirm = encryptManager.setCBCMsg(binding.etPasswordConfirm.getData()),
+                gender = NetworkConstants.GenderType.getGender(requireContext(), selectGender).type,
+                nickName = binding.etNickName.getData()
+            )
+            encryptManager.decrypt(data.password)
+            viewModel.requestSignUp(data)
         }
 
         binding.etEmail.setTextChangeListener {

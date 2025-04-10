@@ -1,5 +1,8 @@
 package kr.co.rolling.moment.library.util
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Spanned
@@ -9,6 +12,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
+import kr.co.rolling.moment.feature.base.BaseActivity
+import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.network.NetworkConstants
+import androidx.core.net.toUri
 
 /**
  * Bundle 의 직렬화를 수행
@@ -50,4 +57,12 @@ fun NavController.navigateSafe(
  */
 fun String.htmlToSpanned(): Spanned {
     return HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
+}
+
+fun BaseActivity.landingOutLink(link: String) {
+    try {
+        this.startActivity(Intent(Intent.ACTION_VIEW, link.toUri()))
+    } catch (e: ActivityNotFoundException) {
+       e.message
+    }
 }

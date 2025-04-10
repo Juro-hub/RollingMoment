@@ -8,6 +8,18 @@
     android:paddingHorizontal="20dp">
 
     <TextView
+        android:id="@+id/tvSave"
+        style="@style/L116Bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="16dp"
+        android:text="@string/moment_save"
+        android:textAlignment="center"
+        android:textColor="@color/C171719"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/tvEdit"
         style="@style/L116Bold"
         android:layout_width="match_parent"
@@ -17,7 +29,7 @@
         android:text="@string/moment_edit"
         android:textAlignment="center"
         android:textColor="@color/C171719"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvSave" />
 
     <TextView
         android:id="@+id/tvDelete"

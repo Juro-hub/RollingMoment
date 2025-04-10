@@ -1,28 +1,24 @@
 package kr.co.rolling.moment.feature.moment
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Bitmap
-import android.net.Uri
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
-import com.bumptech.glide.Glide
 import kr.co.rolling.moment.databinding.ItemMomentCoverTypeBinding
 import kr.co.rolling.moment.feature.base.BaseViewHolder
-import kr.co.rolling.moment.library.data.MomentCoverType
-import kr.co.rolling.moment.ui.util.setOnSingleClickListener
-import java.io.ByteArrayOutputStream
+import kr.co.rolling.moment.library.network.data.response.MomentCreateCoverImageInfo
+import kr.co.rolling.moment.library.network.data.response.MomentImageInfo
+import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 
 
 /**
  * Moment Cover 관련 Adapter
  */
-class MomentCreateCoverAdapter : ListAdapter<MomentCoverType, BaseViewHolder<MomentCoverType>>(DiffCallback()) {
-    private var itemClickListener: ((uri: Uri) -> Unit)? = null
+class MomentCreateCoverAdapter : ListAdapter<MomentCreateCoverImageInfo, BaseViewHolder<MomentCreateCoverImageInfo>>(DiffCallback()) {
+    private var itemClickListener: ((image: MomentImageInfo) -> Unit)? = null
 
     init {
         setHasStableIds(true)
@@ -32,49 +28,45 @@ class MomentCreateCoverAdapter : ListAdapter<MomentCoverType, BaseViewHolder<Mom
         return getItem(position).hashCode().toLong()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<MomentCoverType> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<MomentCreateCoverImageInfo> {
         val view = ItemMomentCoverTypeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<MomentCoverType>, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<MomentCreateCoverImageInfo>, position: Int) {
         holder.bind(getItem(position))
     }
 
-    fun setClickListener(click: ((uri: Uri) -> Unit)) {
+    fun setClickListener(click: ((image: MomentImageInfo) -> Unit)) {
         itemClickListener = click
     }
 
-    inner class ViewHolder(private val binding: ItemMomentCoverTypeBinding) : BaseViewHolder<MomentCoverType>(binding.root) {
+    inner class ViewHolder(private val binding: ItemMomentCoverTypeBinding) : BaseViewHolder<MomentCreateCoverImageInfo>(binding.root) {
 
         @SuppressLint("UseCompatLoadingForDrawables")
-        override fun bind(item: MomentCoverType) = with(binding) {
-            Glide.with(itemView.context)
-                .load(item.resID)
-                .fitCenter()
-                .into(ivType)
-
-            ivType.setOnSingleClickListener {
-                //TODO 호출 URL 확인 후 변경 필요
-                itemClickListener?.invoke(getImageUri(root.context, ivType.drawable.toBitmap()))
+        override fun bind(item: MomentCreateCoverImageInfo) = with(binding) {
+            val adapter = MomentCoverImageAdapter()
+            adapter.setClickListener {
+                itemClickListener?.invoke(item.imageInfo[absoluteAdapterPosition])
             }
+
+            binding.tvType.text = item.type
+
+            val gridLayoutManager = GridLayoutManager(root.context, 2, LinearLayoutManager.VERTICAL, false)
+            adapter.submitList(item.imageInfo.map { it.url })
+            rvAdapter.layoutManager = gridLayoutManager
+            rvAdapter.adapter = adapter
+            rvAdapter.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = 16, spanCount = 2))
         }
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<MomentCoverType>() {
-        override fun areItemsTheSame(oldItem: MomentCoverType, newItem: MomentCoverType): Boolean {
+    class DiffCallback : DiffUtil.ItemCallback<MomentCreateCoverImageInfo>() {
+        override fun areItemsTheSame(oldItem: MomentCreateCoverImageInfo, newItem: MomentCreateCoverImageInfo): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        override fun areContentsTheSame(oldItem: MomentCoverType, newItem: MomentCoverType): Boolean {
+        override fun areContentsTheSame(oldItem: MomentCreateCoverImageInfo, newItem: MomentCreateCoverImageInfo): Boolean {
             return oldItem == newItem
         }
-    }
-
-    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
     }
 }
