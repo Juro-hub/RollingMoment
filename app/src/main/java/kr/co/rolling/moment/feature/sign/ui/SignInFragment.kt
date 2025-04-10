@@ -31,8 +31,6 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
             finishFragment()
         }
 
-        binding.etEmail.setText("wnfhcm1@naver.com")
-        binding.etPassword.setText("bun100!!")
         binding.tvSignUp.setOnSingleClickListener {
             findNavController().navigateSafe(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
         }
