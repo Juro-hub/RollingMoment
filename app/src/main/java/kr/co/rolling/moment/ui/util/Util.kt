@@ -154,7 +154,8 @@ fun Fragment.showDialog(
 }
 
 fun Fragment.showPermissionDialog(
-    type: Constants.PermissionType
+    type: Constants.PermissionType,
+    callback: (() -> Unit)? = null
 ) {
     var title: String
     var content: String
@@ -178,6 +179,9 @@ fun Fragment.showPermissionDialog(
 
     showDialog(CommonDialogData(title = title, contents = content, positiveText = getString(R.string.permission_button), negativeText = getString(R.string.clsoe)), positiveCallback = {
         startActivity(getPermissionSettingIntent())
+        callback?.invoke()
+    }, negativeCallback = {
+        callback?.invoke()
     })
 }
 

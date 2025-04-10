@@ -10,17 +10,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
-import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.BottomSheetMomentCoverBinding
 import kr.co.rolling.moment.feature.base.BaseBottomSheetFragment
 import kr.co.rolling.moment.library.data.Constants
-import kr.co.rolling.moment.library.data.MomentCoverType
+import kr.co.rolling.moment.library.network.data.response.MomentImageInfo
 import kr.co.rolling.moment.library.permission.PermissionManager
 import kr.co.rolling.moment.library.util.AndroidInfo
-import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.showPermissionDialog
 import java.io.File
@@ -32,8 +29,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MomentCoverBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMomentCoverBinding>() {
     companion object {
+        /** 앨범 / 카메라 이미지 선택 */
         const val BUNDLE_KEY_URI = "bundle_key_uri"
         const val BUNDLE_KEY_URI_DATA = "bundle_key_uri_data"
+
+        /** 커버 이미지 선택 */
+        const val BUNDLE_KEY_IMAGE = "bundle_key_image"
+        const val BUNDLE_KEY_IMAGE_DATA = "bundle_key_image_data"
     }
 
     @Inject
@@ -41,6 +43,8 @@ class MomentCoverBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMoment
 
     @Inject
     lateinit var androidInfo: AndroidInfo
+
+    private val args by navArgs<MomentCoverBottomSheetFragmentArgs>()
 
     private var capturedImageUri: Uri? = null
 
@@ -56,8 +60,8 @@ class MomentCoverBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMoment
             }
         }
 
-    private val uriCallback: ((uri: Uri) -> Unit) = { uri ->
-        setFragmentResult(BUNDLE_KEY_URI, bundleOf(BUNDLE_KEY_URI_DATA to uri))
+    private val uriCallback: ((image: MomentImageInfo) -> Unit) = { image ->
+        setFragmentResult(BUNDLE_KEY_IMAGE, bundleOf(BUNDLE_KEY_IMAGE_DATA to image))
         dismiss()
     }
 
@@ -97,31 +101,8 @@ class MomentCoverBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMoment
 
         val adapter = MomentCreateCoverAdapter()
         adapter.setClickListener(uriCallback)
-        val gridLayoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
-        val data = MomentCoverType.entries
-        adapter.submitList(data)
-        binding.layoutType1.tvType.text = getString(R.string.moment_create_cover_type1)
-        binding.layoutType1.rvAdapter.layoutManager = gridLayoutManager
-        binding.layoutType1.rvAdapter.adapter = adapter
-        binding.layoutType1.rvAdapter.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = 16, spanCount = 2))
-
-        val gridLayoutManager2 = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
-        binding.layoutType2.tvType.text = getString(R.string.moment_create_cover_type2)
-        binding.layoutType2.rvAdapter.layoutManager = gridLayoutManager2
-        binding.layoutType2.rvAdapter.adapter = adapter
-        binding.layoutType2.rvAdapter.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = 16, spanCount = 2))
-
-        val gridLayoutManager3 = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
-        binding.layoutType3.tvType.text = getString(R.string.moment_create_cover_type3)
-        binding.layoutType3.rvAdapter.layoutManager = gridLayoutManager3
-        binding.layoutType3.rvAdapter.adapter = adapter
-        binding.layoutType3.rvAdapter.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = 16, spanCount = 2))
-
-        val gridLayoutManager4 = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
-        binding.layoutType4.tvType.text = getString(R.string.moment_create_cover_type3)
-        binding.layoutType4.rvAdapter.layoutManager = gridLayoutManager4
-        binding.layoutType4.rvAdapter.adapter = adapter
-        binding.layoutType4.rvAdapter.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = 16, spanCount = 2))
+        val list = args.coverList.toMutableList()
+        adapter.submitList(list)
 
         initUI()
     }

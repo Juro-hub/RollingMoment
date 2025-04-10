@@ -1,19 +1,49 @@
 package kr.co.rolling.moment.feature.moment
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.createBitmap
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMomentDetailBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
-import kr.co.rolling.moment.library.data.Constants
-import kr.co.rolling.moment.library.data.TraceFontType
-import kr.co.rolling.moment.library.network.data.response.MomentInfo
-import kr.co.rolling.moment.library.network.data.response.ReactionInfo
-import kr.co.rolling.moment.library.network.data.response.TraceInfo
+import kr.co.rolling.moment.feature.main.MomentEditBottomSheetFragment
+import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_DETAIL
+import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_EXPIRED
+import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_OWNER
+import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
+import kr.co.rolling.moment.library.data.MomentResultType
+import kr.co.rolling.moment.library.network.data.request.RequestMomentCode
+import kr.co.rolling.moment.library.network.data.response.MomentDetailInfo
+import kr.co.rolling.moment.library.network.data.response.MomentTraceInfo
+import kr.co.rolling.moment.library.network.util.SingleEvent
+import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
+import kr.co.rolling.moment.library.util.navigateSafe
+import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.ui.util.setOnSingleClickListener
+import kr.co.rolling.moment.ui.util.show
 import kr.co.rolling.moment.ui.util.showExpandableText
+import timber.log.Timber
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 /**
  * 모먼트 상세 조회 화면
@@ -21,49 +51,12 @@ import kr.co.rolling.moment.ui.util.showExpandableText
 @AndroidEntryPoint
 class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
     private lateinit var binding: FragmentMomentDetailBinding
+    private val args by navArgs<MomentDetailFragmentArgs>()
+    private val viewModel by activityViewModels<MomentViewModel>()
 
-    val dummyReactionList = listOf(
-        ReactionInfo(type = "like", count = 10, isClick = false),
-        ReactionInfo(type = "love", count = 3, isClick = true)
-    )
-
-    val dummyTraceList = listOf(
-        TraceInfo(
-            code = "trace001",
-            nickname = "홍길동",
-            content = "작성한 내용이 노출되는 영역 이것은 임시 조각 디자인입니다 최종 아니에요",
-            font = TraceFontType.DEFAULT,
-            color = Constants.TraceBackgroundColor.YELLOW,
-            alignment = Constants.TraceTextAlign.CENTER_ALIGN,
-            date = "2025-04-01",
-            reactionList = dummyReactionList
-        ),
-        TraceInfo(
-            code = "trace002",
-            nickname = "이몽룡",
-            content = "그 어느날 너와 내가 심하게 싸운 그날 이후로 너와 내 친구는 연락도 없고 날 피하는 것 같아 그제서야 난 느낀거야 모든것이 잘못 되있는걸 너와 내 친구는 어느새 다정한 연인이 되있었지",
-            font = TraceFontType.LEAF,
-            color = Constants.TraceBackgroundColor.BLUE,
-            alignment = Constants.TraceTextAlign.RIGHT_ALIGN,
-            date = "2025-04-02",
-            reactionList = null
-        )
-    )
-
-    val dummyMoment = MomentInfo(
-        inviteCode = "ABC123XYZ",
-        isExpired = false,
-        coverImage = "https://media.istockphoto.com/id/1482199015/ko/%EC%82%AC%EC%A7%84/%ED%96%89%EB%B3%B5%ED%95%9C-%EA%B0%95%EC%95%84%EC%A7%80-%EC%9B%A8%EC%9D%BC%EC%8A%A4-%EC%96%B4-%EC%BD%94%EA%B8%B0-14-%EC%A3%BC%EB%A0%B9-%EA%B0%9C%EA%B0%80-%EC%9C%99%ED%81%AC%ED%95%98%EA%B3%A0-%ED%97%90%EB%96%A1%EC%9D%B4%EA%B3%A0-%ED%9D%B0%EC%83%89%EC%97%90-%EA%B3%A0%EB%A6%BD%EB%90%98%EC%96%B4-%EC%95%89%EC%95%84-%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.jpg?s=612x612&w=0&k=20&c=vW29tbABUS2fEJvPi8gopZupfTKErCDMfeq5rrOaAME=",
-        deadLine = "D-7", // UNIX 타임스탬프 예시
-        category = "여행",
-        title = "제주도 여행 기록",
-        content = "함께한 소중한 순간들 그대와 함께라면 나는 어디든 갈 수 있을지 알았는데 그건 아니였던것같아 함께한 소중한 순간들 그대와 함께라면 나는 어디든 갈 수 있을지 알았는데 그건 아니였던것같아함께한 소중한 순간들 그대와 함께라면 나는 어디든 갈 수 있을지 알았는데 그건 아니였던것같아",
-        period = "2025.03.01 ~ 2025.03.05",
-        isPublic = true,
-        isMine = true,
-        traceList = dummyTraceList
-    )
-
+    private val adapter by lazy {
+        MomentDetailTraceAdapter()
+    }
 
     override fun initViewBinding(view: View) {
         binding = FragmentMomentDetailBinding.bind(view)
@@ -72,31 +65,166 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
     }
 
     override fun observeViewModel() {
-        super.observeViewModel()
+        viewLifecycleOwner.observeEvent(viewModel.momentDetailInfo, ::handleMomentDetail)
+        viewLifecycleOwner.observeEvent(viewModel.momentTraceInfo, ::handleTraceInfo)
+        viewModel.requestMomentDetail(RequestMomentCode(args.momentCode))
+    }
+
+    private fun handleTraceInfo(event: SingleEvent<MomentTraceInfo>) {
+        event.getContentIfNotHandled()?.let {
+            val code = it.code
+            val updateReaction = it.reactions
+
+            adapter.updateReaction(code, updateReaction)
+        }
+    }
+
+    private fun handleMomentDetail(event: SingleEvent<MomentDetailInfo>) {
+        event.getContentIfNotHandled()?.let { data ->
+            Timber.d("handleMomentDetail: data = ${data}")
+
+            Glide.with(requireContext())
+                .load(data.coverImageUrl)
+                .fitCenter()
+                .into(binding.ivImage)
+
+            binding.tvDeadline.text = data.deadline
+            if (data.isExpired) {
+                binding.tvDeadline.setBackgroundResource(R.drawable.shape_4_e7f5e7)
+                binding.tvDeadline.setTextColor(requireContext().getColor(R.color.C00BF40))
+                binding.btnTraceInvite.text = getString(R.string.moment_detail_expired)
+            } else {
+                binding.tvDeadline.setBackgroundResource(R.drawable.shape_4_eae4f8)
+                binding.tvDeadline.setTextColor(requireContext().getColor(R.color.C874FFF))
+                binding.btnTraceInvite.text = getString(R.string.moment_detail_invite)
+            }
+
+            binding.tvCategory.text = getString(data.category.textId)
+            binding.tvMomentTitle.text = data.title
+            binding.tvContent.showExpandableText(
+                data.content
+            )
+            binding.tvDate.text = data.period
+
+            binding.layoutEmpty.isVisible = data.traces.isNullOrEmpty()
+            binding.layoutTrace.isVisible = data.traces?.isNotEmpty() == true
+            binding.tvTraceCount.text = getString(R.string.moment_detail_trace_count, data.traces?.size ?: 0)
+
+            adapter.setClickListener {
+                viewModel.requestTraceReaction(it)
+            }
+            adapter.submitList(data.traces)
+
+            binding.layoutToolBar.ivClose.setOnSingleClickListener {
+                val bottomSheet = MomentEditBottomSheetFragment()
+                bottomSheet.arguments = bundleOf(NAVIGATION_KEY_MOMENT_CODE to args.momentCode, NAVIGATION_KEY_IS_EXPIRED to data.isExpired, NAVIGATION_KEY_IS_DETAIL to true, NAVIGATION_KEY_IS_OWNER to data.isOwner)
+                bottomSheet.show(parentFragmentManager, "MomentEditBottomSheet")
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun initUI() {
-        Glide.with(requireContext())
-            .load(dummyMoment.coverImage)
-            .fitCenter()
-            .into(binding.ivImage)
-
-        binding.tvDeadline.text = dummyMoment.deadLine
-        binding.tvCategory.text = dummyMoment.category
-        binding.tvMomentTitle.text = dummyMoment.title
-        binding.tvContent.showExpandableText(
-            dummyMoment.content
-        )
-        binding.tvDate.text = dummyMoment.period
-
-        binding.layoutEmpty.isVisible = dummyMoment.traceList.isNullOrEmpty()
-        binding.layoutTrace.isVisible = dummyMoment.traceList?.isNotEmpty() == true
-
-        binding.tvTraceCount.text = getString(R.string.moment_detail_trace_count, dummyMoment.traceList?.size ?: 0)
-
-        val adapter = MomentDetailTraceAdapter()
-        adapter.submitList(dummyTraceList)
         binding.rvTrace.adapter = adapter
+
+        binding.btnPlusTrace.setOnSingleClickListener {
+            findNavController().navigateSafe(MomentDetailFragmentDirections.actionMomentDetailFragmentToTraceCreateFragment(args.momentCode))
+        }
+
+        binding.btnTraceInvite.setOnSingleClickListener {
+            invite()
+        }
+
+        binding.btnInvite.setOnSingleClickListener {
+            invite()
+        }
+
+        binding.layoutToolBar.ivBack.setOnSingleClickListener {
+            finishFragment()
+        }
+
+        binding.layoutToolBar.ivClose.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_vertical_dots))
+        binding.layoutToolBar.ivClose.show()
+
+
+        setFragmentResultListener(MomentEditBottomSheetFragment.BUNDLE_KEY_EDIT) { _, bundle ->
+            val isSave = bundle.getBoolean(MomentEditBottomSheetFragment.BUNDLE_KEY_SAVE)
+            if (isSave) {
+                captureAndSaveScrollView()
+            }
+
+            val code = bundle.getString(MomentEditBottomSheetFragment.BUNDLE_KEY_EDIT_CODE) ?: return@setFragmentResultListener
+            val isEdit = bundle.getBoolean(MomentEditBottomSheetFragment.BUNDLE_KEY_EDIT_TYPE)
+
+            if (isEdit) {
+                findNavController().navigateSafe(MomentDetailFragmentDirections.actionMomentDetailFragmentToMomentCreateFragment(code))
+            } else {
+                viewModel.requestMomentDelete(code)
+            }
+        }
     }
+
+    private fun invite() {
+        val type = if (viewModel.isMomentExpired()) {
+            MomentResultType.DONE
+        } else {
+            MomentResultType.INVITE
+        }
+        findNavController().navigateSafe(MomentDetailFragmentDirections.actionMomentDetailFragmentToMomentResultFragment(momentCode = args.momentCode, enterType = type))
+    }
+
+    private fun captureAndSaveScrollView() {
+        val contentView = binding.layoutScroll.getChildAt(0)
+
+        // 1. 캡처 준비
+        binding.layoutScroll.post {
+            val width = contentView.width
+            val height = contentView.height
+
+            if (width == 0 || height == 0) {
+                Toast.makeText(context, "화면이 아직 준비되지 않았습니다.", Toast.LENGTH_SHORT).show()
+                return@post
+            }
+
+            // 2. 비트맵 생성 및 그리기
+            val bitmap = createBitmap(width, height)
+            val canvas = Canvas(bitmap)
+            canvas.drawColor(Color.WHITE) // 배경색 흰색 지정
+            contentView.draw(canvas)
+
+            // 3. 파일 저장
+            val filename = "layout_${System.currentTimeMillis()}.jpg"
+            val fos: OutputStream?
+            var imageUri: Uri? = null
+
+            if (androidInfo.hasQ()) {
+                val resolver = requireContext().contentResolver
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/MyApp")
+                }
+
+                imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                fos = imageUri?.let { resolver.openOutputStream(it) }
+            } else {
+                val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/MyApp"
+                val file = File(imagesDir)
+                if (!file.exists()) file.mkdirs()
+                val image = File(file, filename)
+                fos = FileOutputStream(image)
+                imageUri = Uri.fromFile(image)
+
+                requireContext().sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, imageUri))
+            }
+
+            fos?.use {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+            }
+
+            Toast.makeText(context, "갤러리에 저장되었습니다", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
 }

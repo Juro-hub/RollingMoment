@@ -131,7 +131,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/selector_common_radio"
                     android:button="@null"
-                    android:text="@string/moment_crate_deadline_three_days"
+                    android:text="@string/moment_crate_deadline_7"
                     android:textAlignment="center"
                     android:textColor="@color/selector_common_radio_text" />
 
@@ -142,7 +142,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/selector_common_radio"
                     android:button="@null"
-                    android:text="@string/moment_crate_deadline_seven_days"
+                    android:text="@string/moment_crate_deadline_15"
                     android:textAlignment="center"
                     android:textColor="@color/selector_common_radio_text" />
 
@@ -153,7 +153,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/selector_common_radio"
                     android:button="@null"
-                    android:text="@string/moment_crate_deadline_none"
+                    android:text="@string/moment_crate_deadline_30"
                     android:textAlignment="center"
                     android:textColor="@color/selector_common_radio_text" />
             </RadioGroup>
@@ -260,9 +260,10 @@
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/shape_6_171719"
+        android:background="@drawable/selector_common_button"
+        android:enabled="false"
         android:text="@string/moment_create_button"
-        android:textColor="@color/CFFFFFF"
+        android:textColor="@color/selector_common_button_text"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

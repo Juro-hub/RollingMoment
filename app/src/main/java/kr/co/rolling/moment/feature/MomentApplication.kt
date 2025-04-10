@@ -1,9 +1,11 @@
 package kr.co.rolling.moment.feature
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDialog
@@ -45,6 +47,9 @@ class MomentApplication @Inject constructor() : Application() {
         NaverIdLoginSDK.initialize(this, BuildConfig.NAVER_CLIENT_ID, BuildConfig.NAVER_CLIENT_KEY, getString(R.string.app_name))
 
         preferenceManager.init(this)
+        if (preferenceManager.getUserId().isEmpty()) {
+            preferenceManager.setUserId(getSSAID())
+        }
 
         // Firebase Push Token 획득
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
@@ -109,5 +114,10 @@ class MomentApplication @Inject constructor() : Application() {
             binding.lottieAnim.clearAnimation()
             dialog?.dismiss()
         }
+    }
+
+    @SuppressLint("HardwareIds")
+    private fun getSSAID(): String {
+        return Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
     }
 }

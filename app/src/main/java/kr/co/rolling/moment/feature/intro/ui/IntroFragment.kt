@@ -1,19 +1,22 @@
 package kr.co.rolling.moment.feature.intro.ui
 
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.data.Constants
+import kr.co.rolling.moment.library.network.data.request.RequestSplash
+import kr.co.rolling.moment.library.network.data.response.TokenInfo
+import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
+import kr.co.rolling.moment.library.permission.PermissionManager
 import kr.co.rolling.moment.library.util.navigateSafe
-import timber.log.Timber
+import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.ui.util.showPermissionDialog
+import javax.inject.Inject
 
 /**
  * Intro 화면
@@ -22,18 +25,55 @@ import timber.log.Timber
 class IntroFragment : BaseFragment(R.layout.fragment_intro) {
     private val viewModel: SignViewModel by activityViewModels()
 
-    override fun initViewBinding(view: View) {
-        Timber.d("MINSEOK ${KakaoSdk.keyHash}")
-        //TODO Intro API 연동 필요
-        CoroutineScope(Dispatchers.IO).launch {
-            delay(500L)
-            CoroutineScope(Dispatchers.Main).launch {
-                findNavController().navigateSafe(IntroFragmentDirections.actionIntroFragmentToSignInFragment())
+    @Inject
+    lateinit var permissionManager: PermissionManager
+
+    /** 알림 권한 Launcher */
+    private val permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+            val isGrant = permissionManager.isGrant(result)
+
+            if (isGrant) {
+                requestSplash()
+            } else {
+                showPermissionDialog(Constants.PermissionType.ALARM_PERMISSION) {
+                    requestSplash()
+                }
             }
+        }
+
+    override fun initViewBinding(view: View) {
+        val rejectedPermissionList = permissionManager.getPostNotificationValuesPermissionDeniedList()
+
+        if (rejectedPermissionList.isNullOrEmpty() || preferenceManager.isAlreadyShowAlarmPermission()) {
+            requestSplash()
+        } else {
+            preferenceManager.setAlarmPermission()
+            permissionLauncher.launch(rejectedPermissionList.toTypedArray())
         }
     }
 
     override fun observeViewModel() {
-//        viewLifecycleOwner.observeEvent()
+        viewLifecycleOwner.observeEvent(viewModel.tokenInfo, ::handleSplash)
+    }
+
+    private fun handleSplash(event: SingleEvent<TokenInfo>) {
+        event.getContentIfNotHandled()?.let { data ->
+            // 자동 로그인 사용자
+            if (data.accessToken.isNotEmpty()) {
+                preferenceManager.setTokenInfo(data)
+                findNavController().navigateSafe(IntroFragmentDirections.actionIntroFragmentToMainFragment())
+                return
+            }
+
+            findNavController().navigateSafe(IntroFragmentDirections.actionIntroFragmentToSignFragment())
+        }
+    }
+
+    private fun requestSplash() {
+        val data = RequestSplash(
+            pushToken = preferenceManager.getPushToken()
+        )
+        viewModel.requestSplash(data)
     }
 }

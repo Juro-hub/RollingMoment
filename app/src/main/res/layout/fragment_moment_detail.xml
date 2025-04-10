@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
+        android:id="@+id/layoutScroll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutToolBar">
 
@@ -77,11 +78,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                tools:text="모두 딜런에게 마지막 한마디 남겨주세요 ㅎㅎ 소개글이 길어지면 두줄까지 노출하고, 나머지 영역은 더보기눌러... 하지만 나는 더 길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???"
                 android:textColor="@color/C7F7F7F"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tvDeadline"
-                app:layout_constraintTop_toBottomOf="@id/tvMomentTitle" />
+                app:layout_constraintTop_toBottomOf="@id/tvMomentTitle"
+                tools:text="모두 딜런에게 마지막 한마디 남겨주세요 ㅎㅎ 소개글이 길어지면 두줄까지 노출하고, 나머지 영역은 더보기눌러... 하지만 나는 더 길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???" />
 
             <TextView
                 android:id="@+id/tvDate"
@@ -131,9 +132,31 @@
                     android:text="@string/moment_detail_invite"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@id/ivEmpty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/empty_img_03"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvEmpty" />
+
+                <TextView
+                    style="@style/B116Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="100dp"
+                    android:text="@string/moment_detail_empty_title"
+                    android:textColor="@color/C7F7F7F"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivEmpty" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- 흔적 미존재 -->
+            <!-- 흔적 존재 -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutTrace"
                 android:layout_width="match_parent"

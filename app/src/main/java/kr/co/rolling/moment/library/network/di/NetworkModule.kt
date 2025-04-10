@@ -15,6 +15,7 @@ import kr.co.rolling.moment.library.network.ApiService
 import kr.co.rolling.moment.library.network.NetworkConstants
 import kr.co.rolling.moment.library.network.retrofit.HeaderInterceptor
 import kr.co.rolling.moment.library.network.retrofit.NetworkConnectionInterceptor
+import kr.co.rolling.moment.library.util.PreferenceManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -51,8 +52,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideHeaderInterceptor(
+        preferenceManager: PreferenceManager
     ): HeaderInterceptor {
-        return HeaderInterceptor()
+        return HeaderInterceptor(preferenceManager)
     }
 
     @Provides

@@ -1,27 +1,51 @@
 package kr.co.rolling.moment.feature.moment
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.util.Base64
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMomentCreateBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.data.MomentResultType
+import kr.co.rolling.moment.library.network.NetworkConstants
+import kr.co.rolling.moment.library.network.data.request.RequestMomentCreate
+import kr.co.rolling.moment.library.network.data.response.MomentCreateCategoryInfo
+import kr.co.rolling.moment.library.network.data.response.MomentCreateResultInfo
+import kr.co.rolling.moment.library.network.data.response.MomentImageInfo
+import kr.co.rolling.moment.library.network.util.SingleEvent
+import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.util.getParcelableCompat
 import kr.co.rolling.moment.library.util.navigateSafe
+import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.component.CommonDialogData
 import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.show
 import kr.co.rolling.moment.ui.util.showDialog
+import timber.log.Timber
+import java.io.ByteArrayOutputStream
 
 /**
  * 모먼트 만들기
  */
 @AndroidEntryPoint
 class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
+    private val viewModel by activityViewModels<MomentViewModel>()
+    private val args by navArgs<MomentCreateFragmentArgs>()
+    private val isEdit by lazy {
+        args.momentCode.isNotEmpty()
+    }
+
     private lateinit var binding: FragmentMomentCreateBinding
     override fun handleBackPressed() {
         cancelCreateDialog {
@@ -37,38 +61,112 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
     }
 
     override fun observeViewModel() {
+        viewLifecycleOwner.observeEvent(viewModel.momentCode, ::handleMomentCreate)
+        viewModel.requestMomentCreateInfo()
     }
 
+    private fun handleMomentCreate(event: SingleEvent<MomentCreateResultInfo>) {
+        event.getContentIfNotHandled()?.let { data ->
+            Timber.d("handleMomentCreate: data = ${data}")
+            findNavController().navigateSafe(MomentCreateFragmentDirections.actionMomentCreateFragmentToMomentResultFragment(momentCode = data.momentCode, enterType = MomentResultType.CREATE))
+        }
+    }
+
+//    private fun handleMomentEditInfo(event: Single<>) {
+//        val item = args.momentInfo ?: return
+//        Glide.with(requireContext())
+//            .load(item.coverImgUrl)
+//            .fitCenter()
+//            .into(binding.ivCover)
+//
+//        binding.etTitle.setText(item.title)
+//        binding.etMemo.setText(item.comment)
+//        binding.etCategory.setText(item.title)
+//        category = MomentCreateCategoryInfo(item.category.code, getString(item.category.textId))
+//
+//        binding
+//    }
+
     private fun initToolbar() {
-        binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.moment_create_toolbar)
+        binding.layoutToolBar.tvToolbarTitle.text = if (isEdit) {
+            getString(R.string.moment_edit_toolbar)
+        } else {
+            getString(R.string.moment_create_toolbar)
+        }
         binding.layoutToolBar.ivBack.setOnSingleClickListener { handleBackPressed() }
     }
 
     private fun initUI() {
+        var category: MomentCreateCategoryInfo? = null
+        var coverImage: MomentImageInfo? = null
+        var coverImageUri: Uri? = null
+
+        binding.etTitle.setTextChangeListener {
+            isValidButton()
+        }
+
+        binding.rgDeadline.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
+            override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
+                isValidButton()
+            }
+        })
+
         setFragmentResultListener(MomentCoverBottomSheetFragment.BUNDLE_KEY_URI) { _, bundle ->
-            val uri = bundle.getParcelableCompat(MomentCoverBottomSheetFragment.BUNDLE_KEY_URI_DATA, Uri::class.java) ?: return@setFragmentResultListener
+            coverImageUri = bundle.getParcelableCompat(MomentCoverBottomSheetFragment.BUNDLE_KEY_URI_DATA, Uri::class.java) ?: return@setFragmentResultListener
             Glide.with(requireContext())
-                .load(uri)
+                .load(coverImageUri)
                 .fitCenter()
                 .into(binding.ivCover)
+            coverImage = null
+
+            binding.ivCover.show()
+            binding.layoutSelectImage.hide()
+        }
+
+        setFragmentResultListener(MomentCoverBottomSheetFragment.BUNDLE_KEY_IMAGE) { _, bundle ->
+            val image = bundle.getParcelableCompat(MomentCoverBottomSheetFragment.BUNDLE_KEY_IMAGE_DATA, MomentImageInfo::class.java) ?: return@setFragmentResultListener
+            Glide.with(requireContext())
+                .load(image.url)
+                .fitCenter()
+                .into(binding.ivCover)
+
+            coverImage = image
 
             binding.ivCover.show()
             binding.layoutSelectImage.hide()
         }
 
         binding.layoutSelectImage.setOnSingleClickListener {
-            findNavController().navigateSafe(MomentCreateFragmentDirections.actionMomentCreateFragmentToMomentCoverBottomSheet())
+            val list = viewModel.getCoverImageInfo()?.toTypedArray() ?: return@setOnSingleClickListener
+            findNavController().navigateSafe(MomentCreateFragmentDirections.actionMomentCreateFragmentToMomentCoverBottomSheet(list))
         }
         binding.ivCover.setOnSingleClickListener {
-            findNavController().navigateSafe(MomentCreateFragmentDirections.actionMomentCreateFragmentToMomentCoverBottomSheet())
+            val list = viewModel.getCoverImageInfo()?.toTypedArray() ?: return@setOnSingleClickListener
+            findNavController().navigateSafe(MomentCreateFragmentDirections.actionMomentCreateFragmentToMomentCoverBottomSheet(list))
         }
 
         setFragmentResultListener(MomentCategoryBottomSheetFragment.BUNDLE_KEY_TITLE) { _, bundle ->
-            val title = bundle.getString(MomentCategoryBottomSheetFragment.BUNDLE_KEY_TITLE_DATA, null) ?: return@setFragmentResultListener
-            binding.etCategory.setText(title)
+            category = bundle.getParcelableCompat(MomentCategoryBottomSheetFragment.BUNDLE_KEY_TITLE_DATA, MomentCreateCategoryInfo::class.java) ?: return@setFragmentResultListener
+            binding.etCategory.setText(category.title)
         }
+
         binding.etCategory.setClickListener {
-            findNavController().navigateSafe(MomentCreateFragmentDirections.actionMomentCreateFragmentToMomentCategoryBottomSheet(binding.etCategory.getData()))
+            val list = viewModel.getCategoryInfo()?.toTypedArray() ?: return@setClickListener
+            findNavController().navigateSafe(MomentCreateFragmentDirections.actionMomentCreateFragmentToMomentCategoryBottomSheet(selectedItem = binding.etCategory.getData(), categoryList = list))
+        }
+
+        binding.btnCreate.setOnSingleClickListener {
+            val expireDate = binding.root.findViewById<RadioButton>(binding.rgDeadline.checkedRadioButtonId).text.toString()
+            val data = RequestMomentCreate(
+                title = binding.etTitle.getData(),
+                expireType = NetworkConstants.MomentExpireType.getExpireDate(requireContext(), expireDate),
+                category = category?.code ?: "",
+                comment = binding.etMemo.text.toString(),
+                isPublic = !binding.cbPrivate.isChecked,
+                coverImgId = coverImage?.code ?: "",
+                coverImgFileKey = getCoverImage(coverImageUri)
+            )
+            viewModel.requestMomentCreate(data)
         }
     }
 
@@ -81,5 +179,24 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
                 negativeText = getString(R.string.no)
             ), positiveCallback = { listener?.invoke() }
         )
+    }
+
+    private fun getCoverImage(coverImageUri: Uri?): String {
+        if (coverImageUri == null) return ""
+
+        // Drawable → Bitmap 변환
+        val bitmap = (binding.ivCover.drawable as? BitmapDrawable)?.bitmap ?: return ""
+
+        // Bitmap → ByteArray
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val byteArray = stream.toByteArray()
+
+        // ByteArray → Base64
+        return Base64.encodeToString(byteArray, Base64.NO_WRAP)
+    }
+
+    private fun isValidButton() {
+        binding.btnCreate.isEnabled = binding.etTitle.getData().isNotEmpty() && binding.root.findViewById<RadioButton>(binding.rgDeadline.checkedRadioButtonId) != null
     }
 }

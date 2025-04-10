@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import kr.co.rolling.moment.library.network.data.response.TokenInfo
 
 /**
  * Encrypted Preference Manager
@@ -14,6 +15,11 @@ object PreferenceManager {
     private var preference: SharedPreferences? = null
 
     private const val KEY_PUSH_TOKEN = "RollinMoment_KEY_PUSH_TOKEN"
+    private const val KEY_ACCESS_TOKEN = "RollinMoment_KEY_ACCESS_TOKEN"
+    private const val KEY_REFRESH_TOKEN = "RollinMoment_KEY_REFRESH_TOKEN"
+    private const val KEY_USER_ID = "RollinMoment_KEY_USER_ID"
+    private const val KEY_ALARM_PERMISSION = "RollinMoment_KEY_ALARM_PERMISSION"
+
 
     fun init(context: Context) {
         preference = initEncPreference(context)
@@ -25,6 +31,38 @@ object PreferenceManager {
 
     fun getPushToken(): String {
         return read(KEY_PUSH_TOKEN, "")
+    }
+
+    fun setAccessToken(token: String) {
+        write(KEY_ACCESS_TOKEN, token)
+    }
+
+    fun getAccessToken(): String {
+        return read(KEY_ACCESS_TOKEN, "")
+    }
+
+    fun setRefreshToken(token: String) {
+        write(KEY_REFRESH_TOKEN, token)
+    }
+
+    fun getRefreshToken(): String {
+        return read(KEY_REFRESH_TOKEN, "")
+    }
+
+    fun setUserId(userId: String) {
+        write(KEY_USER_ID, userId)
+    }
+
+    fun getUserId(): String {
+        return read(KEY_USER_ID, "")
+    }
+
+    fun setAlarmPermission() {
+        write(KEY_ALARM_PERMISSION, true)
+    }
+
+    fun isAlreadyShowAlarmPermission(): Boolean {
+        return read(KEY_ALARM_PERMISSION, false)
     }
 
     private fun initEncPreference(context: Context): SharedPreferences {
@@ -39,6 +77,11 @@ object PreferenceManager {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
+    }
+
+    fun setTokenInfo(tokenInfo: TokenInfo) {
+        setAccessToken(tokenInfo.accessToken)
+        setRefreshToken(tokenInfo.refreshToken)
     }
 
 

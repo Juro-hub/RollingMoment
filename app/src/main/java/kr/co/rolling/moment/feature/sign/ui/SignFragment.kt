@@ -3,6 +3,7 @@ package kr.co.rolling.moment.feature.sign.ui
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -14,7 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentSignBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.network.NetworkConstants
+import kr.co.rolling.moment.library.network.data.request.RequestSnsLogin
+import kr.co.rolling.moment.library.network.data.response.SnsLoginInfo
+import kr.co.rolling.moment.library.network.data.response.TokenInfo
+import kr.co.rolling.moment.library.network.util.SingleEvent
+import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
 import kr.co.rolling.moment.library.util.navigateSafe
+import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import timber.log.Timber
 
@@ -24,13 +32,22 @@ import timber.log.Timber
 @AndroidEntryPoint
 class SignFragment : BaseFragment(R.layout.fragment_sign) {
     private lateinit var binding: FragmentSignBinding
+    private val viewModel: SignViewModel by activityViewModels()
 
     /**
      * SNS(Naver) Login Callback
      */
     private val naverLoginCallback = object : OAuthLoginCallback {
         override fun onSuccess() {
-            Timber.d("onSuccess:${NaverIdLoginSDK.getAccessToken()}")
+            Timber.d("Naver Login Success Token : ${NaverIdLoginSDK.getAccessToken()}")
+
+            viewModel.requestSnsLogin(
+                RequestSnsLogin(
+                    accessToken = NaverIdLoginSDK.getAccessToken() ?: "",
+                    refreshToken = NaverIdLoginSDK.getRefreshToken() ?: "",
+                    type = NetworkConstants.SnsLoginType.NAVER.type
+                )
+            )
         }
 
         override fun onFailure(httpStatus: Int, message: String) {
@@ -54,7 +71,14 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
             }
 
         } else {
-            Timber.d("token : ${token?.accessToken}")
+            Timber.d("Kakao Login Success Token : ${token?.accessToken}")
+            viewModel.requestSnsLogin(
+                RequestSnsLogin(
+                    accessToken = token?.accessToken ?: "",
+                    refreshToken = token?.refreshToken ?: "",
+                    type = NetworkConstants.SnsLoginType.KAKAO.type
+                )
+            )
         }
     }
 
@@ -64,17 +88,14 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
 
         binding.layoutEmail.root.setOnSingleClickListener {
             findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToSignInFragment())
-//            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToMomentCreateFragment())
         }
 
         binding.layoutKakao.root.setOnSingleClickListener {
             kakaoLogin()
-//            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToTraceCreateFragment())
         }
 
         binding.layoutNaver.root.setOnSingleClickListener {
-//            NaverIdLoginSDK.authenticate(requireContext(), naverLoginCallback)
-            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToMomentEnrollFragment())
+            NaverIdLoginSDK.authenticate(requireContext(), naverLoginCallback)
         }
 
         binding.tvSIgnUp.setOnSingleClickListener {
@@ -83,7 +104,15 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
     }
 
     override fun observeViewModel() {
-        super.observeViewModel()
+        viewLifecycleOwner.observeEvent(viewModel.snsLoginInfo, ::handleSnsLoginInfo)
+    }
+
+    private fun handleSnsLoginInfo(event: SingleEvent<SnsLoginInfo>) {
+        event.getContentIfNotHandled()?.let {
+            Timber.d("handleSnsLoginInfo: data = ${it}")
+            preferenceManager.setTokenInfo(TokenInfo(accessToken = it.accessToken, refreshToken = it.refreshToken))
+            findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToMainFragment())
+        }
     }
 
     private fun initSnsLogin() {
@@ -113,12 +142,10 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
     }
 
     private fun kakaoLogin() {
-        UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoLoginCallback)
-        return
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
             UserApiClient.instance.loginWithKakaoTalk(requireContext(), callback = kakaoLoginCallback)
         } else {
+            UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoLoginCallback)
         }
-
     }
 }

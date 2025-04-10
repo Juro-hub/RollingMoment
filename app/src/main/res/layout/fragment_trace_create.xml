@@ -82,19 +82,34 @@
                 android:id="@+id/groupAi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tvAiTitle, btnAi, viewDivider" />
+                app:constraint_referenced_ids="tvAiTitle, btnAi, viewDivider, tvAiDescription" />
 
             <TextView
                 android:id="@+id/tvAiTitle"
-                style="@style/L612Medium"
+                style="@style/L512Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:paddingVertical="16dp"
+                android:paddingTop="10dp"
                 android:text="@string/trace_create_ai_title"
                 android:textColor="@color/C4C4C4C"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutTrace" />
+
+            <TextView
+                android:id="@+id/tvAiDescription"
+                style="@style/L911Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:drawablePadding="2dp"
+                android:paddingBottom="10dp"
+                android:text="@string/trace_create_ai_description"
+                android:textColor="@color/C999999"
+                app:drawableStartCompat="@drawable/ic_info_black"
+                app:layout_constraintStart_toStartOf="@id/tvAiTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvAiTitle" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnAi"
@@ -105,7 +120,7 @@
                 android:background="@drawable/shape_6_874fff"
                 android:text="@string/trace_create_ai_button"
                 android:textColor="@color/CFFFFFF"
-                app:layout_constraintBottom_toBottomOf="@id/tvAiTitle"
+                app:layout_constraintBottom_toBottomOf="@id/tvAiDescription"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvAiTitle" />
 
@@ -114,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/CE0E0E2"
-                app:layout_constraintTop_toBottomOf="@id/tvAiTitle" />
+                app:layout_constraintTop_toBottomOf="@id/tvAiDescription" />
 
             <TextView
                 android:id="@+id/tvTextAlign"
@@ -184,6 +199,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         style="@style/L116Bold"
+        android:id="@+id/btnConfirm"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"

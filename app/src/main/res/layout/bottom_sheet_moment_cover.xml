@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="600dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/shape_top_20_ffffff"
     android:paddingHorizontal="20dp">
 
@@ -104,37 +105,13 @@
                     app:layout_constraintTop_toBottomOf="@id/ivAlbum" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <include
-                android:id="@+id/layoutType1"
-                layout="@layout/layout_moment_cover_type"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAdapter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
+                tools:listitem="@layout/item_moment_cover_type"
                 app:layout_constraintTop_toBottomOf="@id/layoutCamera" />
-
-            <include
-                android:id="@+id/layoutType2"
-                layout="@layout/layout_moment_cover_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                app:layout_constraintTop_toBottomOf="@id/layoutType1" />
-
-            <include
-                android:id="@+id/layoutType3"
-                layout="@layout/layout_moment_cover_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                app:layout_constraintTop_toBottomOf="@id/layoutType2" />
-
-            <include
-                android:id="@+id/layoutType4"
-                layout="@layout/layout_moment_cover_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                app:layout_constraintTop_toBottomOf="@id/layoutType3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
