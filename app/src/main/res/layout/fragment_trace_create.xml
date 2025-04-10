@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/layoutToolBar"
+        layout="@layout/layout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutToolBar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:background="@color/C333333"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvInfo"
+                style="@style/L911Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/trace_create_info"
+                android:textColor="@color/CFFFFFF"
+                app:drawableStartCompat="@drawable/ic_info"
+                app:layout_constraintBottom_toBottomOf="@id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/view" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutTrace"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@color/CF6F6F6"
+                app:layout_constraintTop_toBottomOf="@id/view">
+
+                <EditText
+                    android:id="@+id/etTrace"
+                    style="@style/L216Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="@string/trace_create_edit_hint"
+                    android:maxLength="500"
+                    android:paddingHorizontal="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="38dp"
+                    android:textColor="@color/C171719"
+                    android:textColorHint="@color/C999999" />
+
+                <TextView
+                    android:id="@+id/tvLength"
+                    style="@style/L612Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/edit_text_length_check"
+                    android:textColor="@color/C7F7F7F"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupAi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tvAiTitle, btnAi, viewDivider, tvAiDescription" />
+
+            <TextView
+                android:id="@+id/tvAiTitle"
+                style="@style/L512Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:paddingTop="10dp"
+                android:text="@string/trace_create_ai_title"
+                android:textColor="@color/C4C4C4C"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutTrace" />
+
+            <TextView
+                android:id="@+id/tvAiDescription"
+                style="@style/L911Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:drawablePadding="2dp"
+                android:paddingBottom="10dp"
+                android:text="@string/trace_create_ai_description"
+                android:textColor="@color/C999999"
+                app:drawableStartCompat="@drawable/ic_info_black"
+                app:layout_constraintStart_toStartOf="@id/tvAiTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvAiTitle" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAi"
+                style="@style/L1011Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_6_874fff"
+                android:text="@string/trace_create_ai_button"
+                android:textColor="@color/CFFFFFF"
+                app:layout_constraintBottom_toBottomOf="@id/tvAiDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvAiTitle" />
+
+            <View
+                android:id="@+id/viewDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/CE0E0E2"
+                app:layout_constraintTop_toBottomOf="@id/tvAiDescription" />
+
+            <TextView
+                android:id="@+id/tvTextAlign"
+                style="@style/L314Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/trace_create_alignment_title"
+                android:textColor="@color/C4C4C4C"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewDivider" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAlign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@id/tvTextAlign"
+                app:layout_constraintTop_toBottomOf="@id/tvTextAlign"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_text_align" />
+
+            <kr.co.rolling.moment.ui.component.CommonEditText
+                android:id="@+id/etFont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:paddingHorizontal="20dp"
+                app:helperText="@string/trace_create_font_helper"
+                app:hintText="@string/trace_create_font_hint"
+                app:iconDrawable="@drawable/ic_chevron_right"
+                app:isClickable="true"
+                app:layout_constraintTop_toBottomOf="@id/rvAlign" />
+
+            <TextView
+                android:id="@+id/tvBackgroundColor"
+                style="@style/L314Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/trace_create_background"
+                android:textColor="@color/C4C4C4C"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etFont" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBackgroundColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:paddingBottom="120dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBackgroundColor"
+                app:spanCount="5"
+                tools:listitem="@layout/item_trace_background" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/L116Bold"
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/selector_common_button"
+        android:enabled="false"
+        android:text="@string/confirm"
+        android:textColor="@color/selector_common_button_text"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

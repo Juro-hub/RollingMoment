@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_16_ffffff_e0e0e2"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="17dp">
+
+    <TextView
+        android:id="@+id/tvDeadline"
+        style="@style/L910Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_4_eae4f8"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/C874FFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="D-7" />
+
+    <TextView
+        android:id="@+id/tvCategory"
+        style="@style/L910Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/shape_4_e0e0e2_ffffff"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/C4C4C4C"
+        app:layout_constraintStart_toEndOf="@id/tvDeadline"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="생일" />
+
+    <ImageView
+        android:id="@+id/ivMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_horizontal_dots"
+        app:layout_constraintBottom_toBottomOf="@id/tvDeadline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvDeadline" />
+
+    <TextView
+        android:id="@+id/tvMomentTitle"
+        style="@style/L718Bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/C171719"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDeadline"
+        tools:text="내 생일 자축 모먼트" />
+
+    <TextView
+        android:id="@+id/tvContent"
+        style="@style/L612Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/C7F7F7F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMomentTitle"
+        tools:text="아무나 오셔도 돼요! 예쁜말 써주시는 분 환영" />
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toBottomOf="@id/tvContent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

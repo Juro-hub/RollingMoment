@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/moment_graph"
+    app:startDestination="@id/SignFragment">
+    <fragment
+        android:id="@+id/SignFragment"
+        android:name="kr.co.rolling.moment.feature.sign.ui.SignFragment"
+        tools:layout="@layout/fragment_sign">
+        <action
+            android:id="@+id/action_SignFragment_to_SignInFragment"
+            app:destination="@id/SignInFragment" />
+        <action
+            android:id="@+id/action_SignFragment_to_SignUpFragment"
+            app:destination="@id/SignUpFragment" />
+        <action
+            android:id="@+id/action_SignFragment_to_MainFragment"
+            app:destination="@id/MainFragment"
+            app:popUpTo="@id/SignFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/IntroFragment"
+        android:name="kr.co.rolling.moment.feature.intro.ui.IntroFragment"
+        tools:layout="@layout/fragment_intro">
+        <action
+            android:id="@+id/action_IntroFragment_to_SignFragment"
+            app:destination="@id/SignFragment"
+            app:popUpTo="@id/IntroFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_IntroFragment_to_MainFragment"
+            app:destination="@id/MainFragment"
+            app:popUpTo="@id/IntroFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SignInFragment"
+        android:name="kr.co.rolling.moment.feature.sign.ui.SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_SignInFragment_to_MainFragment"
+            app:destination="@id/MainFragment" />
+        <action
+            android:id="@+id/action_SignInFragment_to_SignUpFragment"
+            app:destination="@id/SignUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SignUpFragment"
+        android:name="kr.co.rolling.moment.feature.sign.ui.SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_SignUpFragment_to_SignInFragment"
+            app:destination="@id/SignInFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MomentCreateFragment"
+        android:name="kr.co.rolling.moment.feature.moment.MomentCreateFragment"
+        tools:layout="@layout/fragment_moment_create">
+        <argument
+            android:name="momentCode"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_MomentCreateFragment_to_MomentCoverBottomSheet"
+            app:destination="@id/MomentCoverBottomSheet" />
+        <action
+            android:id="@+id/action_MomentCreateFragment_to_MomentCategoryBottomSheet"
+            app:destination="@id/MomentCategoryBottomSheet" />
+        <action
+            android:id="@+id/action_MomentCreateFragment_to_MomentResultFragment"
+            app:destination="@id/MomentResultFragment"
+            app:popUpTo="@id/MomentCreateFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/MomentCoverBottomSheet"
+        android:name="kr.co.rolling.moment.feature.moment.MomentCoverBottomSheetFragment"
+        tools:layout="@layout/bottom_sheet_moment_cover">
+        <argument
+            android:name="coverList"
+            app:argType="kr.co.rolling.moment.library.network.data.response.MomentCreateCoverImageInfo[]" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/MomentCategoryBottomSheet"
+        android:name="kr.co.rolling.moment.feature.moment.MomentCategoryBottomSheetFragment"
+        tools:layout="@layout/bottom_sheet_moment_category">
+        <argument
+            android:name="selectedItem"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="categoryList"
+            app:argType="kr.co.rolling.moment.library.network.data.response.MomentCreateCategoryInfo[]" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/TraceCreateFragment"
+        android:name="kr.co.rolling.moment.feature.trace.CreateTraceFragment"
+        tools:layout="@layout/fragment_trace_create">
+        <argument
+            android:name="momentCode"
+            app:argType="string"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_TraceCreateFragment_to_FontSelectBottomSheetFragment"
+            app:destination="@id/FontSelectBottomSheetFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/FontSelectBottomSheetFragment"
+        android:name="kr.co.rolling.moment.feature.trace.FontBottomSheetFragment"
+        tools:layout="@layout/bottom_sheet_select_font">
+        <argument
+            android:name="fontType"
+            app:argType="kr.co.rolling.moment.library.data.TraceFontType"
+            app:nullable="true" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/MomentDetailFragment"
+        android:name="kr.co.rolling.moment.feature.moment.MomentDetailFragment"
+        tools:layout="@layout/fragment_moment_detail">
+        <action
+            android:id="@+id/action_MomentDetailFragment_to_TraceCreateFragment"
+            app:destination="@id/TraceCreateFragment" />
+        <argument
+            android:name="momentCode"
+            app:argType="string"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_MomentDetailFragment_to_MomentResultFragment"
+            app:destination="@id/MomentResultFragment" />
+        <action
+            android:id="@+id/action_MomentDetailFragment_to_MomentCreateFragment"
+            app:destination="@id/MomentCreateFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MomentEnrollFragment"
+        android:name="kr.co.rolling.moment.feature.moment.MomentEnrollFragment"
+        tools:layout="@layout/fragment_moment_enroll">
+        <argument
+            android:name="momentCode"
+            app:argType="string"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_MomentEnrollFragment_to_MomentDetailFragment"
+            app:destination="@id/MomentDetailFragment"
+            app:popUpTo="@id/MomentEnrollFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MainFragment"
+        android:name="kr.co.rolling.moment.feature.main.MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_MainFragment_to_NotificationFragment"
+            app:destination="@id/NotificationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/NotificationFragment"
+        android:name="kr.co.rolling.moment.feature.main.NotificationFragment"
+        tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="kr.co.rolling.moment.feature.main.HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_HomeFragment_to_MomentEditBottomSheetFragment"
+            app:destination="@id/MomentEditBottomSheetFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_MomentCreateFragment"
+            app:destination="@id/MomentCreateFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_MomentDetailFragment"
+            app:destination="@id/MomentDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SearchFragment"
+        android:name="kr.co.rolling.moment.feature.main.SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_SearchFragment_to_MomentEditBottomSheetFragment"
+            app:destination="@id/MomentEditBottomSheetFragment" />
+        <action
+            android:id="@+id/action_SearchFragment_to_MomentDetailFragment"
+            app:destination="@id/MomentDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MyInfoFragment"
+        android:name="kr.co.rolling.moment.feature.main.MyInfoFragment"
+        tools:layout="@layout/fragment_my_info">
+        <action
+            android:id="@+id/action_MyInfoFragment_to_IntroFragment"
+            app:destination="@id/IntroFragment"
+            app:popUpTo="@id/MyInfoFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MomentResultFragment"
+        android:name="kr.co.rolling.moment.feature.moment.MomentResultFragment"
+        tools:layout="@layout/fragment_moment_result">
+        <argument
+            android:name="momentCode"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="enterType"
+            app:argType="kr.co.rolling.moment.library.data.MomentResultType" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/MomentEditBottomSheetFragment"
+        android:name="kr.co.rolling.moment.feature.main.MomentEditBottomSheetFragment"
+        tools:layout="@layout/bottom_sheet_moment_edit">
+        <argument
+            android:name="isOwner"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="isDetail"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="momentCode"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="isExpired"
+            app:argType="boolean" />
+    </dialog>
+</navigation>

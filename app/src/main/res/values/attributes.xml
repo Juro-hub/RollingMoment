@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommonEditTextAttributes">
+        <attr name="inputMaxLength" format="integer" />
+        <attr name="inputImeOptions" format="enum">
+            <enum name="actionDone" value="0" />
+            <enum name="actionNext" value="1" />
+        </attr>
+        <attr name="helperText" format="string" />
+        <attr name="hintText" format="string" />
+        <attr name="errorMessage" format="string" />
+        <attr name="guideText" format="string"/>
+        <attr name="isVisibleMaxLength" format="boolean"/>
+        <attr name="isClickable" format="boolean"/>
+        <attr name="iconDrawable" format="reference" />
+
+        <attr name="inputTypes" format="enum">
+            <enum name="text" value="0" />
+            <enum name="textMultiLine" value="1" />
+            <enum name="numberSigned" value="2" />
+            <enum name="password" value="3" />
+            <enum name="numberEnglishOnly" value="4" />
+        </attr>
+    </declare-styleable>
+</resources>

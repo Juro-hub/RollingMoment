@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="30dp"
+    android:background="@drawable/shape_16_ffffff"
+    android:paddingHorizontal="20dp"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/T418Bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textAlignment="center"
+        android:textColor="@color/C171719"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="로그인에 실패하였습니다." />
+
+    <TextView
+        android:id="@+id/tvContent"
+        style="@style/B116Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/C4C4C4C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:text="아이디 또는 비밀번호를 잘못 입력했습니다.입력하신 내용을 다시 확인해주세요." />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnPositive"
+        style="@style/L414Medium"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_6_000000"
+        android:textColor="@color/CFFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/tvContent"
+        tools:text="확인" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnNegative"
+        style="@style/L414Medium"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_6_f0f0f0"
+        android:textColor="@color/C171719"
+        app:layout_constraintTop_toBottomOf="@id/btnPositive"
+        tools:text="아니요" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

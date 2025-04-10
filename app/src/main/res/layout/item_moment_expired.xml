@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="125dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvEndDate"
+        style="@style/L910Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/shape_4_e7f5e7"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/C00BF40"
+        app:layout_constraintStart_toEndOf="@id/ivImage"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/process_end" />
+
+    <TextView
+        android:id="@+id/tvCategory"
+        style="@style/L910Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/shape_4_e0e0e2_ffffff"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/C4C4C4C"
+        app:layout_constraintStart_toEndOf="@id/tvEndDate"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="생일" />
+
+    <ImageView
+        android:id="@+id/ivMore"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_horizontal_dots"
+        app:layout_constraintBottom_toBottomOf="@id/tvEndDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvEndDate" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/L116Bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/C171719"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvEndDate"
+        app:layout_constraintTop_toBottomOf="@id/tvEndDate"
+        tools:text="딜런의 퇴사를 축하합니다!!🎉 " />
+
+    <TextView
+        android:id="@+id/tvContent"
+        style="@style/L414Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/C4C4C4C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvEndDate"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:text="모두 딜런에게 마지막 한마디 남겨주세요 ㅎㅎ" />
+
+    <TextView
+        android:id="@+id/tvInfo"
+        style="@style/L612Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingBottom="3dp"
+        android:textColor="@color/C7F7F7F"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvContent"
+        tools:text="참여자 100・흔적 100・" />
+
+    <TextView
+        android:id="@+id/tvPeriod"
+        style="@style/L612Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="2dp"
+        android:paddingBottom="3dp"
+        android:textColor="@color/C7F7F7F"
+        app:drawableStartCompat="@drawable/ic_lock"
+        app:layout_constraintBottom_toBottomOf="@id/tvInfo"
+        app:layout_constraintStart_toEndOf="@id/tvInfo"
+        app:layout_constraintTop_toTopOf="@id/tvInfo"
+        tools:text="비공개" />
+</androidx.constraintlayout.widget.ConstraintLayout>
