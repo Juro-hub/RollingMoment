@@ -2,7 +2,6 @@ package kr.co.rolling.moment.library.util
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Spanned
@@ -16,6 +15,12 @@ import kr.co.rolling.moment.feature.base.BaseActivity
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.network.NetworkConstants
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
+import kr.co.rolling.moment.R
+import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
+import kr.co.rolling.moment.library.data.NavigationData
+import kr.co.rolling.moment.library.network.NetworkConstants.NETWORK_KEY_MOMENT
 
 /**
  * Bundle 의 직렬화를 수행
@@ -64,5 +69,23 @@ fun BaseActivity.landingOutLink(link: String) {
         this.startActivity(Intent(Intent.ACTION_VIEW, link.toUri()))
     } catch (e: ActivityNotFoundException) {
        e.message
+    }
+}
+
+fun BaseFragment.navigate(navigateInfo : NavigationData){
+    when (navigateInfo.navigateType) {
+        NetworkConstants.NavigationType.IN_APP -> {
+            when (navigateInfo.pageType) {
+                NetworkConstants.PageType.MOMENT -> {
+                    val momentCode = navigateInfo.customData[NETWORK_KEY_MOMENT]
+                    val navController = requireActivity().findNavController(R.id.nav_host_fragment)
+                    navController.navigate(R.id.MomentDetailFragment, bundleOf(NAVIGATION_KEY_MOMENT_CODE to momentCode))
+                }
+            }
+        }
+
+        NetworkConstants.NavigationType.OUT_LINK -> {
+            //TODO MoveUrl 추가 필요
+        }
     }
 }

@@ -1,23 +1,25 @@
 package kr.co.rolling.moment.library.network
 
-import com.google.android.gms.common.api.Api
 import com.skydoves.sandwich.ApiResponse
 import kr.co.rolling.moment.library.network.data.request.RequestLogin
+import kr.co.rolling.moment.library.network.data.request.RequestMomentCode
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCreate
+import kr.co.rolling.moment.library.network.data.request.RequestMomentEdit
 import kr.co.rolling.moment.library.network.data.request.RequestSignUp
 import kr.co.rolling.moment.library.network.data.request.RequestSnsLogin
-import kr.co.rolling.moment.library.network.data.request.RequestTrace
-import kr.co.rolling.moment.library.network.data.request.RequestMomentCode
 import kr.co.rolling.moment.library.network.data.request.RequestSplash
+import kr.co.rolling.moment.library.network.data.request.RequestTrace
 import kr.co.rolling.moment.library.network.data.request.RequestTraceCode
 import kr.co.rolling.moment.library.network.data.response.BaseResponseData
 import kr.co.rolling.moment.library.network.data.response.HomeResponse
 import kr.co.rolling.moment.library.network.data.response.MomentCreateResponse
 import kr.co.rolling.moment.library.network.data.response.MomentCreateResultResponse
-import kr.co.rolling.moment.library.network.data.response.MomentDetailResponse
-import kr.co.rolling.moment.library.network.data.response.MomentListResponse
 import kr.co.rolling.moment.library.network.data.response.MomentDeleteResponse
+import kr.co.rolling.moment.library.network.data.response.MomentDetailResponse
+import kr.co.rolling.moment.library.network.data.response.MomentEditInfoResponse
 import kr.co.rolling.moment.library.network.data.response.MomentEnrollResponse
+import kr.co.rolling.moment.library.network.data.response.MomentListResponse
+import kr.co.rolling.moment.library.network.data.response.MomentSimpleInfoResponse
 import kr.co.rolling.moment.library.network.data.response.MyPageResponse
 import kr.co.rolling.moment.library.network.data.response.PushResponse
 import kr.co.rolling.moment.library.network.data.response.SignUpResponse
@@ -26,7 +28,6 @@ import kr.co.rolling.moment.library.network.data.response.TokenResponse
 import kr.co.rolling.moment.library.network.data.response.TraceAiResponse
 import kr.co.rolling.moment.library.network.data.response.TraceCreateResponse
 import retrofit2.http.Body
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -80,57 +81,67 @@ interface ApiService {
 
     // 알림 변경
     @PATCH(NetworkConstants.API_PUSH_STATUS_CHANGE)
-    suspend fun requestPushStatusChange() : ApiResponse<BaseResponseData>
+    suspend fun requestPushStatusChange(): ApiResponse<BaseResponseData>
 
     // 알림함 정보 조회
     @GET(NetworkConstants.API_PUSH_INFO)
-    suspend fun requestPushInfo() : ApiResponse<PushResponse>
+    suspend fun requestPushInfo(): ApiResponse<PushResponse>
 
     // 흔적 AI 조회
     @GET(NetworkConstants.API_AI_RECOMMEND)
     suspend fun requestTraceAi(
         @Query("momentCode") momentCode: String
-    ) : ApiResponse<TraceAiResponse>
+    ): ApiResponse<TraceAiResponse>
 
     // 흔적 AI 조회
     @POST(NetworkConstants.API_TRACE_CREATE)
     suspend fun requestTraceCreate(
         @Body requestTrace: RequestTrace
-    ) : ApiResponse<TraceCreateResponse>
+    ): ApiResponse<TraceCreateResponse>
 
     @GET(NetworkConstants.API_MOMENT_DETAIL)
     suspend fun requestMomentDetail(
         @Query("momentCode") momentCode: String
-    ) : ApiResponse<MomentDetailResponse>
+    ): ApiResponse<MomentDetailResponse>
 
     @GET(NetworkConstants.API_MOMENT_LIST)
-    suspend fun requestMomentList() : ApiResponse<MomentListResponse>
+    suspend fun requestMomentList(): ApiResponse<MomentListResponse>
 
     @PATCH(NetworkConstants.API_MOMENT_DELETE)
     suspend fun requestMomentDelete(
         @Body code: RequestMomentCode
-    ) : ApiResponse<MomentDeleteResponse>
+    ): ApiResponse<MomentDeleteResponse>
 
     @GET(NetworkConstants.API_MOMENT_ENROLL)
     suspend fun requestMomentEnroll(
         @Query("momentCode") momentCode: String
-    ) : ApiResponse<MomentEnrollResponse>
+    ): ApiResponse<MomentEnrollResponse>
 
     @POST(NetworkConstants.API_TRACE_REACTION)
     suspend fun requestTraceReaction(
         @Body code: RequestTraceCode
-    ) : ApiResponse<MomentDeleteResponse>
+    ): ApiResponse<MomentDeleteResponse>
 
     @POST(NetworkConstants.API_LOGOUT)
     suspend fun requestLogOut(
     ): ApiResponse<BaseResponseData>
 
-    @POST(NetworkConstants.API_WITHDRAW)
+    @PATCH(NetworkConstants.API_WITHDRAW)
     suspend fun requestWithDraw(
     ): ApiResponse<BaseResponseData>
 
     @PATCH(NetworkConstants.API_MOMENT_EDIT)
     suspend fun requestMomentEdit(
-        @Body code: RequestMomentCreate
-    ) : ApiResponse<BaseResponseData>
+        @Body code: RequestMomentEdit
+    ): ApiResponse<BaseResponseData>
+
+    @GET(NetworkConstants.API_MOMENT_EDIT)
+    suspend fun requestMomentEditInfo(
+        @Query("momentCode") momentCode: String
+    ): ApiResponse<MomentEditInfoResponse>
+
+    @GET(NetworkConstants.API_MOMENT_SIMPLE)
+    suspend fun requestMomentSimple(
+        @Query("momentCode") momentCode: String
+    ): ApiResponse<MomentSimpleInfoResponse>
 }

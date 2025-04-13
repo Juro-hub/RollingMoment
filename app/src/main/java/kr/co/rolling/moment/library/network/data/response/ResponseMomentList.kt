@@ -63,7 +63,7 @@ data class MomentInfo(
 
     val deadline: String = "",
 
-    val category: NetworkConstants.MomentCategory = NetworkConstants.MomentCategory.WEDDING,
+    val category: NetworkConstants.MomentCategory? = null,
 
     val isPublic: Boolean = false,
 

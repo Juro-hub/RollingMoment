@@ -65,10 +65,26 @@
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/shape_12_ffffff"
                 android:scaleType="fitXY"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImageEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_img_edit"
+                app:layout_constraintBottom_toBottomOf="@id/ivCover"
+                app:layout_constraintEnd_toEndOf="@id/ivCover" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                android:id="@+id/groupImage"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="ivCover, ivImageEdit"/>
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier"

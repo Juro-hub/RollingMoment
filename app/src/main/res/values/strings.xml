@@ -15,6 +15,11 @@
     <string name="sign_in_kakao">카카오로 로그인</string>
     <string name="sign_in_naver">네이버로 로그인</string>
     <string name="sign_in_email">이메일로 로그인</string>
+    <string name="sign_in_bottom_description">가입함으로써 롤링모먼트의 </string>
+    <string name="sign_in_bottom_description_privacy"><u>개인정보 처리방침</u></string>
+    <string name="sign_in_bottom_description_privacy_with">과</string>
+    <string name="sign_in_bottom_description_service"><u>서비스 이용약관</u></string>
+    <string name="sign_in_bottom_description_service_with">에 동의합니다</string>
 
     <string name="edit_text_length_check">%d/%d</string>
 
@@ -69,6 +74,11 @@
     <string name="moment_create_cover_type2">마음 전하기</string>
     <string name="moment_create_cover_type3">작별의 순간</string>
     <string name="moment_create_category_title">카테고리 선택</string>
+    <string name="moment_create_cover_category_1">카메라 또는 앨범</string>
+    <string name="moment_create_cover_category_2">기념의 순간</string>
+    <string name="moment_create_cover_category_3">마음 전하기</string>
+    <string name="moment_create_cover_category_4">작별의 순간</string>
+    <string name="moment_create_cover_category_5">기본 커버 이미지</string>
 
     <!-- 권한 안내 팝업 -->
     <string name="permission_title_camera">카메라에 대한 접근 권한 필요</string>
@@ -134,7 +144,7 @@
     <string name="bottom_menu_my_info">마이</string>
     <string name="process_ing">진행</string>
     <string name="process_end">완료</string>
-    <string name="moment_user_trace_count">흔적 %d・</string>
+    <string name="moment_user_trace_count">흔적 %d</string>
     <string name="moment_public">공개된 모먼트</string>
     <string name="moment_edit">모먼트 수정하기</string>
     <string name="moment_save">모먼트 이미지로 저장하기</string>

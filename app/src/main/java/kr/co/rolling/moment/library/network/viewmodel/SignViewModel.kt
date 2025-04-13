@@ -3,6 +3,7 @@ package kr.co.rolling.moment.library.network.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.launch
 import kr.co.rolling.moment.feature.base.BaseViewModel
 import kr.co.rolling.moment.library.network.data.CustomError
@@ -38,6 +39,9 @@ class SignViewModel @Inject constructor(private val repository: SignRepository) 
         private set
 
     var snsLoginInfo: MutableLiveData<SingleEvent<SnsLoginInfo>> = MutableLiveData()
+        private set
+
+    var isSIgnUp: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
         private set
 
     /**
@@ -152,7 +156,7 @@ class SignViewModel @Inject constructor(private val repository: SignRepository) 
             ).collect {
                 when (it.meta.resCode) {
                     ErrorType.SUCCESS.errorCode -> {
-                        //TODO
+                        isSIgnUp.postValue(SingleEvent(true))
                     }
 
                     else -> {

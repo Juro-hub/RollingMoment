@@ -19,6 +19,7 @@ object PreferenceManager {
     private const val KEY_REFRESH_TOKEN = "RollinMoment_KEY_REFRESH_TOKEN"
     private const val KEY_USER_ID = "RollinMoment_KEY_USER_ID"
     private const val KEY_ALARM_PERMISSION = "RollinMoment_KEY_ALARM_PERMISSION"
+    private const val KEY_MOMENT_CODE = "RollinMoment_KEY_MOMENT_CODE"
 
 
     fun init(context: Context) {
@@ -63,6 +64,14 @@ object PreferenceManager {
 
     fun isAlreadyShowAlarmPermission(): Boolean {
         return read(KEY_ALARM_PERMISSION, false)
+    }
+
+    fun setMomentCode(momentCode: String) {
+        write(KEY_MOMENT_CODE, momentCode)
+    }
+
+    fun getMomentCode(): String {
+        return read(KEY_MOMENT_CODE, "")
     }
 
     private fun initEncPreference(context: Context): SharedPreferences {

@@ -2,6 +2,7 @@ package kr.co.rolling.moment.feature.main
 
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
@@ -47,7 +48,11 @@ class MyInfoFragment : BaseFragment(R.layout.fragment_my_info) {
             preferenceManager.setTokenInfo(TokenInfo("", ""))
 
             val navController = requireActivity().findNavController(R.id.nav_host_fragment)
-            navController.navigate(R.id.IntroFragment)
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(navController.graph.startDestinationId, true) // 백스택 모두 제거
+                .build()
+
+            navController.navigate(R.id.IntroFragment, null, navOptions)
         }
     }
 

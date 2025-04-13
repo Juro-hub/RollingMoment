@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="600dp"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:maxHeight="600dp"
     android:background="@drawable/shape_top_20_ffffff"
     android:paddingHorizontal="20dp">
 
@@ -13,7 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:paddingBottom="20dp"
         android:text="@string/moment_create_cover_title"
         android:textColor="@color/C171719"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,9 +29,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="540dp"
+        android:layout_marginTop="20dp"
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/tvMomentTitle">
 
@@ -108,12 +109,16 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvAdapter"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="40dp"
-                tools:listitem="@layout/item_moment_cover_type"
-                app:layout_constraintTop_toBottomOf="@id/layoutCamera" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/layoutCamera"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_moment_cover_type" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

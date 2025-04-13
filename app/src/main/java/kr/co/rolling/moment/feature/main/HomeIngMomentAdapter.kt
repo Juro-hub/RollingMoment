@@ -14,6 +14,7 @@ import kr.co.rolling.moment.databinding.LayoutMomentInfoBinding
 import kr.co.rolling.moment.feature.base.BaseViewHolder
 import kr.co.rolling.moment.library.network.data.response.HomeMomentInfo
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
+import kr.co.rolling.moment.ui.util.show
 import kr.co.rolling.moment.ui.util.showExpandableText
 
 /**
@@ -59,7 +60,10 @@ class HomeIngMomentAdapter : ListAdapter<HomeMomentInfo, BaseViewHolder<HomeMome
 
             ivMore.isVisible = item.isOwner
             tvDeadline.text = item.deadline
-            tvCategory.text = root.context.getString(item.category.textId)
+            item.category?.let {
+                tvCategory.text = root.context.getString(item.category.textId)
+                tvCategory.show()
+            }
             tvMomentTitle.text = item.title
             tvContent.showExpandableText(
                 item.comment

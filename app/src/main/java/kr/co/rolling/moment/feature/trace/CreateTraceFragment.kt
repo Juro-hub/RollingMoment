@@ -116,7 +116,7 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
                 content = binding.etTrace.text.toString(),
                 bgColor = backgroundColor.type,
                 fontType = font.type,
-                fontAlias = alignment.type
+                fontAlign = alignment.type
             )
             viewModel.requestTraceCreate(data)
         }
