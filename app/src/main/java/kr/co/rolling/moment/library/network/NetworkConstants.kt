@@ -1,7 +1,9 @@
 package kr.co.rolling.moment.library.network
 
 import android.content.Context
+import android.os.Parcelable
 import androidx.annotation.StringRes
+import kotlinx.parcelize.Parcelize
 import kr.co.rolling.moment.R
 
 /**
@@ -18,6 +20,12 @@ object NetworkConstants {
 
     /** API_WRITE_TIMEOUT Timeout 10초 */
     const val API_WRITE_TIMEOUT: Long = 10
+
+    /** 서버에서 전달되는 moment Key */
+    const val NETWORK_KEY_MOMENT = "moment"
+
+    /** 서버에서 앱 초대로 전돨되는 Moment Code */
+    const val NETWORK_KEY_MOMENT_CODE = "inviteCode"
 
     /**
      * Header 관련
@@ -93,7 +101,10 @@ object NetworkConstants {
     const val API_MOMENT_ENROLL = "api/v1/moment/welcome"
 
     // 모먼트 수정
-    const val API_MOMENT_EDIT = "api/v1/moment/setting"
+    const val API_MOMENT_EDIT = "api/v1/moment/settings"
+
+    // 모먼트 간단 조회
+    const val API_MOMENT_SIMPLE = "api/v1/moment/simple"
 
     /**
      * SNS 로그인 유형
@@ -136,10 +147,17 @@ object NetworkConstants {
                     context.getString(it.textId) == text
                 }?.code ?: SEVEN_DAYS_LATER.code
             }
+
+            fun getType(code: String): MomentExpireType {
+                return entries.find {
+                    it.code == code
+                } ?: SEVEN_DAYS_LATER
+            }
         }
     }
 
-    enum class MomentCategory(val code: String, @StringRes val textId: Int) {
+    @Parcelize
+    enum class MomentCategory(val code: String, @StringRes val textId: Int) : Parcelable {
         WEDDING("we", R.string.moment_category_we),
         BIRTHDAY("bi", R.string.moment_category_bi),
         FIRST_BIRTHDAY("fi", R.string.moment_category_fi),
@@ -154,10 +172,51 @@ object NetworkConstants {
         CELEBRATION("ce", R.string.moment_category_ce);
 
         companion object {
-            fun getCategory(code: String): MomentCategory {
+            fun getCategory(code: String): MomentCategory? {
                 return entries.find {
                     it.code == code
-                } ?: WEDDING
+                }
+            }
+        }
+    }
+
+    enum class MomentCoverCategory(val code: String, @StringRes val textId: Int) {
+        CUSTOM("cu", R.string.moment_create_cover_category_1),
+        ANNIVERSARY("an", R.string.moment_create_cover_category_2),
+        SENDING_HEARTS("se", R.string.moment_create_cover_category_3),
+        FAREWELL("fa", R.string.moment_create_cover_category_4),
+        NONE("no", R.string.moment_create_cover_category_5);
+
+        companion object {
+            fun getCategory(code: String): MomentCoverCategory {
+                return MomentCoverCategory.entries.find {
+                    it.code == code
+                } ?: NONE
+            }
+        }
+    }
+
+    enum class NavigationType(val code: String) {
+        IN_APP("in"),
+        OUT_LINK("out");
+
+        companion object {
+            fun getType(code: String): NavigationType {
+                return NavigationType.entries.find {
+                    it.code == code
+                } ?: IN_APP
+            }
+        }
+    }
+
+    enum class PageType(val code: String) {
+        MOMENT("m");
+
+        companion object {
+            fun getType(code: String): PageType {
+                return PageType.entries.find {
+                    it.code == code
+                } ?: MOMENT
             }
         }
     }

@@ -20,6 +20,7 @@ import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
+import kr.co.rolling.moment.ui.util.show
 import timber.log.Timber
 
 /**
@@ -63,7 +64,10 @@ class MomentEnrollFragment : BaseFragment(R.layout.fragment_moment_enroll) {
                     tvDeadline.setTextColor(root.context.getColor(R.color.C874FFF))
                 }
 
-                tvCategory.text = getString(it.category.textId)
+                it.category?.let { category ->
+                    tvCategory.text = getString(category.textId)
+                    tvCategory.show()
+                }
                 tvMomentTitle.text = it.title
                 tvContent.text = it.comment
                 Glide.with(ivImage)

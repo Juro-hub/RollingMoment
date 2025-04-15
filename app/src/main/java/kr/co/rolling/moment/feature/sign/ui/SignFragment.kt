@@ -14,13 +14,17 @@ import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentSignBinding
+import kr.co.rolling.moment.feature.base.BaseActivity
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.data.Constants.MOMENT_PRIVATE_POLICY
+import kr.co.rolling.moment.library.data.Constants.MOMENT_SERVICE_POLICY
 import kr.co.rolling.moment.library.network.NetworkConstants
 import kr.co.rolling.moment.library.network.data.request.RequestSnsLogin
 import kr.co.rolling.moment.library.network.data.response.SnsLoginInfo
 import kr.co.rolling.moment.library.network.data.response.TokenInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
+import kr.co.rolling.moment.library.util.landingOutLink
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
@@ -101,10 +105,22 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
         binding.tvSIgnUp.setOnSingleClickListener {
             findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToSignUpFragment())
         }
+
+        binding.tvBottomDesc2.setOnSingleClickListener {
+            (requireActivity() as? BaseActivity)?.landingOutLink(MOMENT_PRIVATE_POLICY)
+        }
+
+        binding.tvBottomDesc4.setOnSingleClickListener {
+            (requireActivity() as? BaseActivity)?.landingOutLink(MOMENT_SERVICE_POLICY)
+        }
     }
 
     override fun observeViewModel() {
         viewLifecycleOwner.observeEvent(viewModel.snsLoginInfo, ::handleSnsLoginInfo)
+    }
+
+    override fun handleBackPressed() {
+        requireActivity().finishAffinity()
     }
 
     private fun handleSnsLoginInfo(event: SingleEvent<SnsLoginInfo>) {

@@ -4,6 +4,8 @@ package kr.co.rolling.moment.library.network.data.response
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import kr.co.rolling.moment.library.data.NavigationData
+import kr.co.rolling.moment.library.network.NetworkConstants
 
 @Parcelize
 data class ResponsePushList(
@@ -41,9 +43,7 @@ data class PushItem(
     val type: String,
     val content: String,
     val date: String,
-    val pageType: String,
-    val navigateType: String,
-    val dataMap: Map<String, String>,
+    val navigateData: NavigationData,
     val isRead: Boolean
 ) : Parcelable
 
@@ -53,9 +53,11 @@ fun ResponsePushList.toEntity(): List<PushItem> {
             type = it.type,
             content = it.content,
             date = it.date,
-            pageType = it.pageType,
-            navigateType = it.navigateType,
-            dataMap = it.dataMap,
+            navigateData = NavigationData(
+                pageType = NetworkConstants.PageType.getType(it.pageType),
+                navigateType = NetworkConstants.NavigationType.getType(it.navigateType),
+                customData = it.dataMap
+            ),
             isRead = it.isRead
         )
     }

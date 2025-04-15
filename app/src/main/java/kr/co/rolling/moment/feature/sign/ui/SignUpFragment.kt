@@ -13,7 +13,6 @@ import kr.co.rolling.moment.databinding.FragmentSignUpBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.network.NetworkConstants
 import kr.co.rolling.moment.library.network.data.request.RequestSignUp
-import kr.co.rolling.moment.library.network.data.response.SignUpResponse
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
 import kr.co.rolling.moment.library.util.observeEvent
@@ -38,10 +37,10 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     override fun observeViewModel() {
-        viewLifecycleOwner.observeEvent(viewModel.signUpInfo, ::handleSignUp)
+        viewLifecycleOwner.observeEvent(viewModel.isSIgnUp, ::handleSignUp)
     }
 
-    private fun handleSignUp(event: SingleEvent<SignUpResponse>) {
+    private fun handleSignUp(event: SingleEvent<Boolean>) {
         event.getContentIfNotHandled()?.let {
             finishFragment()
         }

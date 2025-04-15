@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.BottomSheetMomentCategoryBinding
 import kr.co.rolling.moment.feature.base.BaseBottomSheetFragment
+import kr.co.rolling.moment.library.network.NetworkConstants
 import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 
@@ -37,7 +38,8 @@ class MomentCategoryBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMom
         adapter.setSelectedItem(args.selectedItem)
 
         adapter.setClickListener { category ->
-            setFragmentResult(BUNDLE_KEY_TITLE, bundleOf(BUNDLE_KEY_TITLE_DATA to category))
+            val result = NetworkConstants.MomentCategory.getCategory(category.code)
+            setFragmentResult(BUNDLE_KEY_TITLE, bundleOf(BUNDLE_KEY_TITLE_DATA to result))
             dismiss()
         }
 

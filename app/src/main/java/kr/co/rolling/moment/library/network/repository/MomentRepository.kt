@@ -14,6 +14,7 @@ import kr.co.rolling.moment.library.network.data.CustomError
 import kr.co.rolling.moment.library.network.data.ErrorType
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCode
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCreate
+import kr.co.rolling.moment.library.network.data.request.RequestMomentEdit
 import kr.co.rolling.moment.library.network.data.request.RequestTrace
 import kr.co.rolling.moment.library.network.data.request.RequestTraceCode
 import kr.co.settlebank.sb010pay.library.network.di.DefaultApiService
@@ -189,12 +190,48 @@ class MomentRepository @Inject constructor() : Repository {
 
     @WorkerThread
     fun requestMomentEdit(
-        requestData: RequestMomentCreate,
+        requestData: RequestMomentEdit,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (CustomError) -> Unit
     ) = flow {
         val response = apiService.requestMomentEdit(requestData)
+
+        response.suspendOnSuccess {
+            emit(data)
+        }.onError {
+            onError(CustomError(ErrorType.HTTP_EXCEPTION, "${statusCode.code}"))
+        }.onException {
+            onError(makeException(exception, message))
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun requestMomentEditInfo(
+        requestData: RequestMomentCode,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (CustomError) -> Unit
+    ) = flow {
+        val response = apiService.requestMomentEditInfo(requestData.momentCode)
+
+        response.suspendOnSuccess {
+            emit(data)
+        }.onError {
+            onError(CustomError(ErrorType.HTTP_EXCEPTION, "${statusCode.code}"))
+        }.onException {
+            onError(makeException(exception, message))
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun requestMomentSimple(
+        requestData: RequestMomentCode,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (CustomError) -> Unit
+    ) = flow {
+        val response = apiService.requestMomentSimple(requestData.momentCode)
 
         response.suspendOnSuccess {
             emit(data)

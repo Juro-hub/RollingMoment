@@ -31,6 +31,7 @@
         android:paddingHorizontal="7dp"
         android:paddingVertical="5dp"
         android:textColor="@color/C4C4C4C"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/tvDeadline"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="생일" />

@@ -85,7 +85,6 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
 
             Glide.with(requireContext())
                 .load(data.coverImageUrl)
-                .fitCenter()
                 .into(binding.ivImage)
 
             binding.tvDeadline.text = data.deadline
@@ -99,7 +98,10 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
                 binding.btnTraceInvite.text = getString(R.string.moment_detail_invite)
             }
 
-            binding.tvCategory.text = getString(data.category.textId)
+            data.category?.let {
+                binding.tvCategory.text = getString(data.category.textId)
+                binding.tvCategory.show()
+            }
             binding.tvMomentTitle.text = data.title
             binding.tvContent.showExpandableText(
                 data.content

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/moment_graph"
-    app:startDestination="@id/SignFragment">
+    app:startDestination="@id/IntroFragment">
     <fragment
         android:id="@+id/SignFragment"
         android:name="kr.co.rolling.moment.feature.sign.ui.SignFragment"

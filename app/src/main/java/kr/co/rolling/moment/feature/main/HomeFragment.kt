@@ -46,6 +46,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         HomeExpiredAdapter()
     }
 
+    override fun handleBackPressed() {
+        requireActivity().finishAffinity()
+    }
+
     override fun initViewBinding(view: View) {
         binding = FragmentHomeBinding.bind(view)
 

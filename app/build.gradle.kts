@@ -39,6 +39,7 @@ android {
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
             buildConfigField("String", "AES_KEY", getApiKey("AES_KEY"))
             buildConfigField("String", "AES_VECTOR_KEY", getApiKey("AES_VECTOR_KEY"))
+            buildConfigField("String", "KAKAO_SHARE_TEMPLATE_ID", getApiKey("KAKAO_SHARE_TEMPLATE"))
         }
         debug{
             isDebuggable = true
@@ -48,6 +49,7 @@ android {
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
             buildConfigField("String", "AES_KEY", getApiKey("AES_KEY"))
             buildConfigField("String", "AES_VECTOR_KEY", getApiKey("AES_VECTOR_KEY"))
+            buildConfigField("String", "KAKAO_SHARE_TEMPLATE_ID", getApiKey("KAKAO_SHARE_TEMPLATE"))
         }
     }
     compileOptions {
@@ -144,6 +146,9 @@ dependencies {
 
     // 카카오 로그인 API 모듈
     implementation (libs.v2.user)
+
+    // 카카오 공유하기 API
+    implementation(libs.v2.share)
 
     // Naver 로그인 API 모듈
     implementation(libs.oauth)

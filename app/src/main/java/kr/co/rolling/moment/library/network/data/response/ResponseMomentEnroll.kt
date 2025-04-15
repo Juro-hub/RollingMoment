@@ -29,7 +29,7 @@ data class ResponseMomentEnroll(
 data class MomentEnrollInfo(
     val deadline: String = "",
 
-    val category: NetworkConstants.MomentCategory = NetworkConstants.MomentCategory.WEDDING,
+    val category: NetworkConstants.MomentCategory? = null,
 
     val title: String = "",
 
