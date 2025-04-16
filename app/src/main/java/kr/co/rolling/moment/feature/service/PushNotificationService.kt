@@ -9,11 +9,16 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.feature.MomentActivity
 import kr.co.rolling.moment.library.data.Constants.MOMENT_PUSH_DATA_KEY
-import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
+import kr.co.rolling.moment.library.data.Constants.MOMENT_PUSH_KEY_BODY
+import kr.co.rolling.moment.library.data.Constants.MOMENT_PUSH_KEY_PAYLOAD
+import kr.co.rolling.moment.library.data.Constants.MOMENT_PUSH_KEY_TITLE
+import kr.co.rolling.moment.library.data.NavigationResponse
+import kr.co.rolling.moment.library.data.toEntity
 import kr.co.rolling.moment.library.util.PreferenceManager
 import kr.co.rolling.moment.library.util.htmlToSpanned
 import timber.log.Timber
@@ -41,12 +46,11 @@ class PushNotificationService : FirebaseMessagingService() {
         message.data.let { notification ->
             Timber.d("notification : ${notification}")
             Timber.d("notification2 : ${notification.entries}")
-            var title = notification["title"]
+            var title = notification[MOMENT_PUSH_KEY_TITLE]
             if (title.isNullOrEmpty()) {
                 title = getString(R.string.app_name)
             }
-            val body = notification["body"]
-            val code = notification[NAVIGATION_KEY_MOMENT_CODE]
+            val body = notification[MOMENT_PUSH_KEY_BODY]
 
             sendNotification(title, body, createIntent(notification))
         }
@@ -56,7 +60,7 @@ class PushNotificationService : FirebaseMessagingService() {
      * 노티피케이션 설정
      */
     private fun sendNotification(title: String?, body: String?, intent: Intent) {
-        val pendingIntent = PendingIntent.getActivity(this, getNotifyId(), Intent(), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getActivity(this, getNotifyId(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val manager: NotificationManager = this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val notificationId = this.getString(R.string.app_push_name)
@@ -88,10 +92,12 @@ class PushNotificationService : FirebaseMessagingService() {
     private fun createIntent(map: Map<String, String>?): Intent {
         return Intent(this, MomentActivity::class.java).apply {
             map?.let {
-                val momentCode = map[NAVIGATION_KEY_MOMENT_CODE]
+                val payload = map[MOMENT_PUSH_KEY_PAYLOAD]
 
                 val bundle = Bundle()
-                bundle.putString(MOMENT_PUSH_DATA_KEY, momentCode)
+                val customData = Gson().fromJson(payload, NavigationResponse::class.java).toEntity()
+                Timber.d("PushNotificationService Payload : $customData")
+                bundle.putParcelable(MOMENT_PUSH_DATA_KEY, customData)
 
                 putExtras(bundle)
             }

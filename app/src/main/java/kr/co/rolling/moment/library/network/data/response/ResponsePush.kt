@@ -4,6 +4,7 @@ package kr.co.rolling.moment.library.network.data.response
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import kr.co.rolling.moment.library.data.CustomData
 import kr.co.rolling.moment.library.data.NavigationData
 import kr.co.rolling.moment.library.network.NetworkConstants
 
@@ -56,7 +57,10 @@ fun ResponsePushList.toEntity(): List<PushItem> {
             navigateData = NavigationData(
                 pageType = NetworkConstants.PageType.getType(it.pageType),
                 navigateType = NetworkConstants.NavigationType.getType(it.navigateType),
-                customData = it.dataMap
+                customData = CustomData(
+                    momentCode = it.dataMap[NetworkConstants.NETWORK_KEY_MOMENT_CODE] ?: "",
+                    traceCode =  it.dataMap[NetworkConstants.NETWORK_KEY_TRACE_CODE] ?: "",
+                )
             ),
             isRead = it.isRead
         )

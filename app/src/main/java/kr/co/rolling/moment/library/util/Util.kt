@@ -5,22 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Spanned
+import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-import kr.co.rolling.moment.feature.base.BaseActivity
-import kr.co.rolling.moment.feature.base.BaseFragment
-import kr.co.rolling.moment.library.network.NetworkConstants
-import androidx.core.net.toUri
-import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import kr.co.rolling.moment.R
+import kr.co.rolling.moment.feature.base.BaseActivity
+import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
 import kr.co.rolling.moment.library.data.NavigationData
-import kr.co.rolling.moment.library.network.NetworkConstants.NETWORK_KEY_MOMENT
+import kr.co.rolling.moment.library.network.NetworkConstants
 
 /**
  * Bundle 의 직렬화를 수행
@@ -68,16 +67,16 @@ fun BaseActivity.landingOutLink(link: String) {
     try {
         this.startActivity(Intent(Intent.ACTION_VIEW, link.toUri()))
     } catch (e: ActivityNotFoundException) {
-       e.message
+        e.message
     }
 }
 
-fun BaseFragment.navigate(navigateInfo : NavigationData){
+fun BaseFragment.navigate(navigateInfo: NavigationData) {
     when (navigateInfo.navigateType) {
         NetworkConstants.NavigationType.IN_APP -> {
             when (navigateInfo.pageType) {
                 NetworkConstants.PageType.MOMENT -> {
-                    val momentCode = navigateInfo.customData[NETWORK_KEY_MOMENT]
+                    val momentCode = navigateInfo.customData.momentCode
                     val navController = requireActivity().findNavController(R.id.nav_host_fragment)
                     navController.navigate(R.id.MomentDetailFragment, bundleOf(NAVIGATION_KEY_MOMENT_CODE to momentCode))
                 }

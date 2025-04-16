@@ -37,6 +37,9 @@ class MomentEnrollFragment : BaseFragment(R.layout.fragment_moment_enroll) {
 
         val randomColor = Constants.TraceBackgroundColor.entries.random().color
         binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), randomColor))
+        binding.layoutToolBar.ivBack.setOnSingleClickListener {
+            finishFragment()
+        }
 
         binding.btnEnroll.setOnSingleClickListener {
             findNavController().navigateSafe(MomentEnrollFragmentDirections.actionMomentEnrollFragmentToMomentDetailFragment(args.momentCode))
