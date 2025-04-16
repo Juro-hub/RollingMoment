@@ -10,10 +10,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMainBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.data.Constants.MOMENT_PUSH_DATA_KEY
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
+import kr.co.rolling.moment.library.data.NavigationData
+import kr.co.rolling.moment.library.util.getParcelableCompat
+import kr.co.rolling.moment.library.util.navigate
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
-import timber.log.Timber
 
 /**
  * Main 화면
@@ -58,7 +61,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             preferenceManager.setMomentCode("")
             moveToMomentDetail(momentCode)
         }
+        requireActivity().intent.extras?.let {
+            val data = it.getParcelableCompat(MOMENT_PUSH_DATA_KEY, NavigationData::class.java) ?: return
+            // 처리 완료 후 Key 제거
+            requireActivity().intent.removeExtra(MOMENT_PUSH_DATA_KEY)
+            navigate(data)
+        }
 
+        // App 링크로 수신할 경우
         requireActivity().intent.data?.let { uri ->
             val momentCode = uri.getQueryParameter(NAVIGATION_KEY_MOMENT_CODE) ?: return
             // 처리 완료 후 intent 초기화

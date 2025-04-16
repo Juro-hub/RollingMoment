@@ -30,6 +30,10 @@ object Constants {
 
     const val MOMENT_PUSH_DATA_KEY = "MOMENT_PUSH_DATA_KEY"
 
+    const val MOMENT_PUSH_KEY_TITLE = "title"
+    const val MOMENT_PUSH_KEY_BODY= "body"
+    const val MOMENT_PUSH_KEY_PAYLOAD= "payload"
+
     /** Enum 영역 */
 
     /** 앱 내 권한 */

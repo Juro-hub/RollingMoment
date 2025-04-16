@@ -142,7 +142,7 @@ class MomentResultFragment : BaseFragment(R.layout.fragment_moment_result) {
     }
 
     private fun shareKakao(inviteUrl: String) {
-        val map = mapOf(MOMENT_SHARE_KAKAO_WEB_KEY to inviteUrl)
+        val map = mapOf(Constants.NAVIGATION_KEY_MOMENT_CODE to "inviteUrl")
         val templateId = BuildConfig.KAKAO_SHARE_TEMPLATE_ID.toLong()
 
         if (ShareClient.instance.isKakaoTalkSharingAvailable(requireContext())) {

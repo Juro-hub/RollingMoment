@@ -11,7 +11,7 @@ import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.ActivityMomentBinding
 import kr.co.rolling.moment.feature.base.BaseActivity
 import kr.co.rolling.moment.feature.main.MyInfoFragment
-import kr.co.rolling.moment.library.network.NetworkConstants.NETWORK_KEY_MOMENT_CODE
+import kr.co.rolling.moment.library.network.NetworkConstants.NETWORK_KEY_INVITE_CODE
 import kr.co.rolling.moment.library.network.data.CustomError
 import kr.co.rolling.moment.library.network.data.ErrorType
 import kr.co.rolling.moment.library.network.data.response.TokenInfo
@@ -60,7 +60,7 @@ class MomentActivity : BaseActivity() {
         val manager = getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
         manager?.let {
             val uri = (it.primaryClip?.getItemAt(0)?.text ?: "").toString().toUri()
-            val momentCode = uri.getQueryParameter(NETWORK_KEY_MOMENT_CODE)
+            val momentCode = uri.getQueryParameter(NETWORK_KEY_INVITE_CODE)
             momentCode?.let { code ->
                 preferenceManager.setMomentCode(code)
                 val emptyClip = ClipData.newPlainText("", "")
