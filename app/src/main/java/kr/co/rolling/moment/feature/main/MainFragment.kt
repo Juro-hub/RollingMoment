@@ -13,6 +13,7 @@ import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
+import timber.log.Timber
 
 /**
  * Main 화면
@@ -60,10 +61,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
         requireActivity().intent.data?.let { uri ->
             val momentCode = uri.getQueryParameter(NAVIGATION_KEY_MOMENT_CODE) ?: return
+            // 처리 완료 후 intent 초기화
+            requireActivity().intent.data = null
             moveToMomentDetail(momentCode)
         }
     }
-
 
     override fun observeViewModel() {
         super.observeViewModel()
