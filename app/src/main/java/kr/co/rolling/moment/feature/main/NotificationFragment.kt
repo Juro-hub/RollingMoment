@@ -33,7 +33,6 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
         binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.notification_title)
 
         binding.rvNotification.adapter = adapter
-
     }
 
     override fun observeViewModel() {

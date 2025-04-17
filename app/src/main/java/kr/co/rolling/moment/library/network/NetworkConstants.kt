@@ -23,12 +23,14 @@ object NetworkConstants {
 
     /** 서버에서 전달되는 moment Key */
     const val NETWORK_KEY_MOMENT = "moment"
+    const val NETWORK_KEY_TRACE = "trace"
 
     /** 서버에서 앱 초대로 전돨되는 Moment Code */
     const val NETWORK_KEY_INVITE_CODE = "inviteCode"
 
     const val NETWORK_KEY_MOMENT_CODE = "momentCode"
     const val NETWORK_KEY_TRACE_CODE = "traceCode"
+
 
     /**
      * Header 관련
