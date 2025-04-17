@@ -47,10 +47,12 @@
 
     <TextView
         android:id="@+id/tvMomentTitle"
-        style="@style/L718Bold"
+        style="@style/L116Bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/C171719"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,9 +73,13 @@
 
     <ImageView
         android:id="@+id/ivImage"
-        android:layout_width="match_parent"
-        android:layout_height="192dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="5:4"
         android:layout_marginTop="12dp"
+        app:layout_goneMarginTop="0dp"
         android:scaleType="fitXY"
         app:layout_constraintTop_toBottomOf="@id/tvContent" />
 

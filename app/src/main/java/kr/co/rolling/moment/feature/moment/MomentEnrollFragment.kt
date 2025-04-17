@@ -75,7 +75,7 @@ class MomentEnrollFragment : BaseFragment(R.layout.fragment_moment_enroll) {
                 tvContent.text = it.comment
                 Glide.with(ivImage)
                     .load(it.coverImageUrl)
-                    .transform(CenterInside(), RoundedCorners(8))
+                    .transform(CenterInside(), RoundedCorners(root.resources.getDimensionPixelSize(R.dimen.spacing_8)))
                     .into(ivImage)
                 ivMore.hide()
             }

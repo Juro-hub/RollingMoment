@@ -48,6 +48,6 @@ class MomentCategoryBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMom
         adapter.submitList(data.toMutableList())
         binding.rvAdapter.layoutManager = gridLayoutManager
         binding.rvAdapter.adapter = adapter
-        binding.rvAdapter.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_8), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_8), spanCount = 3))
+        binding.rvAdapter.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_8), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_6), spanCount = 3))
     }
 }

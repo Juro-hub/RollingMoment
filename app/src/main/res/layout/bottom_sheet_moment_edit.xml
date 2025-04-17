@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_top_20_ffffff"
-    android:layout_marginTop="20dp"
+    android:layout_marginVertical="20dp"
+    android:paddingBottom="20dp"
     android:paddingHorizontal="20dp">
 
     <TextView

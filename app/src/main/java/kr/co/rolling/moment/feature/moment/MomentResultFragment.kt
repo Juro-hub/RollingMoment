@@ -101,7 +101,7 @@ class MomentResultFragment : BaseFragment(R.layout.fragment_moment_result) {
                 tvMomentTitle.text = it.title
                 Glide.with(ivImage)
                     .load(it.coverImage?.url)
-                    .transform(CenterInside(), RoundedCorners(8))
+                    .transform(CenterInside(), RoundedCorners(root.resources.getDimensionPixelSize(R.dimen.spacing_8)))
                     .into(ivImage)
 
             }

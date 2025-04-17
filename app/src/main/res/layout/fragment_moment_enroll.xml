@@ -14,9 +14,10 @@
     <TextView
         android:id="@+id/tvMomentTitle"
         style="@style/T320Bold"
+        android:textColor="@color/C000000"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="80dp"
         android:text="@string/moment_detail_enroll"
         android:textAlignment="center"
