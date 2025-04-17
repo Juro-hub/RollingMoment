@@ -1,6 +1,10 @@
 package kr.co.rolling.moment.feature.moment
 
+import android.graphics.Color
+import android.os.Build
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -24,6 +28,7 @@ import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.show
 import timber.log.Timber
 
+
 /**
  * 탐색을 통하여 모먼트 진입 시 노출되는 화면
  */
@@ -38,6 +43,8 @@ class MomentEnrollFragment : BaseFragment(R.layout.fragment_moment_enroll) {
 
         val randomColor = Constants.TraceBackgroundColor.entries.random().color
         binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), randomColor))
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), randomColor)
+
         binding.layoutToolBar.ivBack.setOnSingleClickListener {
             finishFragment()
         }
@@ -51,6 +58,12 @@ class MomentEnrollFragment : BaseFragment(R.layout.fragment_moment_enroll) {
         viewModel.requestMomentEnroll(args.momentCode)
 
         viewLifecycleOwner.observeEvent(viewModel.momentEnroll, ::handleMomentEnroll)
+    }
+
+    override fun onDestroyView() {
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.CFFFFFF)
+
+        super.onDestroyView()
     }
 
     private fun handleMomentEnroll(event: SingleEvent<MomentEnrollInfo>) {
