@@ -172,9 +172,16 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
         // Image 선택 (List 중)
         setFragmentResultListener(MomentCoverBottomSheetFragment.BUNDLE_KEY_IMAGE) { _, bundle ->
             val cover = bundle.getParcelableCompat(MomentCoverBottomSheetFragment.BUNDLE_KEY_IMAGE_DATA, MomentImageInfo::class.java) ?: return@setFragmentResultListener
+
             Glide.with(requireContext())
                 .load(cover.url)
-                .fitCenter()
+                .transform(
+                    MultiTransformation(
+                        CenterCrop(),
+                        BorderTransformation(1f, requireContext().getColor(R.color.CE0E0E2), resources.getDimensionPixelSize(R.dimen.spacing_16).toFloat()),
+                        RoundedCorners(resources.getDimensionPixelSize(R.dimen.spacing_16))
+                    )
+                )
                 .into(binding.ivCover)
 
             image = MomentImageInfo(
