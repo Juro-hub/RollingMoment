@@ -55,7 +55,7 @@ class HomeIngMomentAdapter : ListAdapter<HomeMomentInfo, BaseViewHolder<HomeMome
         override fun bind(item: HomeMomentInfo) = with(binding) {
             Glide.with(ivImage)
                 .load(item.coverImageUrl)
-                .transform(CenterInside(), RoundedCorners(8))
+                .transform(CenterInside(), RoundedCorners(root.resources.getDimensionPixelSize(R.dimen.spacing_8)))
                 .into(ivImage)
 
             ivMore.isVisible = item.isOwner
