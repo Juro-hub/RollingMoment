@@ -12,6 +12,9 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMomentCreateBinding
@@ -32,6 +35,7 @@ import kr.co.rolling.moment.library.util.getParcelableCompat
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.component.CommonDialogData
+import kr.co.rolling.moment.ui.util.BorderTransformation
 import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.show
@@ -96,7 +100,13 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
             Timber.d("handleMomentEditInfo : ${it}")
             Glide.with(requireContext())
                 .load(it.coverImage?.url)
-                .fitCenter()
+                .transform(
+                    MultiTransformation(
+                        CenterCrop(),
+                        BorderTransformation(1f, requireContext().getColor(R.color.CE0E0E2), resources.getDimensionPixelSize(R.dimen.spacing_16).toFloat()),
+                        RoundedCorners(resources.getDimensionPixelSize(R.dimen.spacing_16))
+                    )
+                )
                 .into(binding.ivCover)
             binding.groupImage.show()
             binding.layoutSelectImage.hide()
@@ -109,6 +119,7 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
             binding.cbPrivate.isChecked = !it.isPublic
             category = it.category
             image = it.coverImage
+            binding.btnCreate.text = getString(R.string.moment_edit_confirm)
 
             for (view in binding.rgDeadline.children) {
                 if (view is RadioButton && view.text == getString(it.expireType.textId)) {
@@ -143,7 +154,13 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
             coverImageUri = bundle.getParcelableCompat(MomentCoverBottomSheetFragment.BUNDLE_KEY_URI_DATA, Uri::class.java) ?: return@setFragmentResultListener
             Glide.with(requireContext())
                 .load(coverImageUri)
-                .fitCenter()
+                .transform(
+                    MultiTransformation(
+                        CenterCrop(),
+                        BorderTransformation(1f, requireContext().getColor(R.color.CE0E0E2), resources.getDimensionPixelSize(R.dimen.spacing_16).toFloat()),
+                        RoundedCorners(resources.getDimensionPixelSize(R.dimen.spacing_16))
+                    )
+                )
                 .into(binding.ivCover)
 
             image = null

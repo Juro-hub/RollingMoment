@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Spanned
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
@@ -15,6 +16,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.findNavController
 import kr.co.rolling.moment.R
+import kr.co.rolling.moment.feature.MomentActivity
 import kr.co.rolling.moment.feature.base.BaseActivity
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
@@ -72,12 +74,16 @@ fun BaseActivity.landingOutLink(link: String) {
 }
 
 fun BaseFragment.navigate(navigateInfo: NavigationData) {
+    (requireActivity() as MomentActivity).navigate(navigateInfo)
+}
+
+fun AppCompatActivity.navigate(navigateInfo: NavigationData) {
     when (navigateInfo.navigateType) {
         NetworkConstants.NavigationType.IN_APP -> {
             when (navigateInfo.pageType) {
                 NetworkConstants.PageType.MOMENT -> {
                     val momentCode = navigateInfo.customData.momentCode
-                    val navController = requireActivity().findNavController(R.id.nav_host_fragment)
+                    val navController = findNavController(R.id.nav_host_fragment)
                     navController.navigate(R.id.MomentDetailFragment, bundleOf(NAVIGATION_KEY_MOMENT_CODE to momentCode))
                 }
             }

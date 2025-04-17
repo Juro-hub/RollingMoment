@@ -2,6 +2,7 @@ package kr.co.rolling.moment.feature
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
 import androidx.activity.viewModels
 import androidx.core.net.toUri
 import androidx.navigation.NavOptions
@@ -11,6 +12,8 @@ import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.ActivityMomentBinding
 import kr.co.rolling.moment.feature.base.BaseActivity
 import kr.co.rolling.moment.feature.main.MyInfoFragment
+import kr.co.rolling.moment.library.data.Constants.MOMENT_PUSH_DATA_KEY
+import kr.co.rolling.moment.library.data.NavigationData
 import kr.co.rolling.moment.library.network.NetworkConstants.NETWORK_KEY_INVITE_CODE
 import kr.co.rolling.moment.library.network.data.CustomError
 import kr.co.rolling.moment.library.network.data.ErrorType
@@ -20,9 +23,13 @@ import kr.co.rolling.moment.library.network.viewmodel.MainViewModel
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
 import kr.co.rolling.moment.library.util.PreferenceManager
+import kr.co.rolling.moment.library.util.getParcelableCompat
+import kr.co.rolling.moment.library.util.navigate
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.component.CommonDialogData
 import kr.co.rolling.moment.ui.util.showDialog
+import timber.log.Timber
+import java.time.zone.ZoneOffsetTransitionRule
 import javax.inject.Inject
 
 /**
@@ -55,6 +62,18 @@ class MomentActivity : BaseActivity() {
         observeEvent(mainViewModel.error, ::networkError)
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        Timber.d("onNewIntent: data = ${intent}")
+
+        intent?.extras?.let {
+            val data = it.getParcelableCompat(MOMENT_PUSH_DATA_KEY, NavigationData::class.java) ?: return
+            // 처리 완료 후 Key 제거
+            intent.removeExtra(MOMENT_PUSH_DATA_KEY)
+            navigate(data)
+        }
+    }
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         val manager = getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
