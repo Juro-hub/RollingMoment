@@ -58,8 +58,8 @@ fun ResponsePushList.toEntity(): List<PushItem> {
                 pageType = NetworkConstants.PageType.getType(it.pageType),
                 navigateType = NetworkConstants.NavigationType.getType(it.navigateType),
                 customData = CustomData(
-                    momentCode = it.dataMap[NetworkConstants.NETWORK_KEY_MOMENT_CODE] ?: "",
-                    traceCode =  it.dataMap[NetworkConstants.NETWORK_KEY_TRACE_CODE] ?: "",
+                    momentCode = it.dataMap[NetworkConstants.NETWORK_KEY_MOMENT_CODE] ?: it.dataMap[NetworkConstants.NETWORK_KEY_MOMENT] ?: "",
+                    traceCode =  it.dataMap[NetworkConstants.NETWORK_KEY_TRACE_CODE] ?: it.dataMap[NetworkConstants.NETWORK_KEY_TRACE] ?: "",
                 )
             ),
             isRead = it.isRead
