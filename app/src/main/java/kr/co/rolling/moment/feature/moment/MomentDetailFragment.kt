@@ -89,6 +89,7 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
                 .into(binding.ivImage)
 
             binding.tvDeadline.text = data.deadline
+            binding.tvDeadline.isVisible = data.deadline.isNotEmpty()
             if (data.isExpired) {
                 binding.tvDeadline.setBackgroundResource(R.drawable.shape_4_e7f5e7)
                 binding.tvDeadline.setTextColor(requireContext().getColor(R.color.C00BF40))

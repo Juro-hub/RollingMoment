@@ -13,8 +13,8 @@ import kr.co.rolling.moment.library.network.ApiService
 import kr.co.rolling.moment.library.network.data.CustomError
 import kr.co.rolling.moment.library.network.data.ErrorType
 import kr.co.rolling.moment.library.network.data.request.RequestLogin
-import kr.co.rolling.moment.library.network.data.request.RequestSnsLogin
 import kr.co.rolling.moment.library.network.data.request.RequestSignUp
+import kr.co.rolling.moment.library.network.data.request.RequestSnsLogin
 import kr.co.rolling.moment.library.network.data.request.RequestSplash
 import kr.co.settlebank.sb010pay.library.network.di.DefaultApiService
 import javax.inject.Inject

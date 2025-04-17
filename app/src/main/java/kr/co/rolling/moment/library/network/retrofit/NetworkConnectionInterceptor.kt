@@ -23,7 +23,12 @@ class NetworkConnectionInterceptor @Inject constructor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (!isInternetAvailable()) {
-            throw NoInternetConnectException(CustomError(ErrorType.NO_NETWORK_EXCEPTION, context.getString(R.string.no_internet_exception)))
+            throw NoInternetConnectException(
+                CustomError(
+                    ErrorType.NO_NETWORK_EXCEPTION,
+                    context.getString(R.string.no_internet_exception)
+                )
+            )
         }
         return chain.proceed(chain.request())
     }
@@ -55,19 +60,7 @@ class NetworkConnectionInterceptor @Inject constructor(
 /**
  * 인터넷 연결 안된 경우 Custom Exception 처리
  */
-class NoInternetConnectException @Inject constructor(
-    private val customError: CustomError,
-) : ConnectException() {
-    /**
-     * 에러에 따른 Message 생성
-     * @return 사용자에게 노출될 메시지
-     */
-    private fun createMessage(): String {
-        Timber.d("createMessage() called : ResultMessage = [${message}]")
-        return customError.message
-    }
 
-    override val message: String
-        get() = createMessage()
-
-}
+class NoInternetConnectException(
+    customError: CustomError
+) : ConnectException(customError.message)
