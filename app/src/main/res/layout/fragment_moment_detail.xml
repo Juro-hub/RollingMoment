@@ -69,7 +69,7 @@
                 style="@style/L116Bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:textColor="@color/C171719"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +94,7 @@
                 style="@style/L612Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/C7F7F7F"
                 app:layout_constraintStart_toStartOf="@id/tvDeadline"
                 app:layout_constraintTop_toBottomOf="@id/tvContent"
@@ -131,6 +131,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnInvite"
                     style="@style/L910Bold"
+                    android:textColor="@color/C4C4C4C"
                     android:layout_width="wrap_content"
                     android:layout_height="29dp"
                     android:background="@drawable/shape_6_f6f6f6"
@@ -183,6 +184,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnTraceInvite"
                     style="@style/L910Bold"
+                    android:textColor="@color/C4C4C4C"
                     android:layout_width="wrap_content"
                     android:layout_height="29dp"
                     android:background="@drawable/shape_6_f6f6f6"

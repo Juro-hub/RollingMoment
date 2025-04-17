@@ -2,6 +2,7 @@ package kr.co.rolling.moment.feature.moment
 
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -73,6 +74,7 @@ class MomentEnrollFragment : BaseFragment(R.layout.fragment_moment_enroll) {
                 }
                 tvMomentTitle.text = it.title
                 tvContent.text = it.comment
+                tvContent.isVisible = it.comment.isNotEmpty()
                 Glide.with(ivImage)
                     .load(it.coverImageUrl)
                     .transform(CenterInside(), RoundedCorners(root.resources.getDimensionPixelSize(R.dimen.spacing_8)))
