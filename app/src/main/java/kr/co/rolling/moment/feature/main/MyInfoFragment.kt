@@ -15,9 +15,11 @@ import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MainViewModel
 import kr.co.rolling.moment.library.util.landingOutLink
 import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.ui.component.CommonDialogData
 import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.show
+import kr.co.rolling.moment.ui.util.showDialog
 import timber.log.Timber
 
 /**
@@ -104,11 +106,15 @@ class MyInfoFragment : BaseFragment(R.layout.fragment_my_info) {
         binding.layoutWithdraw.viewDivider.hide()
 
         binding.layoutLogOut.root.setOnSingleClickListener {
-            viewModel.requestLogout()
+            showDialog(CommonDialogData(title = getString(R.string.my_info_logout_dialog_title), positiveText = getString(R.string.my_info_logout_dialog_positive), negativeText = getString(R.string.no)), positiveCallback = {
+                viewModel.requestLogout()
+            })
         }
 
         binding.layoutWithdraw.root.setOnSingleClickListener {
-            viewModel.requestWithDraw()
+            showDialog(CommonDialogData(title = getString(R.string.my_info_withdraw_dialog_title), positiveText = getString(R.string.my_info_withdraw_dialog_positive), negativeText = getString(R.string.no)), positiveCallback = {
+                viewModel.requestWithDraw()
+            })
         }
     }
 }
