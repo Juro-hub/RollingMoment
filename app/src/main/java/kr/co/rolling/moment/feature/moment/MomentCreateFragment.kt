@@ -1,11 +1,15 @@
 package kr.co.rolling.moment.feature.moment
 
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.util.Base64
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.RadioButton
+import android.widget.RadioGroup
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -147,7 +151,15 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
             isValidButton()
         }
 
-        binding.rgDeadline.setOnCheckedChangeListener { _, _ -> isValidButton() }
+        binding.rgDeadline.setOnCheckedChangeListener { group, checkId ->
+            isValidButton()
+
+            for(view in group.children){
+                if (view is RadioButton) {
+                    view.setTypeface(null, if (view.id == checkId) Typeface.BOLD else Typeface.NORMAL)
+                }
+            }
+        }
 
         // Image 선택 (앨범 or 카메라)
         setFragmentResultListener(MomentCoverBottomSheetFragment.BUNDLE_KEY_URI) { _, bundle ->
