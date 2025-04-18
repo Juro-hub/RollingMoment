@@ -25,13 +25,25 @@ android {
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders["kakao_key"] = getApiKey("KAKAO_API_KEY")
+    }
+
+    signingConfigs {
+        create("releaseSignConfig")  {
+            keyAlias = getApiKey("SIGN_KEY_ALIAS")
+            keyPassword = getApiKey("KEY_PASSWORD")
+            storeFile = rootProject.file("rollin_keystore")
+            storePassword = getApiKey("KEY_PASSWORD")
+            enableV1Signing = true
+            enableV2Signing = true
+        }
     }
 
     buildTypes {
         release {
             isDebuggable = false
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("releaseSignConfig")
+
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 
             buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("KAKAO_API_KEY"))
