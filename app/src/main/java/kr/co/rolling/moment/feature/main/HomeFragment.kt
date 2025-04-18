@@ -76,6 +76,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                 bottomSheet.show(parentFragmentManager, "MomentEditBottomSheet")
             }
 
+            expiredMomentAdapter.submitList(it.expiredMoment)
             expiredMomentAdapter.setInfoClickListener {
                 val bottomSheet = MomentEditBottomSheetFragment()
                 bottomSheet.arguments = bundleOf(NAVIGATION_KEY_MOMENT_CODE to it.code, NAVIGATION_KEY_IS_EXPIRED to it.isExpired, NAVIGATION_KEY_IS_OWNER to it.isOwner)
@@ -162,10 +163,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
             binding.layoutEmpty.hide()
             binding.layoutMomentIng.show()
-            val momentList: List<MomentInfo> = list.map { it.toMomentInfo() }
 
-            momentAdapter.submitList(list)
-            expiredMomentAdapter.submitList(momentList)
+            if(isProcess){
+                momentAdapter.submitList(viewModel.getProgressMomentList())
+            }else{
+                val list = viewModel.getExpiredMomentList()?.toMutableList() ?: mutableListOf<MomentInfo>()
+                expiredMomentAdapter.submitList(list)
+            }
         }
 
         binding.rvProcess.adapter = textAdapter
