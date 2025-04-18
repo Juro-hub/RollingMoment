@@ -80,7 +80,7 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
             }
             tvInfo.text = item.traceCnt
             ivMore.isVisible = item.isOwner
-            tvPeriod.isVisible = item.isPublic
+            tvPeriod.isVisible = !item.isPublic
 
             if (item.isExpired) {
                 tvEndDate.setBackgroundResource(R.drawable.shape_4_e7f5e7)

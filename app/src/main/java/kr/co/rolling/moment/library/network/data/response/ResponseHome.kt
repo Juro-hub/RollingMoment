@@ -46,7 +46,7 @@ data class ResponseHomeMoment(
     val isOwner: Boolean,
 
     @SerializedName("isPublic")
-    val isPublic: Boolean,
+    val isPublic: Boolean = true,
 
     @SerializedName("traceCnt")
     val traceCnt: Int
@@ -57,7 +57,7 @@ data class HomeInfo(
     val hasAlarm: Boolean = false,
 
     val progressMoment: List<HomeMomentInfo>? = null,
-    val expiredMoment: List<HomeMomentInfo>? = null,
+    val expiredMoment: List<MomentInfo>? = null,
 ) : Parcelable
 
 @Parcelize
@@ -76,7 +76,7 @@ data class HomeMomentInfo(
 
     val isOwner: Boolean = false,
 
-    val isPublic: Boolean = false,
+    val isPublic: Boolean = true,
 
     val traceCount: String = "",
 
@@ -113,6 +113,20 @@ fun ResponseHome.toEntity(context: Context) = HomeInfo(
             isPublic = it.isPublic,
             traceCount = context.getString(R.string.moment_user_trace_count, it.traceCnt),
             isExpired = it.deadline == -1
+        )
+    },
+    expiredMoment = this.endedMomentList.map {
+        MomentInfo(
+            code = it.momentCode,
+            deadline =  context.getString(R.string.moment_deadline_expired),
+            category = NetworkConstants.MomentCategory.getCategory(it.category),
+            title = it.title,
+            comment = it.comment,
+            coverImgUrl = it.coverImgUrl,
+            isOwner = it.isOwner,
+            isPublic = it.isPublic,
+            traceCnt = context.getString(R.string.moment_user_trace_count, it.traceCnt),
+            isExpired = true
         )
     }
 )
