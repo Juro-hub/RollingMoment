@@ -51,7 +51,6 @@ android {
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
             buildConfigField("String", "AES_KEY", getApiKey("AES_KEY"))
             buildConfigField("String", "AES_VECTOR_KEY", getApiKey("AES_VECTOR_KEY"))
-            buildConfigField("String", "KAKAO_SHARE_TEMPLATE_ID", getApiKey("KAKAO_SHARE_TEMPLATE"))
         }
         debug{
             isDebuggable = true
@@ -61,7 +60,6 @@ android {
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
             buildConfigField("String", "AES_KEY", getApiKey("AES_KEY"))
             buildConfigField("String", "AES_VECTOR_KEY", getApiKey("AES_VECTOR_KEY"))
-            buildConfigField("String", "KAKAO_SHARE_TEMPLATE_ID", getApiKey("KAKAO_SHARE_TEMPLATE"))
         }
     }
     compileOptions {

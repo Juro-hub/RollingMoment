@@ -37,6 +37,7 @@ import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.show
 import kr.co.rolling.moment.ui.util.showExpandableText
@@ -94,6 +95,7 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
                 binding.tvDeadline.setBackgroundResource(R.drawable.shape_4_e7f5e7)
                 binding.tvDeadline.setTextColor(requireContext().getColor(R.color.C00BF40))
                 binding.btnTraceInvite.text = getString(R.string.moment_detail_expired)
+                binding.btnPlusTrace.hide()
             } else {
                 binding.tvDeadline.setBackgroundResource(R.drawable.shape_4_eae4f8)
                 binding.tvDeadline.setTextColor(requireContext().getColor(R.color.C874FFF))

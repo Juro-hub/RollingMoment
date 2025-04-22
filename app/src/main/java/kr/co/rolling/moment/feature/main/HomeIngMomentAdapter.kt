@@ -59,7 +59,7 @@ class HomeIngMomentAdapter : ListAdapter<HomeMomentInfo, BaseViewHolder<HomeMome
                 .into(ivImage)
 
             ivMore.isVisible = item.isOwner
-            tvDeadline.text = item.deadline
+            tvDeadline.text = item.deadLineText
             item.category?.let {
                 tvCategory.text = root.context.getString(item.category.textId)
                 tvCategory.show()
@@ -69,12 +69,21 @@ class HomeIngMomentAdapter : ListAdapter<HomeMomentInfo, BaseViewHolder<HomeMome
                 item.comment
             )
 
-            if (item.isExpired) {
-                tvDeadline.setBackgroundResource(R.drawable.shape_4_e7f5e7)
-                tvDeadline.setTextColor(root.context.getColor(R.color.C00BF40))
-            } else {
-                tvDeadline.setBackgroundResource(R.drawable.shape_4_eae4f8)
-                tvDeadline.setTextColor(root.context.getColor(R.color.C874FFF))
+            when (item.deadLine) {
+                -1 -> {
+                    tvDeadline.setBackgroundResource(R.drawable.shape_4_e7f5e7)
+                    tvDeadline.setTextColor(root.context.getColor(R.color.C00BF40))
+                }
+
+                0 -> {
+                    tvDeadline.setBackgroundResource(R.drawable.shape_4_fcecec)
+                    tvDeadline.setTextColor(root.context.getColor(R.color.CFF4242))
+                }
+
+                else -> {
+                    tvDeadline.setBackgroundResource(R.drawable.shape_4_eae4f8)
+                    tvDeadline.setTextColor(root.context.getColor(R.color.C874FFF))
+                }
             }
             root.setOnSingleClickListener {
                 rootClickListener?.invoke(item)

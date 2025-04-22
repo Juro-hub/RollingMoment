@@ -103,6 +103,13 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                 v.setFocusListener(focusChangeListener)
             }
         }
+
+        binding.etNickName.setTextChangeListener {
+            val input = it.toString()
+
+            val isValid = input.matches(Regex("^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]+$"))
+            binding.etNickName.setError(!isValid)
+        }
     }
 
     /**
@@ -160,6 +167,6 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun isRegexView(view: View): Boolean {
-        return view != binding.etNickName && view is CommonEditText
+        return view is CommonEditText
     }
 }

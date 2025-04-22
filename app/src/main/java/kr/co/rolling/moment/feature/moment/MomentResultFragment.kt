@@ -17,12 +17,15 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.share.ShareClient
 import com.kakao.sdk.share.WebSharerClient
+import com.kakao.sdk.template.model.Button
+import com.kakao.sdk.template.model.Content
+import com.kakao.sdk.template.model.FeedTemplate
+import com.kakao.sdk.template.model.Link
 import kr.co.rolling.moment.BuildConfig
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMomentResultBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.data.Constants
-import kr.co.rolling.moment.library.data.Constants.MOMENT_SHARE_KAKAO_WEB_KEY
 import kr.co.rolling.moment.library.data.Constants.SCHEME_SHARE_TYPE
 import kr.co.rolling.moment.library.data.Constants.SCHEME_SMS_TO
 import kr.co.rolling.moment.library.data.Constants.SCHEME_SMS_TO_BODY
@@ -109,7 +112,7 @@ class MomentResultFragment : BaseFragment(R.layout.fragment_moment_result) {
             adapter.setClickListener { item ->
                 when (item) {
                     Constants.MomentShareType.KAKAO -> {
-                        shareKakao(it.inviteUrl)
+                        shareKakao(it)
                     }
 
                     Constants.MomentShareType.MESSAGE -> {
@@ -141,19 +144,36 @@ class MomentResultFragment : BaseFragment(R.layout.fragment_moment_result) {
         }
     }
 
-    private fun shareKakao(inviteUrl: String) {
-        val map = mapOf(Constants.NAVIGATION_KEY_MOMENT_CODE to "inviteUrl")
-        val templateId = BuildConfig.KAKAO_SHARE_TEMPLATE_ID.toLong()
+    private fun shareKakao(info: MomentSimpleInfo) {
+        val defaultCommerce = FeedTemplate(
+            content = Content(
+                title = getString(R.string.moment_kakao_title),
+                imageUrl = info.coverImage?.url ?: "",
+                link = Link(
+                    webUrl = info.inviteUrl,
+                    mobileWebUrl = info.inviteUrl
+                )
+            ),
+            buttons = listOf(
+                Button(
+                    getString(R.string.moment_kakao_button),
+                    Link(
+                        webUrl = info.inviteUrl,
+                        mobileWebUrl = info.inviteUrl
+                    )
+                )
+            )
+        )
 
         if (ShareClient.instance.isKakaoTalkSharingAvailable(requireContext())) {
-            ShareClient.instance.shareCustom(requireContext(), templateId, templateArgs = map) { sharingResult, error ->
+            ShareClient.instance.shareDefault(requireContext(),defaultCommerce) { sharingResult, error ->
                 if (error == null && sharingResult != null) {
                     startActivity(sharingResult.intent)
                 }
             }
         } else {
             // 웹 공유 예시 코드
-            val sharerUrl = WebSharerClient.instance.makeCustomUrl(templateId, map)
+            val sharerUrl = WebSharerClient.instance.makeDefaultUrl(defaultCommerce)
 
             try {
                 KakaoCustomTabsClient.openWithDefault(requireContext(), sharerUrl)
