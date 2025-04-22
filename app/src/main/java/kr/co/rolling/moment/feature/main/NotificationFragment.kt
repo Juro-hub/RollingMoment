@@ -10,6 +10,7 @@ import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.network.data.response.PushItem
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MainViewModel
+import kr.co.rolling.moment.library.util.navigate
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import timber.log.Timber
@@ -32,7 +33,6 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
         binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.notification_title)
 
         binding.rvNotification.adapter = adapter
-
     }
 
     override fun observeViewModel() {
@@ -46,6 +46,9 @@ class NotificationFragment : BaseFragment(R.layout.fragment_notification) {
             Timber.d("handlePushList: data = ${it}")
 
             adapter.submitList(it)
+            adapter.setClickListener {
+                navigate(it.navigateData)
+            }
 
             binding.rvNotification.isVisible = it.isNotEmpty()
             binding.layoutEmpty.isVisible = it.isEmpty()

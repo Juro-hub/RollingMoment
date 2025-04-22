@@ -1,4 +1,4 @@
-package kr.co.settlebank.sb010pay.library.network.di
+package kr.co.rolling.moment.library.network.di
 
 import android.content.Context
 import com.google.gson.Gson

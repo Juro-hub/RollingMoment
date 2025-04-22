@@ -7,13 +7,17 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterInside
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.ItemMomentExpiredBinding
 import kr.co.rolling.moment.feature.base.BaseViewHolder
 import kr.co.rolling.moment.library.network.data.response.MomentInfo
+import kr.co.rolling.moment.ui.util.BorderTransformation
+import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
+import kr.co.rolling.moment.ui.util.show
 
 
 /**
@@ -54,24 +58,46 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
         override fun bind(item: MomentInfo) = with(binding) {
             Glide.with(ivImage)
                 .load(item.coverImgUrl)
-                .transform(CenterInside(), RoundedCorners(8))
+                .transform(
+                    MultiTransformation(
+                        CenterCrop(),
+                        BorderTransformation(1f, root.context.getColor(R.color.CE0E0E2), root.resources.getDimensionPixelSize(R.dimen.spacing_8).toFloat()),
+                        RoundedCorners(root.resources.getDimensionPixelSize(R.dimen.spacing_8))
+                    )
+                )
                 .into(ivImage)
 
-            tvEndDate.text = item.deadline
-            tvCategory.text = root.context.getString(item.category.textId)
-            tvTitle.text = item.title
-            tvContent.text = item.comment
-            tvInfo.text = item.traceCnt
-            ivMore.isVisible = item.isOwner
-            if (item.isExpired) {
-                tvEndDate.setBackgroundResource(R.drawable.shape_4_e7f5e7)
-                tvEndDate.setTextColor(root.context.getColor(R.color.C00BF40))
-            } else {
-                tvEndDate.setBackgroundResource(R.drawable.shape_4_eae4f8)
-                tvEndDate.setTextColor(root.context.getColor(R.color.C874FFF))
+            tvEndDate.text = item.deadLineText
+            item.category?.let { category ->
+                tvCategory.text = root.context.getString(category.textId)
+                tvCategory.show()
             }
 
+            tvTitle.text = item.title
+            tvContent.text = item.comment
+            if (item.comment.isEmpty()) {
+                tvContent.hide()
+            }
+            tvInfo.text = item.traceCnt
+            ivMore.isVisible = item.isOwner
+            tvPeriod.isVisible = !item.isPublic
 
+            when (item.deadLine) {
+                -1 -> {
+                    tvEndDate.setBackgroundResource(R.drawable.shape_4_e7f5e7)
+                    tvEndDate.setTextColor(root.context.getColor(R.color.C00BF40))
+                }
+
+                0 -> {
+                    tvEndDate.setBackgroundResource(R.drawable.shape_4_fcecec)
+                    tvEndDate.setTextColor(root.context.getColor(R.color.CFF4242))
+                }
+
+                else -> {
+                    tvEndDate.setBackgroundResource(R.drawable.shape_4_eae4f8)
+                    tvEndDate.setTextColor(root.context.getColor(R.color.C874FFF))
+                }
+            }
 
             root.setOnSingleClickListener {
                 rootClickListener?.invoke(item)

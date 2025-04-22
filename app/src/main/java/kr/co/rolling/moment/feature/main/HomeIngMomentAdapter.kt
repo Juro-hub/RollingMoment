@@ -14,6 +14,7 @@ import kr.co.rolling.moment.databinding.LayoutMomentInfoBinding
 import kr.co.rolling.moment.feature.base.BaseViewHolder
 import kr.co.rolling.moment.library.network.data.response.HomeMomentInfo
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
+import kr.co.rolling.moment.ui.util.show
 import kr.co.rolling.moment.ui.util.showExpandableText
 
 /**
@@ -54,23 +55,36 @@ class HomeIngMomentAdapter : ListAdapter<HomeMomentInfo, BaseViewHolder<HomeMome
         override fun bind(item: HomeMomentInfo) = with(binding) {
             Glide.with(ivImage)
                 .load(item.coverImageUrl)
-                .transform(CenterInside(), RoundedCorners(8))
+                .transform(CenterInside(), RoundedCorners(root.resources.getDimensionPixelSize(R.dimen.spacing_8)))
                 .into(ivImage)
 
             ivMore.isVisible = item.isOwner
-            tvDeadline.text = item.deadline
-            tvCategory.text = root.context.getString(item.category.textId)
+            tvDeadline.text = item.deadLineText
+            item.category?.let {
+                tvCategory.text = root.context.getString(item.category.textId)
+                tvCategory.show()
+            }
             tvMomentTitle.text = item.title
             tvContent.showExpandableText(
                 item.comment
             )
+            tvContent.isVisible = item.comment.isNotEmpty()
 
-            if (item.isExpired) {
-                tvDeadline.setBackgroundResource(R.drawable.shape_4_e7f5e7)
-                tvDeadline.setTextColor(root.context.getColor(R.color.C00BF40))
-            } else {
-                tvDeadline.setBackgroundResource(R.drawable.shape_4_eae4f8)
-                tvDeadline.setTextColor(root.context.getColor(R.color.C874FFF))
+            when (item.deadLine) {
+                -1 -> {
+                    tvDeadline.setBackgroundResource(R.drawable.shape_4_e7f5e7)
+                    tvDeadline.setTextColor(root.context.getColor(R.color.C00BF40))
+                }
+
+                0 -> {
+                    tvDeadline.setBackgroundResource(R.drawable.shape_4_fcecec)
+                    tvDeadline.setTextColor(root.context.getColor(R.color.CFF4242))
+                }
+
+                else -> {
+                    tvDeadline.setBackgroundResource(R.drawable.shape_4_eae4f8)
+                    tvDeadline.setTextColor(root.context.getColor(R.color.C874FFF))
+                }
             }
             root.setOnSingleClickListener {
                 rootClickListener?.invoke(item)

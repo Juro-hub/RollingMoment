@@ -15,6 +15,11 @@
     <string name="sign_in_kakao">카카오로 로그인</string>
     <string name="sign_in_naver">네이버로 로그인</string>
     <string name="sign_in_email">이메일로 로그인</string>
+    <string name="sign_in_bottom_description">가입함으로써 롤링모먼트의 </string>
+    <string name="sign_in_bottom_description_privacy"><u>개인정보 처리방침</u></string>
+    <string name="sign_in_bottom_description_privacy_with">과</string>
+    <string name="sign_in_bottom_description_service"><u>서비스 이용약관</u></string>
+    <string name="sign_in_bottom_description_service_with">에 동의합니다</string>
 
     <string name="edit_text_length_check">%d/%d</string>
 
@@ -40,6 +45,7 @@
     <string name="password_confirm_hint">비밀번호를 한번 더 입력해주세요.</string>
     <string name="password_error">영문 대/소문자, 숫자, 특수문자를 조합한 8~16자의\n비밀번호를 입력해주세요. (연속하는 문자, 숫자 금지)</string>
     <string name="password_confirm_error">비밀번호를 다시 확인해주세요.</string>
+    <string name="nickname_error">한글, 영어, 숫자를 포함하여 10자 이내로 작성해주세요.</string>
 
     <!-- 모먼트 만들기 -->
     <string name="moment_create_toolbar">모먼트 만들기</string>
@@ -69,6 +75,12 @@
     <string name="moment_create_cover_type2">마음 전하기</string>
     <string name="moment_create_cover_type3">작별의 순간</string>
     <string name="moment_create_category_title">카테고리 선택</string>
+    <string name="moment_create_cover_category_1">카메라 또는 앨범</string>
+    <string name="moment_create_cover_category_2">기념의 순간</string>
+    <string name="moment_create_cover_category_3">마음 전하기</string>
+    <string name="moment_create_cover_category_4">작별의 순간</string>
+    <string name="moment_create_cover_category_5">기본 커버 이미지</string>
+    <string name="moment_edit_confirm">수정 완료</string>
 
     <!-- 권한 안내 팝업 -->
     <string name="permission_title_camera">카메라에 대한 접근 권한 필요</string>
@@ -113,6 +125,8 @@
     <string name="moment_result_message">메시지</string>
     <string name="moment_result_share">링크 공유</string>
     <string name="moment_result_copy">링크 복사</string>
+    <string name="moment_kakao_title">Rollin`Moment 에서 롤링페이퍼가 도착했어요!\n모두의 마음이 담긴 순간, Rollin`Moment 에서 확인해보세요</string>
+    <string name="moment_kakao_button">확인하러 가기</string>
 
     <!-- 모먼트 카테고리 -->
     <string name="moment_category_we">결혼</string>
@@ -134,7 +148,8 @@
     <string name="bottom_menu_my_info">마이</string>
     <string name="process_ing">진행</string>
     <string name="process_end">완료</string>
-    <string name="moment_user_trace_count">흔적 %d・</string>
+    <string name="moment_expired_soon">마감임박</string>
+    <string name="moment_user_trace_count">흔적 %d</string>
     <string name="moment_public">공개된 모먼트</string>
     <string name="moment_edit">모먼트 수정하기</string>
     <string name="moment_save">모먼트 이미지로 저장하기</string>
@@ -162,4 +177,8 @@
     <string name="my_info_policy">개인정보처리방침</string>
     <string name="my_info_logout">로그아웃</string>
     <string name="my_info_withdraw">회원탈퇴</string>
+    <string name="my_info_logout_dialog_title">로그아웃 하시겠어요?</string>
+    <string name="my_info_withdraw_dialog_title">서비스를 탈퇴하시겠어요?</string>
+    <string name="my_info_logout_dialog_positive">네, 로그아웃 할래요</string>
+    <string name="my_info_withdraw_dialog_positive">네, 탈퇴할래요</string>
 </resources>

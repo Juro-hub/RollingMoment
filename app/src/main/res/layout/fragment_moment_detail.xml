@@ -13,10 +13,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/layoutScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        android:id="@+id/layoutScroll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutToolBar">
 
@@ -26,8 +26,12 @@
 
             <ImageView
                 android:id="@+id/ivImage"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:maxHeight="300dp"
+                app:layout_constraintDimensionRatio="5:4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -41,6 +45,7 @@
                 android:paddingHorizontal="7dp"
                 android:paddingVertical="5dp"
                 android:textColor="@color/C874FFF"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ivImage"
                 tools:text="D-7" />
@@ -55,6 +60,7 @@
                 android:paddingHorizontal="7dp"
                 android:paddingVertical="5dp"
                 android:textColor="@color/C4C4C4C"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@id/tvDeadline"
                 app:layout_constraintTop_toTopOf="@id/tvDeadline"
                 tools:text="생일" />
@@ -64,7 +70,7 @@
                 style="@style/L116Bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:textColor="@color/C171719"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +95,7 @@
                 style="@style/L612Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/C7F7F7F"
                 app:layout_constraintStart_toStartOf="@id/tvDeadline"
                 app:layout_constraintTop_toBottomOf="@id/tvContent"
@@ -130,6 +136,7 @@
                     android:layout_height="29dp"
                     android:background="@drawable/shape_6_f6f6f6"
                     android:text="@string/moment_detail_invite"
+                    android:textColor="@color/C4C4C4C"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -170,10 +177,10 @@
                     style="@style/T320Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/moment_detail_trace_count"
                     android:textColor="@color/C171719"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/moment_detail_trace_count" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnTraceInvite"
@@ -182,6 +189,7 @@
                     android:layout_height="29dp"
                     android:background="@drawable/shape_6_f6f6f6"
                     android:text="@string/moment_detail_invite"
+                    android:textColor="@color/C4C4C4C"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -191,6 +199,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="vertical"
+                    android:paddingBottom="40dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/tvTraceCount"
                     tools:listitem="@layout/item_trace" />
@@ -206,6 +215,7 @@
         android:layout_marginBottom="40dp"
         android:background="@drawable/shape_99_874fff"
         android:drawableStart="@drawable/ic_plus_white"
+        android:elevation="10dp"
         android:paddingHorizontal="31dp"
         android:text="@string/moment_detail_plus_trace"
         android:textColor="@color/CFFFFFF"

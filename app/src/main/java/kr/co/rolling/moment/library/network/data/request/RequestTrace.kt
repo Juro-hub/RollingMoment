@@ -21,6 +21,6 @@ data class RequestTrace (
     @SerializedName("fontType")
     val fontType : String,
 
-    @SerializedName("fontAlias")
-    val fontAlias : String,
+    @SerializedName("fontAlign")
+    val fontAlign : String,
 ): Parcelable

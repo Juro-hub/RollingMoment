@@ -12,12 +12,14 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.BottomSheetMomentCoverBinding
 import kr.co.rolling.moment.feature.base.BaseBottomSheetFragment
 import kr.co.rolling.moment.library.data.Constants
 import kr.co.rolling.moment.library.network.data.response.MomentImageInfo
 import kr.co.rolling.moment.library.permission.PermissionManager
 import kr.co.rolling.moment.library.util.AndroidInfo
+import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.showPermissionDialog
 import java.io.File
@@ -60,7 +62,7 @@ class MomentCoverBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMoment
             }
         }
 
-    private val uriCallback: ((image: MomentImageInfo) -> Unit) = { image ->
+    private val uriCallback: ((image: MomentImageInfo?) -> Unit) = { image ->
         setFragmentResult(BUNDLE_KEY_IMAGE, bundleOf(BUNDLE_KEY_IMAGE_DATA to image))
         dismiss()
     }
@@ -102,11 +104,19 @@ class MomentCoverBottomSheetFragment : BaseBottomSheetFragment<BottomSheetMoment
         val adapter = MomentCreateCoverAdapter()
         adapter.setClickListener(uriCallback)
         val list = args.coverList.toMutableList()
+
         adapter.submitList(list)
+        binding.rvAdapter.adapter = adapter
+        binding.rvAdapter.addItemDecoration(
+            CommonGridItemDecorator(
+                verticalMargin = resources.getDimensionPixelSize(
+                    R.dimen.spacing_40
+                ), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_8), spanCount = 1
+            )
+        )
 
         initUI()
     }
-
 
     private fun initUI() {
         binding.layoutCamera.setOnSingleClickListener {

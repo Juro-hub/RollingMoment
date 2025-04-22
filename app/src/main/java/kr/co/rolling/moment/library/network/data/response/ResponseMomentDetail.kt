@@ -90,7 +90,7 @@ data class MomentDetailInfo(
 
     val deadline: String = "",
 
-    val category: NetworkConstants.MomentCategory = NetworkConstants.MomentCategory.WEDDING,
+    val category: NetworkConstants.MomentCategory? = null,
 
     val coverImageUrl: String = "",
 

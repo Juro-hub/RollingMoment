@@ -91,3 +91,13 @@ data class MomentDeleteResponse(
 data class MomentEnrollResponse(
     val body: ResponseMomentEnroll
 ) : BaseResponseData()
+
+/** 모먼트 수정 정보조회 DTO */
+data class MomentEditInfoResponse(
+    val body: ResponseMomentEditInfo
+) : BaseResponseData()
+
+/** 모먼트 간략 정보조회 DTO */
+data class MomentSimpleInfoResponse(
+    val body: ResponseMomentSimpleInfo
+) : BaseResponseData()

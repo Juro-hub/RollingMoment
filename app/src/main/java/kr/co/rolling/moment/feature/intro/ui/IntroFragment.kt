@@ -57,6 +57,10 @@ class IntroFragment : BaseFragment(R.layout.fragment_intro) {
         viewLifecycleOwner.observeEvent(viewModel.tokenInfo, ::handleSplash)
     }
 
+    override fun handleBackPressed() {
+        requireActivity().finishAffinity()
+    }
+
     private fun handleSplash(event: SingleEvent<TokenInfo>) {
         event.getContentIfNotHandled()?.let { data ->
             // 자동 로그인 사용자

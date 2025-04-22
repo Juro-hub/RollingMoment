@@ -2,20 +2,27 @@ package kr.co.rolling.moment.library.util
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Spanned
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
+import androidx.navigation.findNavController
+import com.google.gson.Gson
+import kr.co.rolling.moment.R
+import kr.co.rolling.moment.feature.MomentActivity
 import kr.co.rolling.moment.feature.base.BaseActivity
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
+import kr.co.rolling.moment.library.data.NavigationData
 import kr.co.rolling.moment.library.network.NetworkConstants
-import androidx.core.net.toUri
 
 /**
  * Bundle 의 직렬화를 수행
@@ -63,6 +70,32 @@ fun BaseActivity.landingOutLink(link: String) {
     try {
         this.startActivity(Intent(Intent.ACTION_VIEW, link.toUri()))
     } catch (e: ActivityNotFoundException) {
-       e.message
+        e.message
     }
+}
+
+fun BaseFragment.navigate(navigateInfo: NavigationData) {
+    (requireActivity() as MomentActivity).navigate(navigateInfo)
+}
+
+fun AppCompatActivity.navigate(navigateInfo: NavigationData) {
+    when (navigateInfo.navigateType) {
+        NetworkConstants.NavigationType.IN_APP -> {
+            when (navigateInfo.pageType) {
+                NetworkConstants.PageType.MOMENT -> {
+                    val momentCode = navigateInfo.customData.momentCode
+                    val navController = findNavController(R.id.nav_host_fragment)
+                    navController.navigate(R.id.MomentDetailFragment, bundleOf(NAVIGATION_KEY_MOMENT_CODE to momentCode))
+                }
+            }
+        }
+
+        NetworkConstants.NavigationType.OUT_LINK -> {
+            //TODO MoveUrl 추가 필요
+        }
+    }
+}
+
+fun String.decodeUnicodeString(): String {
+    return Gson().fromJson("\"$this\"", String::class.java)
 }

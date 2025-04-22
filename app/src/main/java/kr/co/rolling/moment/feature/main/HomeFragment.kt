@@ -16,7 +16,6 @@ import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_OWNER
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
 import kr.co.rolling.moment.library.network.data.response.HomeInfo
 import kr.co.rolling.moment.library.network.data.response.MomentInfo
-import kr.co.rolling.moment.library.network.data.response.toMomentInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MainViewModel
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
@@ -46,6 +45,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         HomeExpiredAdapter()
     }
 
+    override fun handleBackPressed() {
+        requireActivity().finishAffinity()
+    }
+
     override fun initViewBinding(view: View) {
         binding = FragmentHomeBinding.bind(view)
 
@@ -72,6 +75,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                 bottomSheet.show(parentFragmentManager, "MomentEditBottomSheet")
             }
 
+            expiredMomentAdapter.submitList(it.expiredMoment)
             expiredMomentAdapter.setInfoClickListener {
                 val bottomSheet = MomentEditBottomSheetFragment()
                 bottomSheet.arguments = bundleOf(NAVIGATION_KEY_MOMENT_CODE to it.code, NAVIGATION_KEY_IS_EXPIRED to it.isExpired, NAVIGATION_KEY_IS_OWNER to it.isOwner)
@@ -158,10 +162,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
             binding.layoutEmpty.hide()
             binding.layoutMomentIng.show()
-            val momentList: List<MomentInfo> = list.map { it.toMomentInfo() }
 
-            momentAdapter.submitList(list)
-            expiredMomentAdapter.submitList(momentList)
+            if (isProcess) {
+                momentAdapter.submitList(viewModel.getProgressMomentList())
+            } else {
+                val list = viewModel.getExpiredMomentList()?.toMutableList() ?: mutableListOf<MomentInfo>()
+                expiredMomentAdapter.submitList(list)
+            }
         }
 
         binding.rvProcess.adapter = textAdapter

@@ -72,4 +72,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutEmail" />
 
+    <TextView
+        android:id="@+id/tvBottomDesc1"
+        style="@style/L612Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/sign_in_bottom_description"
+        android:textColor="@color/C999999"
+        app:layout_constraintBottom_toTopOf="@id/tvBottomDesc5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvBottomDesc2"
+        style="@style/L612Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="@string/sign_in_bottom_description_privacy"
+        android:textColor="@color/C999999"
+        app:layout_constraintStart_toEndOf="@id/tvBottomDesc1"
+        app:layout_constraintTop_toTopOf="@id/tvBottomDesc1" />
+
+    <TextView
+        android:id="@+id/tvBottomDesc3"
+        style="@style/L612Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_bottom_description_privacy_with"
+        android:textColor="@color/C999999"
+        app:layout_constraintStart_toEndOf="@id/tvBottomDesc2"
+        app:layout_constraintTop_toTopOf="@id/tvBottomDesc1" />
+
+    <TextView
+        android:id="@+id/tvBottomDesc4"
+        style="@style/L612Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="@string/sign_in_bottom_description_service"
+        android:textColor="@color/C999999"
+        app:layout_constraintStart_toEndOf="@id/tvBottomDesc3"
+        app:layout_constraintTop_toTopOf="@id/tvBottomDesc1" />
+
+    <TextView
+        android:id="@+id/tvBottomDesc5"
+        style="@style/L612Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="12dp"
+        android:text="@string/sign_in_bottom_description_service_with"
+        android:textColor="@color/C999999"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

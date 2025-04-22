@@ -17,11 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/btnCreate"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutToolBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:paddingBottom="40dp"
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,12 +64,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="268dp"
                 android:layout_marginHorizontal="20dp"
-                android:background="@drawable/shape_12_ffffff"
                 android:scaleType="fitXY"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImageEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_img_edit"
+                app:layout_constraintBottom_toBottomOf="@id/ivCover"
+                app:layout_constraintEnd_toEndOf="@id/ivCover" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                android:id="@+id/groupImage"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="ivCover, ivImageEdit"/>
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrier"
@@ -215,7 +231,7 @@
                 android:background="@color/CFAFAFA"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/layoutPrivate"
                 app:layout_constraintTop_toBottomOf="@id/tvMemoCount">
 
                 <TextView
@@ -250,20 +266,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCreate"
+                style="@style/L116Bold"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/selector_common_button"
+                android:enabled="false"
+                android:text="@string/moment_create_button"
+                android:layout_marginTop="36dp"
+                android:textColor="@color/selector_common_button_text"
+                app:layout_constraintTop_toBottomOf="@id/layoutPrivate"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCreate"
-        style="@style/L116Bold"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/selector_common_button"
-        android:enabled="false"
-        android:text="@string/moment_create_button"
-        android:textColor="@color/selector_common_button_text"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,17 +21,29 @@ android {
         applicationId = "kr.co.rolling.moment"
         minSdk = 26
         targetSdk = 35
-        versionCode = 24041100
+        versionCode = 24042201
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders["kakao_key"] = getApiKey("KAKAO_API_KEY")
+    }
+
+    signingConfigs {
+        create("releaseSignConfig")  {
+            keyAlias = getApiKey("SIGN_KEY_ALIAS")
+            keyPassword = getApiKey("KEY_PASSWORD")
+            storeFile = rootProject.file("rollin_keystore")
+            storePassword = getApiKey("KEY_PASSWORD")
+            enableV1Signing = true
+            enableV2Signing = true
+        }
     }
 
     buildTypes {
         release {
             isDebuggable = false
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("releaseSignConfig")
+
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 
             buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("KAKAO_API_KEY"))
@@ -144,6 +156,9 @@ dependencies {
 
     // 카카오 로그인 API 모듈
     implementation (libs.v2.user)
+
+    // 카카오 공유하기 API
+    implementation(libs.v2.share)
 
     // Naver 로그인 API 모듈
     implementation(libs.oauth)

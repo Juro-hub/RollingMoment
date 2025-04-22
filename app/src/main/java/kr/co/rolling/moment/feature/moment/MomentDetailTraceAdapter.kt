@@ -58,17 +58,18 @@ class MomentDetailTraceAdapter : ListAdapter<MomentTraceInfo, BaseViewHolder<Mom
             binding.tvContent.gravity = item.alignment.gravity
 
             binding.tvCount.text = (item.reactions?.get(0)?.count ?: 0).toString()
-            val image = if (item.reactions?.get(0)?.isClicked == true) {
-                R.drawable.ic_thumb_up_already
+            if (item.reactions?.get(0)?.isClicked == true) {
+                binding.tvCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_thumb_up_already, 0, 0, 0)
+                binding.tvCount.setTextColor(root.context.getColor(R.color.C874FFF))
             } else {
-                R.drawable.ic_thumb_up
+                binding.tvCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_thumb_up, 0, 0, 0)
+                binding.tvCount.setTextColor(root.context.getColor(R.color.C7F7F7F))
             }
 
             binding.tvCount.setOnSingleClickListener {
                 goodClickListener?.invoke(item)
             }
 
-            binding.tvCount.setCompoundDrawablesRelativeWithIntrinsicBounds(image, 0, 0, 0)
             binding.tvInfo.text = binding.root.context.getString(R.string.moment_detail_trace_date_user, item.nickname, item.date)
         }
     }

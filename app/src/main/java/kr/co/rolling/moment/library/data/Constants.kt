@@ -18,6 +18,22 @@ object Constants {
     const val NAVIGATION_KEY_IS_DETAIL = "isDetail"
     const val NAVIGATION_KEY_IS_OWNER = "isOwner"
 
+    const val MOMENT_EDIT_SUCCESS = "0000"
+    const val MOMENT_SHARE_KAKAO_WEB_KEY = "REGI_WEB_DOMAIN"
+
+    const val SCHEME_SMS_TO = "smsto:"
+    const val SCHEME_SMS_TO_BODY = "sms_body"
+    const val SCHEME_SHARE_TYPE = "text/plain"
+
+    const val MOMENT_SERVICE_POLICY = "https://elegant-frog-5b2.notion.site/Terms-of-Use-1bb6137f891380f2abf2ded3339a4b7f?pvs=4"
+    const val MOMENT_PRIVATE_POLICY = "https://elegant-frog-5b2.notion.site/Privacy-Policy-1bb6137f891380bc8587c034d1fa0ae7?pvs=4"
+
+    const val MOMENT_PUSH_DATA_KEY = "MOMENT_PUSH_DATA_KEY"
+
+    const val MOMENT_PUSH_KEY_TITLE = "title"
+    const val MOMENT_PUSH_KEY_BODY= "body"
+    const val MOMENT_PUSH_KEY_PAYLOAD= "payload"
+
     /** Enum 영역 */
 
     /** 앱 내 권한 */
@@ -34,11 +50,11 @@ object Constants {
 
     /** 흔적 작성 시 텍스트 정렬 */
     enum class TraceTextAlign(@DrawableRes val drawable: Int, @StringRes val string: Int, val gravity: Int, val type: String) {
-        LEFT_ALIGN(R.drawable.ic_left, R.string.trace_create_alignment_left, Gravity.START or Gravity.TOP, "l"),
+        LEFT_ALIGN(R.drawable.ic_left, R.string.trace_create_alignment_left, Gravity.START or Gravity.TOP, "left"),
 
-        CENTER_ALIGN(R.drawable.ic_center, R.string.trace_create_alignment_center, Gravity.CENTER or Gravity.TOP, "c"),
+        CENTER_ALIGN(R.drawable.ic_center, R.string.trace_create_alignment_center, Gravity.CENTER or Gravity.TOP, "center"),
 
-        RIGHT_ALIGN(R.drawable.ic_right, R.string.trace_create_alignment_right, Gravity.END or Gravity.TOP, "r");
+        RIGHT_ALIGN(R.drawable.ic_right, R.string.trace_create_alignment_right, Gravity.END or Gravity.TOP, "right");
 
         companion object {
             fun getAlign(type: String): TraceTextAlign {
