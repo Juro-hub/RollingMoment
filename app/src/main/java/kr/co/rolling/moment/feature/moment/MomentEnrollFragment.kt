@@ -11,6 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +25,7 @@ import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.ui.util.BorderTransformation
 import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.show
@@ -90,8 +93,15 @@ class MomentEnrollFragment : BaseFragment(R.layout.fragment_moment_enroll) {
                 tvContent.isVisible = it.comment.isNotEmpty()
                 Glide.with(ivImage)
                     .load(it.coverImageUrl)
-                    .transform(CenterInside(), RoundedCorners(root.resources.getDimensionPixelSize(R.dimen.spacing_8)))
+                    .transform(
+                        MultiTransformation(
+                            CenterCrop(),
+                            BorderTransformation(1f, root.context.getColor(R.color.CE0E0E2), root.resources.getDimensionPixelSize(R.dimen.spacing_8).toFloat()),
+                            RoundedCorners(root.resources.getDimensionPixelSize(R.dimen.spacing_8))
+                        )
+                    )
                     .into(ivImage)
+
                 ivMore.hide()
             }
         }
