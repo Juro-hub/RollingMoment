@@ -50,20 +50,24 @@ class TraceAlignmentAdapter : ListAdapter<TraceTextAlign, BaseViewHolder<TraceTe
             binding.tvAlign.text = binding.root.context.getString(item.string)
             binding.ivAlign.setImageDrawable(ContextCompat.getDrawable(binding.root.context, item.drawable))
 
-            if ((bindingAdapterPosition == selectedPosition) || (absoluteAdapterPosition == 0 && selectedPosition == RecyclerView.NO_POSITION)) {
-                TextViewCompat.setTextAppearance(binding.tvAlign, R.style.L512Bold)
-                val drawable = GradientDrawable().apply {
-                    shape = GradientDrawable.RECTANGLE
-                    setStroke(1, binding.root.context.getColor(R.color.C171719))
-                    cornerRadius = 6f
-                    setColor(binding.root.context.getColor(R.color.CFAFAFA))
-                }
-                binding.ivAlign.background = drawable
-            } else {
-                TextViewCompat.setTextAppearance(binding.tvAlign, R.style.L612Medium)
-                binding.ivAlign.background = null
+            val drawable = GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = 6f
+                setColor(binding.root.context.getColor(R.color.CFAFAFA))
             }
 
+            if (isSelectedItem(bindingAdapterPosition, selectedPosition, absoluteAdapterPosition)) {
+                TextViewCompat.setTextAppearance(binding.tvAlign, R.style.L512Bold)
+                binding.tvAlign.setTextColor(binding.root.context.getColor(R.color.C171719))
+
+                // 선택된 아이템의 경우 Stroke 설정
+                drawable.setStroke(2, binding.root.context.getColor(R.color.C171719))
+            } else {
+                TextViewCompat.setTextAppearance(binding.tvAlign, R.style.L612Medium)
+                binding.tvAlign.setTextColor(binding.root.context.getColor(R.color.C7F7F7F))
+            }
+
+            binding.ivAlign.background = drawable
             binding.root.setOnSingleClickListener {
                 selectedPosition = bindingAdapterPosition
 
@@ -72,6 +76,10 @@ class TraceAlignmentAdapter : ListAdapter<TraceTextAlign, BaseViewHolder<TraceTe
                 itemClickListener?.invoke(item)
             }
         }
+    }
+
+    private fun isSelectedItem(adapterPosition: Int, selectedPosition : Int, absolutePosition: Int) : Boolean{
+        return (adapterPosition == selectedPosition) || (absolutePosition == 0 && selectedPosition == RecyclerView.NO_POSITION)
     }
 
     class DiffCallback : DiffUtil.ItemCallback<TraceTextAlign>() {

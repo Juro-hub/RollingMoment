@@ -68,6 +68,7 @@ class HomeIngMomentAdapter : ListAdapter<HomeMomentInfo, BaseViewHolder<HomeMome
             tvContent.showExpandableText(
                 item.comment
             )
+            tvContent.isVisible = item.comment.isNotEmpty()
 
             when (item.deadLine) {
                 -1 -> {
