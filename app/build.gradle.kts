@@ -21,7 +21,7 @@ android {
         applicationId = "kr.co.rolling.moment"
         minSdk = 26
         targetSdk = 35
-        versionCode = 24041801
+        versionCode = 24042200
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
