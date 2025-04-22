@@ -45,6 +45,7 @@
     <string name="password_confirm_hint">비밀번호를 한번 더 입력해주세요.</string>
     <string name="password_error">영문 대/소문자, 숫자, 특수문자를 조합한 8~16자의\n비밀번호를 입력해주세요. (연속하는 문자, 숫자 금지)</string>
     <string name="password_confirm_error">비밀번호를 다시 확인해주세요.</string>
+    <string name="nickname_error">한글, 영어, 숫자를 포함하여 10자 이내로 작성해주세요.</string>
 
     <!-- 모먼트 만들기 -->
     <string name="moment_create_toolbar">모먼트 만들기</string>
@@ -124,6 +125,8 @@
     <string name="moment_result_message">메시지</string>
     <string name="moment_result_share">링크 공유</string>
     <string name="moment_result_copy">링크 복사</string>
+    <string name="moment_kakao_title">Rollin`Moment 에서 롤링페이퍼가 도착했어요!\n모두의 마음이 담긴 순간, Rollin`Moment 에서 확인해보세요</string>
+    <string name="moment_kakao_button">확인하러 가기</string>
 
     <!-- 모먼트 카테고리 -->
     <string name="moment_category_we">결혼</string>
@@ -145,6 +148,7 @@
     <string name="bottom_menu_my_info">마이</string>
     <string name="process_ing">진행</string>
     <string name="process_end">완료</string>
+    <string name="moment_expired_soon">마감임박</string>
     <string name="moment_user_trace_count">흔적 %d</string>
     <string name="moment_public">공개된 모먼트</string>
     <string name="moment_edit">모먼트 수정하기</string>

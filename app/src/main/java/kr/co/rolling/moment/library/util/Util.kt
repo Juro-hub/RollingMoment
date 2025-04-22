@@ -15,6 +15,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.findNavController
+import com.google.gson.Gson
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.feature.MomentActivity
 import kr.co.rolling.moment.feature.base.BaseActivity
@@ -93,4 +94,8 @@ fun AppCompatActivity.navigate(navigateInfo: NavigationData) {
             //TODO MoveUrl 추가 필요
         }
     }
+}
+
+fun String.decodeUnicodeString(): String {
+    return Gson().fromJson("\"$this\"", String::class.java)
 }

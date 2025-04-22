@@ -64,7 +64,9 @@ data class HomeInfo(
 data class HomeMomentInfo(
     val momentCode: String = "",
 
-    val deadline: String = "",
+    val deadLineText: String = "",
+
+    val deadLine: Int = -1,
 
     val category: NetworkConstants.MomentCategory? = null,
 
@@ -83,28 +85,19 @@ data class HomeMomentInfo(
     val isExpired: Boolean = false
 ) : Parcelable
 
-fun HomeMomentInfo.toMomentInfo(): MomentInfo {
-    return MomentInfo(
-        code = momentCode,
-        coverImgUrl = coverImageUrl,
-        title = title,
-        comment = comment,
-        deadline = deadline,
-        category = category,
-        isPublic = isPublic,
-        isOwner = isOwner,
-        traceCnt = traceCount,
-        isExpired = isExpired
-    )
-}
-
-
 fun ResponseHome.toEntity(context: Context) = HomeInfo(
     hasAlarm = this.hasAlarm,
     progressMoment = this.inProgressMomentList.map {
         HomeMomentInfo(
             momentCode = it.momentCode,
-            deadline = if (it.deadline == -1) context.getString(R.string.moment_deadline_expired) else context.getString(R.string.moment_deadline, it.deadline),
+            deadLine = it.deadline,
+            deadLineText = if (it.deadline == -1) {
+                context.getString(R.string.moment_deadline_expired)
+            } else if (it.deadline == 0) {
+                context.getString(R.string.moment_expired_soon)
+            } else {
+                context.getString(R.string.moment_deadline, it.deadline)
+            },
             category = NetworkConstants.MomentCategory.getCategory(it.category),
             title = it.title,
             comment = it.comment,
@@ -118,7 +111,7 @@ fun ResponseHome.toEntity(context: Context) = HomeInfo(
     expiredMoment = this.endedMomentList.map {
         MomentInfo(
             code = it.momentCode,
-            deadline =  context.getString(R.string.moment_deadline_expired),
+            deadLineText = context.getString(R.string.moment_deadline_expired),
             category = NetworkConstants.MomentCategory.getCategory(it.category),
             title = it.title,
             comment = it.comment,

@@ -67,7 +67,7 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
                 )
                 .into(ivImage)
 
-            tvEndDate.text = item.deadline
+            tvEndDate.text = item.deadLineText
             item.category?.let { category ->
                 tvCategory.text = root.context.getString(category.textId)
                 tvCategory.show()
@@ -82,12 +82,21 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
             ivMore.isVisible = item.isOwner
             tvPeriod.isVisible = !item.isPublic
 
-            if (item.isExpired) {
-                tvEndDate.setBackgroundResource(R.drawable.shape_4_e7f5e7)
-                tvEndDate.setTextColor(root.context.getColor(R.color.C00BF40))
-            } else {
-                tvEndDate.setBackgroundResource(R.drawable.shape_4_eae4f8)
-                tvEndDate.setTextColor(root.context.getColor(R.color.C874FFF))
+            when (item.deadLine) {
+                -1 -> {
+                    tvEndDate.setBackgroundResource(R.drawable.shape_4_e7f5e7)
+                    tvEndDate.setTextColor(root.context.getColor(R.color.C00BF40))
+                }
+
+                0 -> {
+                    tvEndDate.setBackgroundResource(R.drawable.shape_4_fcecec)
+                    tvEndDate.setTextColor(root.context.getColor(R.color.CFF4242))
+                }
+
+                else -> {
+                    tvEndDate.setBackgroundResource(R.drawable.shape_4_eae4f8)
+                    tvEndDate.setTextColor(root.context.getColor(R.color.C874FFF))
+                }
             }
 
             root.setOnSingleClickListener {

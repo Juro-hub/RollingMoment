@@ -26,8 +26,6 @@ object NetworkConstants {
     const val NETWORK_KEY_TRACE = "trace"
 
     /** 서버에서 앱 초대로 전돨되는 Moment Code */
-    const val NETWORK_KEY_INVITE_CODE = "inviteCode"
-
     const val NETWORK_KEY_MOMENT_CODE = "momentCode"
     const val NETWORK_KEY_TRACE_CODE = "traceCode"
 

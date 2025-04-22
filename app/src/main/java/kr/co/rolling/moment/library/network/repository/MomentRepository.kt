@@ -17,7 +17,7 @@ import kr.co.rolling.moment.library.network.data.request.RequestMomentCreate
 import kr.co.rolling.moment.library.network.data.request.RequestMomentEdit
 import kr.co.rolling.moment.library.network.data.request.RequestTrace
 import kr.co.rolling.moment.library.network.data.request.RequestTraceCode
-import kr.co.settlebank.sb010pay.library.network.di.DefaultApiService
+import kr.co.rolling.moment.library.network.di.DefaultApiService
 import javax.inject.Inject
 
 /**

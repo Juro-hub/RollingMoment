@@ -14,7 +14,7 @@ import kr.co.rolling.moment.feature.base.BaseActivity
 import kr.co.rolling.moment.feature.main.MyInfoFragment
 import kr.co.rolling.moment.library.data.Constants.MOMENT_PUSH_DATA_KEY
 import kr.co.rolling.moment.library.data.NavigationData
-import kr.co.rolling.moment.library.network.NetworkConstants.NETWORK_KEY_INVITE_CODE
+import kr.co.rolling.moment.library.network.NetworkConstants.NETWORK_KEY_MOMENT_CODE
 import kr.co.rolling.moment.library.network.data.CustomError
 import kr.co.rolling.moment.library.network.data.ErrorType
 import kr.co.rolling.moment.library.network.data.response.TokenInfo
@@ -29,7 +29,6 @@ import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.component.CommonDialogData
 import kr.co.rolling.moment.ui.util.showDialog
 import timber.log.Timber
-import java.time.zone.ZoneOffsetTransitionRule
 import javax.inject.Inject
 
 /**
@@ -74,18 +73,27 @@ class MomentActivity : BaseActivity() {
             navigate(data)
         }
     }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         val manager = getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
-        manager?.let {
-            val uri = (it.primaryClip?.getItemAt(0)?.text ?: "").toString().toUri()
-            val momentCode = uri.getQueryParameter(NETWORK_KEY_INVITE_CODE)
-            momentCode?.let { code ->
-                preferenceManager.setMomentCode(code)
-                val emptyClip = ClipData.newPlainText("", "")
-                it.setPrimaryClip(emptyClip)
+        try {
+            manager?.let {
+                val uri = (it.primaryClip?.getItemAt(0)?.text ?: "").toString().toUri()
+
+                if (uri.isHierarchical) {
+                    val momentCode = uri.getQueryParameter(NETWORK_KEY_MOMENT_CODE)
+                    momentCode?.let { code ->
+                        preferenceManager.setMomentCode(code)
+                        val emptyClip = ClipData.newPlainText("", "")
+                        it.setPrimaryClip(emptyClip)
+                    }
+                }
             }
+
+        } catch (e: Exception) {
         }
+
     }
 
     private fun networkError(singleEvent: SingleEvent<CustomError>) {

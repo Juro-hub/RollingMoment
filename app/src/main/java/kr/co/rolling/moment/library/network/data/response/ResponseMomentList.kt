@@ -61,7 +61,9 @@ data class MomentInfo(
 
     val comment: String = "",
 
-    val deadline: String = "",
+    val deadLineText: String = "",
+
+    val deadLine: Int = -1,
 
     val category: NetworkConstants.MomentCategory? = null,
 
@@ -80,7 +82,14 @@ fun ResponseMomentList.toEntity(context: Context) = MomentListInfo(
             code = it.code,
             coverImgUrl = it.coverImgUrl,
             title = it.title,
-            deadline = if (it.deadline == -1) context.getString(R.string.moment_deadline_expired) else context.getString(R.string.moment_deadline, it.deadline),
+            deadLine = it.deadline,
+            deadLineText = if (it.deadline == -1) {
+                context.getString(R.string.moment_deadline_expired)
+            } else if (it.deadline == 0) {
+                context.getString(R.string.moment_expired_soon)
+            } else {
+                context.getString(R.string.moment_deadline, it.deadline)
+            },
             category = NetworkConstants.MomentCategory.getCategory(it.category),
             isPublic = true,
             isOwner = it.isOwner,

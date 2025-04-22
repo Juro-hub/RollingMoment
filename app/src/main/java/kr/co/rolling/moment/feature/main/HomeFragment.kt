@@ -16,7 +16,6 @@ import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_OWNER
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
 import kr.co.rolling.moment.library.network.data.response.HomeInfo
 import kr.co.rolling.moment.library.network.data.response.MomentInfo
-import kr.co.rolling.moment.library.network.data.response.toMomentInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MainViewModel
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
@@ -164,9 +163,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             binding.layoutEmpty.hide()
             binding.layoutMomentIng.show()
 
-            if(isProcess){
+            if (isProcess) {
                 momentAdapter.submitList(viewModel.getProgressMomentList())
-            }else{
+            } else {
                 val list = viewModel.getExpiredMomentList()?.toMutableList() ?: mutableListOf<MomentInfo>()
                 expiredMomentAdapter.submitList(list)
             }
