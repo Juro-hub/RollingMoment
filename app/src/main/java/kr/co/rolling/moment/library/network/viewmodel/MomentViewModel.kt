@@ -13,6 +13,7 @@ import kr.co.rolling.moment.library.network.data.ErrorType
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCode
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCreate
 import kr.co.rolling.moment.library.network.data.request.RequestMomentEdit
+import kr.co.rolling.moment.library.network.data.request.RequestMomentReport
 import kr.co.rolling.moment.library.network.data.request.RequestTrace
 import kr.co.rolling.moment.library.network.data.request.RequestTraceCode
 import kr.co.rolling.moment.library.network.data.response.CreateTraceInfo
@@ -73,6 +74,9 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
         private set
 
     var momentSimpleInfo: MutableLiveData<SingleEvent<MomentSimpleInfo>> = MutableLiveData()
+        private set
+
+    var momentReportInfo: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
         private set
 
     fun requestMomentCreateInfo() {
@@ -366,6 +370,33 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
                 when (it.meta.resCode) {
                     ErrorType.SUCCESS.errorCode -> {
                         momentSimpleInfo.postValue(SingleEvent(it.body.toEntity()))
+                    }
+
+                    else -> {
+                        error.postValue(SingleEvent(getError(it.meta.resCode, it.meta.resMessage)))
+                    }
+                }
+            }
+        }
+    }
+
+    fun requestMomentReport(reportData: RequestMomentReport) {
+        viewModelScope.launch {
+            repository.requestMomentReport(
+                requestData = reportData,
+                onStart = {
+                    isLoading.postValue(SingleEvent(true))
+                },
+                onError = {
+                    error.postValue(SingleEvent(it))
+                },
+                onComplete = {
+                    isLoading.postValue(SingleEvent(false))
+                }
+            ).collect {
+                when (it.meta.resCode) {
+                    ErrorType.SUCCESS.errorCode -> {
+                        momentReportInfo.postValue(SingleEvent(true))
                     }
 
                     else -> {

@@ -19,6 +19,7 @@ import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.library.util.showToast
 import timber.log.Timber
 
 /**
@@ -63,6 +64,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             Timber.d("handleMomentList: data = ${it}")
 
             if (it) {
+                showToast(getString(R.string.moment_detail_delete_done))
                 viewModel.requestMomentList()
             }
         }

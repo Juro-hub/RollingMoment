@@ -55,6 +55,8 @@
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_SignUpFragment_to_SignInFragment"
+            app:popUpTo="@id/SignUpFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/SignInFragment" />
     </fragment>
 
@@ -141,6 +143,9 @@
         <action
             android:id="@+id/action_MomentDetailFragment_to_MomentCreateFragment"
             app:destination="@id/MomentCreateFragment" />
+        <action
+            android:id="@+id/action_MomentDetailFragment_to_TraceMoreBottomSheetFragment"
+            app:destination="@id/TraceMoreBottomSheetFragment" />
     </fragment>
 
     <fragment
@@ -242,5 +247,15 @@
         <argument
             android:name="isExpired"
             app:argType="boolean" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/TraceMoreBottomSheetFragment"
+        android:name="kr.co.rolling.moment.feature.main.TraceMoreBottomSheetFragment"
+        tools:layout="@layout/bottom_sheet_trace_more">
+        <argument
+            android:name="traceCode"
+            android:defaultValue=""
+            app:argType="string" />
     </dialog>
 </navigation>

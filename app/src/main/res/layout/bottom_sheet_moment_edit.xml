@@ -44,4 +44,16 @@
         android:textColor="@color/C171719"
         app:layout_constraintTop_toBottomOf="@id/tvEdit" />
 
+    <TextView
+        android:id="@+id/tvReport"
+        style="@style/L116Bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="16dp"
+        android:text="@string/moment_report"
+        android:textAlignment="center"
+        android:textColor="@color/C171719"
+        app:layout_constraintTop_toBottomOf="@id/tvDelete" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

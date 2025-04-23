@@ -20,6 +20,7 @@ import kr.co.rolling.moment.ui.util.setOnSingleClickListener
  */
 class MomentDetailTraceAdapter : ListAdapter<MomentTraceInfo, BaseViewHolder<MomentTraceInfo>>(DiffCallback()) {
     private var goodClickListener: ((item: MomentTraceInfo) -> Unit)? = null
+    private var reportClickListener: ((item: MomentTraceInfo) -> Unit)? = null
 
     init {
         setHasStableIds(true)
@@ -40,6 +41,10 @@ class MomentDetailTraceAdapter : ListAdapter<MomentTraceInfo, BaseViewHolder<Mom
 
     fun setClickListener(click: ((item: MomentTraceInfo) -> Unit)) {
         goodClickListener = click
+    }
+
+    fun setReportListener(click: ((item: MomentTraceInfo)-> Unit)){
+        reportClickListener = click
     }
 
     inner class ViewHolder(private val binding: ItemTraceBinding) : BaseViewHolder<MomentTraceInfo>(binding.root) {
@@ -70,6 +75,9 @@ class MomentDetailTraceAdapter : ListAdapter<MomentTraceInfo, BaseViewHolder<Mom
                 goodClickListener?.invoke(item)
             }
 
+            binding.ivReport.setOnSingleClickListener{
+                reportClickListener?.invoke(item)
+            }
             binding.tvInfo.text = binding.root.context.getString(R.string.moment_detail_trace_date_user, item.nickname, item.date)
         }
     }
