@@ -26,6 +26,7 @@ import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 import kr.co.rolling.moment.library.util.getParcelableCompat
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.library.util.showToast
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import timber.log.Timber
 
@@ -61,7 +62,7 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
     private fun handleTraceCreate(event: SingleEvent<CreateTraceInfo>) {
         event.getContentIfNotHandled()?.let { data ->
             Timber.d("handleTraceCreate: data = ${data}")
-
+            showToast(getString(R.string.trace_create_done))
             finishFragment()
         }
     }

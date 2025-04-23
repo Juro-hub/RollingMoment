@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Spanned
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.os.BundleCompat
@@ -98,4 +99,8 @@ fun AppCompatActivity.navigate(navigateInfo: NavigationData) {
 
 fun String.decodeUnicodeString(): String {
     return Gson().fromJson("\"$this\"", String::class.java)
+}
+
+fun BaseFragment.showToast(msg:String){
+    Toast.makeText(requireContext(),msg, Toast.LENGTH_SHORT).show()
 }

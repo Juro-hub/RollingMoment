@@ -2,6 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="24dp"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -44,9 +46,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:paddingBottom="24dp"
         android:text="@string/moment_detail_trace_date_user"
         android:textColor="@color/C7F7F7F"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutTrace" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="2dp"
+        android:id="@+id/ivReport"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/ic_vertical_dots_gray"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -109,6 +109,9 @@ object NetworkConstants {
     // 모먼트 간단 조회
     const val API_MOMENT_SIMPLE = "api/v1/moment/simple"
 
+    // 모먼트 / 흔적 신고
+    const val API_MOMENT_REPORT ="api/v1/report"
+
     /**
      * SNS 로그인 유형
      */
@@ -222,5 +225,10 @@ object NetworkConstants {
                 } ?: MOMENT
             }
         }
+    }
+
+    enum class ReportType(val type: String){
+        MOMENT("moment"),
+        TRACE("trace")
     }
 }

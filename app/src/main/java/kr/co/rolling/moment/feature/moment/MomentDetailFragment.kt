@@ -25,21 +25,27 @@ import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMomentDetailBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.feature.main.MomentEditBottomSheetFragment
+import kr.co.rolling.moment.feature.main.TraceMoreBottomSheetFragment
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_DETAIL
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_EXPIRED
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_OWNER
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
 import kr.co.rolling.moment.library.data.MomentResultType
+import kr.co.rolling.moment.library.network.NetworkConstants
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCode
+import kr.co.rolling.moment.library.network.data.request.RequestMomentReport
 import kr.co.rolling.moment.library.network.data.response.MomentDetailInfo
 import kr.co.rolling.moment.library.network.data.response.MomentTraceInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.library.util.showToast
+import kr.co.rolling.moment.ui.component.CommonDialogData
 import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.show
+import kr.co.rolling.moment.ui.util.showDialog
 import kr.co.rolling.moment.ui.util.showExpandableText
 import timber.log.Timber
 import java.io.File
@@ -68,7 +74,26 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
     override fun observeViewModel() {
         viewLifecycleOwner.observeEvent(viewModel.momentDetailInfo, ::handleMomentDetail)
         viewLifecycleOwner.observeEvent(viewModel.momentTraceInfo, ::handleTraceInfo)
+        viewLifecycleOwner.observeEvent(viewModel.momentReportInfo, ::handleReportInfo)
+        viewLifecycleOwner.observeEvent(viewModel.momentDelete, ::handleMomentDelete)
         viewModel.requestMomentDetail(RequestMomentCode(args.momentCode))
+    }
+
+    private fun handleMomentDelete(event: SingleEvent<Boolean>){
+        event.getContentIfNotHandled()?.let {
+            Timber.d("handleMomentDelete: data = ${it}")
+
+            showToast(getString(R.string.moment_detail_delete_done))
+            finishFragment()
+        }
+    }
+
+    private fun handleReportInfo(event : SingleEvent<Boolean>){
+        event.getContentIfNotHandled()?.let {
+            Timber.d("handleReportInfo: data = ${it}")
+
+            showToast(getString(R.string.moment_report_done))
+        }
     }
 
     private fun handleTraceInfo(event: SingleEvent<MomentTraceInfo>) {
@@ -119,6 +144,9 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
             adapter.setClickListener {
                 viewModel.requestTraceReaction(it)
             }
+            adapter.setReportListener{
+                findNavController().navigateSafe(MomentDetailFragmentDirections.actionMomentDetailFragmentToTraceMoreBottomSheetFragment(it.code))
+            }
             adapter.submitList(data.traces)
 
             binding.layoutToolBar.ivClose.setOnSingleClickListener {
@@ -152,11 +180,28 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
         binding.layoutToolBar.ivClose.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_vertical_dots))
         binding.layoutToolBar.ivClose.show()
 
+        setFragmentResultListener(TraceMoreBottomSheetFragment.BUNDLE_KEY_MORE) { _, bundle ->
+            val isReport = bundle.getBoolean(TraceMoreBottomSheetFragment.BUNDLE_KEY_REPORT)
+            val code = bundle.getString(TraceMoreBottomSheetFragment.BUNDLE_KEY_MORE_CODE) ?: return@setFragmentResultListener
+
+            if (isReport) {
+                report(code, NetworkConstants.ReportType.TRACE)
+                return@setFragmentResultListener
+            }
+        }
 
         setFragmentResultListener(MomentEditBottomSheetFragment.BUNDLE_KEY_EDIT) { _, bundle ->
             val isSave = bundle.getBoolean(MomentEditBottomSheetFragment.BUNDLE_KEY_SAVE)
+            val isReport = bundle.getBoolean(MomentEditBottomSheetFragment.BUNDLE_KEY_REPORT)
+
+            if (isReport) {
+                report(args.momentCode, NetworkConstants.ReportType.MOMENT)
+                return@setFragmentResultListener
+            }
+
             if (isSave) {
                 captureAndSaveScrollView()
+                return@setFragmentResultListener
             }
 
             val code = bundle.getString(MomentEditBottomSheetFragment.BUNDLE_KEY_EDIT_CODE) ?: return@setFragmentResultListener
@@ -232,5 +277,19 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
         }
     }
 
-
+    private fun report(code: String, reportType: NetworkConstants.ReportType){
+        showDialog(CommonDialogData(
+            title = getString(R.string.moment_report_title),
+            contents = getString(R.string.moment_report_description),
+            positiveText = getString(R.string.moment_report_positive),
+            negativeText = getString(R.string.no)
+        ), positiveCallback = {
+            viewModel.requestMomentReport(
+                RequestMomentReport(
+                    contentType = reportType.type,
+                    code = code
+                )
+            )
+        })
+    }
 }

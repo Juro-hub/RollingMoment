@@ -15,6 +15,7 @@ import kr.co.rolling.moment.library.network.data.ErrorType
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCode
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCreate
 import kr.co.rolling.moment.library.network.data.request.RequestMomentEdit
+import kr.co.rolling.moment.library.network.data.request.RequestMomentReport
 import kr.co.rolling.moment.library.network.data.request.RequestTrace
 import kr.co.rolling.moment.library.network.data.request.RequestTraceCode
 import kr.co.rolling.moment.library.network.di.DefaultApiService
@@ -232,6 +233,24 @@ class MomentRepository @Inject constructor() : Repository {
         onError: (CustomError) -> Unit
     ) = flow {
         val response = apiService.requestMomentSimple(requestData.momentCode)
+
+        response.suspendOnSuccess {
+            emit(data)
+        }.onError {
+            onError(CustomError(ErrorType.HTTP_EXCEPTION, "${statusCode.code}"))
+        }.onException {
+            onError(makeException(exception, message))
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun requestMomentReport(
+        requestData: RequestMomentReport,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (CustomError) -> Unit
+    ) = flow {
+        val response = apiService.requestMomentReport(requestData)
 
         response.suspendOnSuccess {
             emit(data)

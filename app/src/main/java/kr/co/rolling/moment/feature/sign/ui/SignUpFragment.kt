@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.RadioButton
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentSignUpBinding
@@ -15,7 +16,9 @@ import kr.co.rolling.moment.library.network.NetworkConstants
 import kr.co.rolling.moment.library.network.data.request.RequestSignUp
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
+import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.library.util.showToast
 import kr.co.rolling.moment.ui.component.CommonEditText
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.smoothScrollToView
@@ -42,13 +45,14 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     private fun handleSignUp(event: SingleEvent<Boolean>) {
         event.getContentIfNotHandled()?.let {
-            finishFragment()
+            showToast(getString(R.string.sign_up_done))
+            findNavController().navigateSafe(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment())
         }
     }
 
     private fun initToolBar() {
         binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.sign_up)
-        binding.layoutToolBar.ivBack.setOnSingleClickListener { finishFragment() }
+        binding.layoutToolBar.ivBack.setOnSingleClickListener { findNavController().navigateSafe(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment()) }
     }
 
     private fun initUi() {
