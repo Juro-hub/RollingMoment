@@ -21,6 +21,7 @@ import kr.co.rolling.moment.library.network.viewmodel.MainViewModel
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.library.util.showToast
 import kr.co.rolling.moment.ui.component.CommonDialogData
 import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
@@ -87,6 +88,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private fun handleMomentDelete(data: SingleEvent<Boolean>) {
         data.getContentIfNotHandled()?.let {
             if (it) {
+                showToast(getString(R.string.moment_detail_delete_done))
                 viewModel.requestHomeInfo()
             }
         }

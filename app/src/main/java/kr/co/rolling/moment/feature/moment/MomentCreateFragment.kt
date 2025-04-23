@@ -38,6 +38,7 @@ import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.util.getParcelableCompat
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
+import kr.co.rolling.moment.library.util.showToast
 import kr.co.rolling.moment.ui.component.CommonDialogData
 import kr.co.rolling.moment.ui.util.BorderTransformation
 import kr.co.rolling.moment.ui.util.hide
@@ -86,6 +87,7 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
         event.getContentIfNotHandled()?.let { data ->
             Timber.d("handleMomentCreate: data = ${data}")
             if (data.momentCode == MOMENT_EDIT_SUCCESS) {
+                showToast(getString(R.string.moment_edit_done))
                 finishFragment()
                 return
             }

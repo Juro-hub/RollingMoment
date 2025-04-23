@@ -5,6 +5,7 @@ import kr.co.rolling.moment.library.network.data.request.RequestLogin
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCode
 import kr.co.rolling.moment.library.network.data.request.RequestMomentCreate
 import kr.co.rolling.moment.library.network.data.request.RequestMomentEdit
+import kr.co.rolling.moment.library.network.data.request.RequestMomentReport
 import kr.co.rolling.moment.library.network.data.request.RequestSignUp
 import kr.co.rolling.moment.library.network.data.request.RequestSnsLogin
 import kr.co.rolling.moment.library.network.data.request.RequestSplash
@@ -144,4 +145,10 @@ interface ApiService {
     suspend fun requestMomentSimple(
         @Query("momentCode") momentCode: String
     ): ApiResponse<MomentSimpleInfoResponse>
+
+    // 모먼트/흔적 신고
+    @POST(NetworkConstants.API_MOMENT_REPORT)
+    suspend fun requestMomentReport(
+        @Body requestReport: RequestMomentReport
+    ): ApiResponse<BaseResponseData>
 }
