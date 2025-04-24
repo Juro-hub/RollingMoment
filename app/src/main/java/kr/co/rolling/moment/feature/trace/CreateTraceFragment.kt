@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentTraceCreateBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.feature.moment.CouponImagePopUpDialog
 import kr.co.rolling.moment.library.data.Constants
 import kr.co.rolling.moment.library.data.TraceFontType
 import kr.co.rolling.moment.library.network.data.request.RequestTrace
@@ -29,6 +30,7 @@ import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.library.util.showToast
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import timber.log.Timber
+import kotlin.random.Random
 
 
 /**
@@ -63,6 +65,11 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
         event.getContentIfNotHandled()?.let { data ->
             Timber.d("handleTraceCreate: data = ${data}")
             showToast(getString(R.string.trace_create_done))
+
+            val random = Random.nextInt(10) == 0
+            if (data.momentCode == "MO20251071744885997781" && random) {
+                CouponImagePopUpDialog().show(parentFragmentManager, "couponImagePopUp")
+            }
             finishFragment()
         }
     }
