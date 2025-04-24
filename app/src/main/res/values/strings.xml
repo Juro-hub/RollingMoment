@@ -62,7 +62,7 @@
     <string name="moment_crate_category_guide">카테고리 선택</string>
     <string name="moment_crate_category_hint">카테고리를 선택해주세요.</string>
     <string name="moment_create_memo_guide">모먼트 소개</string>
-    <string name="moment_create_memo_hint">어떤 모먼트를 만들고 싶은가요? 소개글을 추가해주세요.</string>
+    <string name="moment_create_memo_hint">타인을 비방하거나 욕설, 혐오 표현, 개인정보 노출, 정치·종교 관련 내용 등 부적절한 내용이 포함된 글은 운영 정책에 따라 사전 고지 없이 삭제될 수 있습니다</string>
     <string name="moment_create_private_title">비공개로 만드시겠어요?</string>
     <string name="moment_create_private_content">비공개는 초대받은 사람만 확인할 수 있습니다.\n모먼트 제작 후에는 공개 여부를 수정할 수 없습니다.</string>
     <string name="moment_create_button">모먼트 만들기</string>
