@@ -67,7 +67,7 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
             showToast(getString(R.string.trace_create_done))
 
             val random = Random.nextInt(10) == 0
-            if (data.momentCode == "MO20251071744885997781" && random) {
+            if (data.momentCode == "MO20251141745459557566" && random) {
                 CouponImagePopUpDialog().show(parentFragmentManager, "couponImagePopUp")
             }
             finishFragment()
