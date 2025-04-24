@@ -32,7 +32,10 @@ data class ResponseMomentSimpleInfo(
     val inviteUrl: String,
 
     @SerializedName("period")
-    val period: String
+    val period: String,
+
+    @SerializedName("inviteImgUrl")
+    val inviteImgUrl: String
 ) : Parcelable
 
 @Parcelize
@@ -53,7 +56,9 @@ data class MomentSimpleInfo(
 
     val period: String = "",
 
-    val isExpired: Boolean = false
+    val isExpired: Boolean = false,
+
+    val inviteImgUrl: String = ""
 ) : Parcelable
 
 fun ResponseMomentSimpleInfo.toEntity() = MomentSimpleInfo(
@@ -66,6 +71,7 @@ fun ResponseMomentSimpleInfo.toEntity() = MomentSimpleInfo(
         url = coverImgUrl,
         code = coverImageId.toString()
     ),
+    inviteImgUrl = inviteImgUrl,
     period = period,
     inviteUrl = inviteUrl,
     isExpired = deadline == -1

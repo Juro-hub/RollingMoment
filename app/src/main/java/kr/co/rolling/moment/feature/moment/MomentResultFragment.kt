@@ -148,7 +148,7 @@ class MomentResultFragment : BaseFragment(R.layout.fragment_moment_result) {
         val defaultCommerce = FeedTemplate(
             content = Content(
                 title = getString(R.string.moment_kakao_title),
-                imageUrl = info.coverImage?.url ?: "",
+                imageUrl = info.inviteImgUrl,
                 link = Link(
                     webUrl = info.inviteUrl,
                     mobileWebUrl = info.inviteUrl
