@@ -107,7 +107,7 @@
                 android:paddingBottom="10dp"
                 android:text="@string/trace_create_ai_description"
                 android:textColor="@color/C999999"
-                app:drawableStartCompat="@drawable/ic_info_black"
+                app:drawableStartCompat="@drawable/ic_info_gray"
                 app:layout_constraintStart_toStartOf="@id/tvAiTitle"
                 app:layout_constraintTop_toBottomOf="@id/tvAiTitle" />
 
