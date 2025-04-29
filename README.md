@@ -16,11 +16,9 @@
 ## 🛠️ 기술 스택
 
 - Kotlin
-- Jetpack Compose
+- MVVM
 - Hilt (Dependency Injection)
 - Firebase (Authentication, Firestore, Storage)
-- Clean Architecture 적용
-- 모듈화(Modularization) 구조
 
 ---
 
@@ -50,7 +48,8 @@
 ---
 
 ## 🛠️ 향후 개발 예정 기능
-
+- **SAA 및 Compose 기능 도입**
+- Clean Architectur 도입
 - 인기글 및 모먼트 탐색 기능 추가
 - 다국어(영어, 일본어) 지원
 - 사용자 맞춤형 롤링페이퍼 커스터마이징
