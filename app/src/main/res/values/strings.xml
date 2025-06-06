@@ -113,7 +113,10 @@
     <string name="trace_create_font_helper">폰트 선택</string>
     <string name="trace_create_font_hint">폰트를 선택해주세요</string>
     <string name="trace_create_background">배경 컬러</string>
+    <string name="trace_create_text_color">텍스트 컬러</string>
     <string name="trace_create_done">당신의 흔적이 모먼트에 기록되었습니다</string>
+    <string name="trace_create_anonymous_title">익명으로 작성하시겠어요?</string>
+    <string name="trace_create_anonymous_content">내 이름 대신 &#39;익명&#39;으로 표시됩니다.</string>
 
     <!-- 모먼트 상세 -->
     <string name="moment_detail_enroll">%s에 참여하시겠어요?</string>

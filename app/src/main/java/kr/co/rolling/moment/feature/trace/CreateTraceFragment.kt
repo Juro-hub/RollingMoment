@@ -79,6 +79,7 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
         var font = TraceFontType.DEFAULT
         var backgroundColor = Constants.TraceBackgroundColor.NONE
         var alignment = Constants.TraceTextAlign.LEFT_ALIGN
+        var textColor = Constants.TraceTextColor.BLACK
 
         binding.layoutToolBar.ivBack.setOnSingleClickListener { finishFragment() }
         binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.trace_create_toolbar)
@@ -124,7 +125,9 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
                 content = binding.etTrace.text.toString(),
                 bgColor = backgroundColor.type,
                 fontType = font.type,
-                fontAlign = alignment.type
+                fontAlign = alignment.type,
+                isAnonymous = binding.cbAnonymous.isChecked,
+                textColor = textColor.type
             )
             viewModel.requestTraceCreate(data)
         }
@@ -134,8 +137,7 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
             binding.layoutTrace.setBackgroundColor(ContextCompat.getColor(requireContext(), it.color))
             backgroundColor = it
         }
-        val data = Constants.TraceBackgroundColor.entries
-        colorAdapter.submitList(data)
+        colorAdapter.submitList(Constants.TraceBackgroundColor.entries)
         binding.rvBackgroundColor.adapter = colorAdapter
         binding.rvBackgroundColor.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_12), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_10), spanCount = 5))
 
@@ -146,6 +148,15 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
         }
         val alignments = Constants.TraceTextAlign.entries
         alignmentAdapter.submitList(alignments)
+
+        val textColorAdapter = TraceTextColorAdapter()
+        textColorAdapter.setClickListener {
+            binding.etTrace.setTextColor(requireContext().getColor(it.color))
+            textColor = it
+        }
+        textColorAdapter.submitList(Constants.TraceTextColor.entries)
+        binding.rvTextColor.adapter = textColorAdapter
+        binding.rvTextColor.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_12), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_10), spanCount = 5))
 
         binding.rvAlign.adapter = alignmentAdapter
         binding.rvAlign.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_20), spanCount = 3))

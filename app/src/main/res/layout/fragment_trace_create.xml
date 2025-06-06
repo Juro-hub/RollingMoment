@@ -35,9 +35,9 @@
                 style="@style/L911Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawablePadding="2dp"
                 android:text="@string/trace_create_info"
                 android:textColor="@color/CFFFFFF"
-                android:drawablePadding="2dp"
                 app:drawableStartCompat="@drawable/ic_info"
                 app:layout_constraintBottom_toBottomOf="@id/view"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -169,6 +169,32 @@
                 app:layout_constraintTop_toBottomOf="@id/rvAlign" />
 
             <TextView
+                android:id="@+id/tvTextColor"
+                style="@style/L314Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/trace_create_text_color"
+                android:textColor="@color/C4C4C4C"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etFont" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTextColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTextColor"
+                app:spanCount="5"
+                tools:listitem="@layout/item_trace_background" />
+
+            <TextView
                 android:id="@+id/tvBackgroundColor"
                 style="@style/L314Bold"
                 android:layout_width="wrap_content"
@@ -178,7 +204,7 @@
                 android:text="@string/trace_create_background"
                 android:textColor="@color/C4C4C4C"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etFont" />
+                app:layout_constraintTop_toBottomOf="@id/rvTextColor" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvBackgroundColor"
@@ -194,19 +220,59 @@
                 app:spanCount="5"
                 tools:listitem="@layout/item_trace_background" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutAnonymous"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/CF6F6F6"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="16dp"
+                app:layout_constraintTop_toBottomOf="@id/rvBackgroundColor">
+
+                <TextView
+                    android:id="@+id/tvAnonymousTitle"
+                    style="@style/L116Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trace_create_anonymous_title"
+                    android:textColor="@color/C4C4C4C"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/L911Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/trace_create_anonymous_content"
+                    android:textColor="@color/C7F7F7F"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAnonymousTitle" />
+
+                <CheckBox
+                    android:id="@+id/cbAnonymous"
+                    android:layout_width="36dp"
+                    android:layout_height="21dp"
+                    android:background="@drawable/selector_common_checkbox"
+                    android:button="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.appcompat.widget.AppCompatButton
-                style="@style/L116Bold"
                 android:id="@+id/btnConfirm"
+                style="@style/L116Bold"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:background="@drawable/selector_common_button"
                 android:enabled="false"
                 android:text="@string/confirm"
-                android:layout_marginTop="40dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:textColor="@color/selector_common_button_text"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rvBackgroundColor" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
