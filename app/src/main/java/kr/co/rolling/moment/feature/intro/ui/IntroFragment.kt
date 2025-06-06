@@ -1,5 +1,6 @@
 package kr.co.rolling.moment.feature.intro.ui
 
+import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
@@ -9,7 +10,7 @@ import kr.co.rolling.moment.R
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.data.Constants
 import kr.co.rolling.moment.library.network.data.request.RequestSplash
-import kr.co.rolling.moment.library.network.data.response.TokenInfo
+import kr.co.rolling.moment.library.network.data.response.SplashInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
 import kr.co.rolling.moment.library.permission.PermissionManager
@@ -43,7 +44,8 @@ class IntroFragment : BaseFragment(R.layout.fragment_intro) {
         }
 
     override fun initViewBinding(view: View) {
-        val rejectedPermissionList = permissionManager.getPostNotificationValuesPermissionDeniedList()
+        val rejectedPermissionList =
+            permissionManager.getPostNotificationValuesPermissionDeniedList()
 
         if (rejectedPermissionList.isNullOrEmpty() || preferenceManager.isAlreadyShowAlarmPermission()) {
             requestSplash()
@@ -54,15 +56,26 @@ class IntroFragment : BaseFragment(R.layout.fragment_intro) {
     }
 
     override fun observeViewModel() {
-        viewLifecycleOwner.observeEvent(viewModel.tokenInfo, ::handleSplash)
+        viewLifecycleOwner.observeEvent(viewModel.splashInfo, ::handleSplash)
     }
 
     override fun handleBackPressed() {
         requireActivity().finishAffinity()
     }
 
-    private fun handleSplash(event: SingleEvent<TokenInfo>) {
+    private fun handleSplash(event: SingleEvent<SplashInfo>) {
         event.getContentIfNotHandled()?.let { data ->
+            // 강제 업데이트 팝업 노출
+            if (data.isUpdate) {
+                val bundle = Bundle()
+                bundle.putParcelable(UpdateDialog.ARG_DIALOG_DATA, data)
+
+                val updateDialog = UpdateDialog()
+
+                updateDialog.arguments = bundle
+                updateDialog.show(childFragmentManager, "updateAlert")
+                return
+            }
             // 자동 로그인 사용자
             if (data.accessToken.isNotEmpty()) {
                 preferenceManager.setTokenInfo(data)

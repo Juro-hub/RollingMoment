@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import kr.co.rolling.moment.library.network.data.response.TokenInfo
+import kr.co.rolling.moment.library.network.data.response.SplashInfo
 
 /**
  * Encrypted Preference Manager
@@ -88,9 +88,9 @@ object PreferenceManager {
         )
     }
 
-    fun setTokenInfo(tokenInfo: TokenInfo) {
-        setAccessToken(tokenInfo.accessToken)
-        setRefreshToken(tokenInfo.refreshToken)
+    fun setTokenInfo(splashInfo: SplashInfo) {
+        setAccessToken(splashInfo.accessToken)
+        setRefreshToken(splashInfo.refreshToken)
     }
 
 

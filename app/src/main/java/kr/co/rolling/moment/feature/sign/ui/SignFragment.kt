@@ -21,7 +21,7 @@ import kr.co.rolling.moment.library.data.Constants.MOMENT_SERVICE_POLICY
 import kr.co.rolling.moment.library.network.NetworkConstants
 import kr.co.rolling.moment.library.network.data.request.RequestSnsLogin
 import kr.co.rolling.moment.library.network.data.response.SnsLoginInfo
-import kr.co.rolling.moment.library.network.data.response.TokenInfo
+import kr.co.rolling.moment.library.network.data.response.SplashInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
 import kr.co.rolling.moment.library.util.landingOutLink
@@ -126,7 +126,7 @@ class SignFragment : BaseFragment(R.layout.fragment_sign) {
     private fun handleSnsLoginInfo(event: SingleEvent<SnsLoginInfo>) {
         event.getContentIfNotHandled()?.let {
             Timber.d("handleSnsLoginInfo: data = ${it}")
-            preferenceManager.setTokenInfo(TokenInfo(accessToken = it.accessToken, refreshToken = it.refreshToken))
+            preferenceManager.setTokenInfo(SplashInfo(accessToken = it.accessToken, refreshToken = it.refreshToken))
             findNavController().navigateSafe(SignFragmentDirections.actionSignFragmentToMainFragment())
         }
     }

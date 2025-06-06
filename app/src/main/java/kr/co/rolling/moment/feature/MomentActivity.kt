@@ -17,7 +17,7 @@ import kr.co.rolling.moment.library.data.NavigationData
 import kr.co.rolling.moment.library.network.NetworkConstants.NETWORK_KEY_MOMENT_CODE
 import kr.co.rolling.moment.library.network.data.CustomError
 import kr.co.rolling.moment.library.network.data.ErrorType
-import kr.co.rolling.moment.library.network.data.response.TokenInfo
+import kr.co.rolling.moment.library.network.data.response.SplashInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MainViewModel
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
@@ -101,7 +101,7 @@ class MomentActivity : BaseActivity() {
             when (it.errorType) {
                 ErrorType.EXPIRED_TOKEN -> {
                     showDialog(CommonDialogData(it.message, positiveText = getString(R.string.confirm)), positiveCallback = {
-                        preferenceManager.setTokenInfo(TokenInfo("", ""))
+                        preferenceManager.setTokenInfo(SplashInfo("", ""))
                         findNavController(R.id.nav_host_fragment).navigate(R.id.IntroFragment, NavOptions.Builder().setPopUpTo<MyInfoFragment>(true).build())
                     })
                 }
