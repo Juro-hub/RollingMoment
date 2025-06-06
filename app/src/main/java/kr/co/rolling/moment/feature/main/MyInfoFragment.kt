@@ -10,7 +10,7 @@ import kr.co.rolling.moment.databinding.FragmentMyInfoBinding
 import kr.co.rolling.moment.feature.base.BaseActivity
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.network.data.response.MyPageInfo
-import kr.co.rolling.moment.library.network.data.response.TokenInfo
+import kr.co.rolling.moment.library.network.data.response.SplashInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MainViewModel
 import kr.co.rolling.moment.library.util.landingOutLink
@@ -47,7 +47,7 @@ class MyInfoFragment : BaseFragment(R.layout.fragment_my_info) {
     private fun handleLogout(event: SingleEvent<Boolean>) {
         event.getContentIfNotHandled()?.let {
             Timber.d("handleLogout: data = ${it}")
-            preferenceManager.setTokenInfo(TokenInfo("", ""))
+            preferenceManager.setTokenInfo(SplashInfo("", ""))
 
             val navController = requireActivity().findNavController(R.id.nav_host_fragment)
             val navOptions = NavOptions.Builder()
@@ -62,7 +62,7 @@ class MyInfoFragment : BaseFragment(R.layout.fragment_my_info) {
         event.getContentIfNotHandled()?.let {
             Timber.d("handleWithdraw: data = ${it}")
 
-            preferenceManager.setTokenInfo(TokenInfo("", ""))
+            preferenceManager.setTokenInfo(SplashInfo("", ""))
             requireActivity().finishAffinity()
         }
     }

@@ -7,21 +7,31 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ResponseToken(
     @SerializedName("accessToken")
-    val accessToken: String,
+    val accessToken: String = "",
 
     @SerializedName("refreshToken")
-    val refreshToken: String
+    val refreshToken: String = "",
+
+    @SerializedName("isUpdate")
+    val isUpdate: Boolean = false,
+
+    @SerializedName("message")
+    val message: String = ""
 ) : Parcelable
 
 @Parcelize
-data class TokenInfo(
+data class SplashInfo(
     val accessToken: String = "",
-    val refreshToken: String = ""
+    val refreshToken: String = "",
+    val isUpdate: Boolean = false,
+    val updateMessage: String = "'"
 ) : Parcelable
 
-fun ResponseToken.toEntity(): TokenInfo {
-    return TokenInfo(
+fun ResponseToken.toEntity(): SplashInfo {
+    return SplashInfo(
         accessToken = this.accessToken,
-        refreshToken = this.refreshToken
+        refreshToken = this.refreshToken,
+        isUpdate = this.isUpdate,
+        updateMessage = this.message
     )
 }

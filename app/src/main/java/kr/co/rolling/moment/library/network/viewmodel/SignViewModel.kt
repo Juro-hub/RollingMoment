@@ -3,7 +3,6 @@ package kr.co.rolling.moment.library.network.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.launch
 import kr.co.rolling.moment.feature.base.BaseViewModel
 import kr.co.rolling.moment.library.network.data.CustomError
@@ -14,7 +13,7 @@ import kr.co.rolling.moment.library.network.data.request.RequestSnsLogin
 import kr.co.rolling.moment.library.network.data.request.RequestSplash
 import kr.co.rolling.moment.library.network.data.response.SignUpResponse
 import kr.co.rolling.moment.library.network.data.response.SnsLoginInfo
-import kr.co.rolling.moment.library.network.data.response.TokenInfo
+import kr.co.rolling.moment.library.network.data.response.SplashInfo
 import kr.co.rolling.moment.library.network.data.response.toEntity
 import kr.co.rolling.moment.library.network.repository.SignRepository
 import kr.co.rolling.moment.library.network.util.SingleEvent
@@ -32,10 +31,7 @@ class SignViewModel @Inject constructor(private val repository: SignRepository) 
     var error: MutableLiveData<SingleEvent<CustomError>> = MutableLiveData()
         private set
 
-    var signUpInfo: MutableLiveData<SingleEvent<SignUpResponse>> = MutableLiveData()
-        private set
-
-    var tokenInfo: MutableLiveData<SingleEvent<TokenInfo>> = MutableLiveData()
+    var splashInfo: MutableLiveData<SingleEvent<SplashInfo>> = MutableLiveData()
         private set
 
     var snsLoginInfo: MutableLiveData<SingleEvent<SnsLoginInfo>> = MutableLiveData()
@@ -63,7 +59,7 @@ class SignViewModel @Inject constructor(private val repository: SignRepository) 
             ).collect {
                 when (it.meta.resCode) {
                     ErrorType.SUCCESS.errorCode -> {
-                        tokenInfo.postValue(SingleEvent(it.body.toEntity()))
+                        splashInfo.postValue(SingleEvent(it.body.toEntity()))
                     }
 
                     else -> {
@@ -125,7 +121,7 @@ class SignViewModel @Inject constructor(private val repository: SignRepository) 
             ).collect {
                 when (it.meta.resCode) {
                     ErrorType.SUCCESS.errorCode -> {
-                        tokenInfo.postValue(SingleEvent(it.body.toEntity()))
+                        splashInfo.postValue(SingleEvent(it.body.toEntity()))
                     }
 
                     else -> {
