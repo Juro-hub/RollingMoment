@@ -11,6 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentTraceCreateBinding
@@ -74,7 +78,7 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     private fun initUI() {
         var font = TraceFontType.DEFAULT
         var backgroundColor = Constants.TraceBackgroundColor.NONE
@@ -160,5 +164,20 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
 
         binding.rvAlign.adapter = alignmentAdapter
         binding.rvAlign.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_20), spanCount = 3))
+
+        val emojiAdapter = TraceEmojiAdapter()
+        emojiAdapter.submitList(resources.getStringArray(R.array.trace_create_emoji_list).toMutableList())
+        emojiAdapter.setClickListener {
+            binding.etTrace.setText(binding.etTrace.text.toString()+it)
+            binding.etTrace.setSelection(binding.etTrace.text.length)
+        }
+        val layoutManager = FlexboxLayoutManager(context).apply {
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.FLEX_START
+            flexWrap = FlexWrap.WRAP
+        }
+        binding.rvEmoji.layoutManager = layoutManager
+        binding.rvEmoji.adapter = emojiAdapter
+        binding.rvEmoji.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_12), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_10), spanCount = 3))
     }
 }

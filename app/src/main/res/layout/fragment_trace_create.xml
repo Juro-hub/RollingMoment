@@ -133,6 +133,40 @@
                 app:layout_constraintTop_toBottomOf="@id/tvAiDescription" />
 
             <TextView
+                android:id="@+id/tvEmoji"
+                style="@style/L314Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/trace_create_emoji_title"
+                android:textColor="@color/C4C4C4C"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewDivider" />
+
+            <TextView
+                android:id="@+id/tvEmojiContent"
+                style="@style/L612Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/trace_create_emoji_content"
+                android:textColor="@color/C7F7F7F"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvEmoji" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvEmoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="@id/tvEmojiContent"
+                app:layout_constraintTop_toBottomOf="@id/tvEmojiContent"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_trace_emoji" />
+
+            <TextView
                 android:id="@+id/tvTextAlign"
                 style="@style/L314Bold"
                 android:layout_width="wrap_content"
@@ -142,7 +176,7 @@
                 android:text="@string/trace_create_alignment_title"
                 android:textColor="@color/C4C4C4C"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewDivider" />
+                app:layout_constraintTop_toBottomOf="@id/rvEmoji" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvAlign"
@@ -226,6 +260,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/CF6F6F6"
                 android:paddingHorizontal="20dp"
+                android:layout_marginTop="30dp"
                 android:paddingVertical="16dp"
                 app:layout_constraintTop_toBottomOf="@id/rvBackgroundColor">
 
@@ -273,7 +308,7 @@
                 android:text="@string/confirm"
                 android:textColor="@color/selector_common_button_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvBackgroundColor" />
+                app:layout_constraintTop_toBottomOf="@id/layoutAnonymous" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

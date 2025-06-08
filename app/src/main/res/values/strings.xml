@@ -116,7 +116,17 @@
     <string name="trace_create_text_color">텍스트 컬러</string>
     <string name="trace_create_done">당신의 흔적이 모먼트에 기록되었습니다</string>
     <string name="trace_create_anonymous_title">익명으로 작성하시겠어요?</string>
-    <string name="trace_create_anonymous_content">내 이름 대신 &#39;익명&#39;으로 표시됩니다.</string>
+    <string name="trace_create_anonymous_content">내 이름 대신 \'익명\'으로 표시됩니다.</string>
+    <string name="trace_create_emoji_title">이모지 선택</string>
+    <string name="trace_create_emoji_content">이모지를 선택하여 더 풍부한 감정을 표현해보세요.\n선택하면 작성 영역에 자동으로 붙여넣기 됩니다!</string>
+    <string-array name="trace_create_emoji_list">
+        <item>ദ്ദി◍•ᴗ•◍)</item>
+        <item>(●´∀｀●)</item>
+        <item>♪( ›◡‹ )</item>
+        <item>(´ε｀ )♡</item>
+        <item>( ˶\'ᵕ\'˶)</item>
+        <item>≽^•⩊•^≼</item>
+    </string-array>
 
     <!-- 모먼트 상세 -->
     <string name="moment_detail_enroll">%s에 참여하시겠어요?</string>

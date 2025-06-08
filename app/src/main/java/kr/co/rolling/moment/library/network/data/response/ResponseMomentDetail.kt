@@ -69,7 +69,7 @@ data class ResponseTrace(
     val date: String, // yyyy.MM.dd HH:mm,
 
     @SerializedName("textcolor")
-    val textColor : String,
+    val textColor : String? = null,
 
     @SerializedName("reactions")
     val reactions: List<ResponseReaction>
@@ -160,7 +160,7 @@ fun ResponseTrace.toEntity() = MomentTraceInfo(
     color = Constants.TraceBackgroundColor.getColor(color),
     alignment = Constants.TraceTextAlign.getAlign(alignment),
     date = date,
-    textColor = Constants.TraceTextColor.getColor(textColor),
+    textColor = Constants.TraceTextColor.getColor(textColor ?: ""),
     reactions = reactions.map { it.toEntity() }
 )
 
