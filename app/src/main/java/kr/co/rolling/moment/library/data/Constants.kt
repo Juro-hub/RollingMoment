@@ -106,4 +106,29 @@ object Constants {
 
         COPY(R.drawable.ic_copy, R.string.moment_result_copy)
     }
+
+    @Parcelize
+    enum class MomentCategory(val code: String, @StringRes val textId: Int) : Parcelable {
+        ALL("all",R.string.moment_category_all),
+        WEDDING("we", R.string.moment_category_we),
+        BIRTHDAY("bi", R.string.moment_category_bi),
+        FIRST_BIRTHDAY("fi", R.string.moment_category_fi),
+        GRADUATION("gr", R.string.moment_category_gr),
+        FAREWELL("fa", R.string.moment_category_fa),
+        CHRISTMAS("ch", R.string.moment_category_ch),
+        TEACHERS_DAY("te", R.string.moment_category_te),
+        APPRECIATION("ap", R.string.moment_category_ap),
+        CHEERING("che", R.string.moment_category_che),
+        CONFESSION("co", R.string.moment_category_co),
+        PRAISE("pr", R.string.moment_category_pr),
+        CELEBRATION("ce", R.string.moment_category_ce);
+
+        companion object {
+            fun getCategory(code: String): MomentCategory? {
+                return entries.find {
+                    it.code == code
+                }
+            }
+        }
+    }
 }
