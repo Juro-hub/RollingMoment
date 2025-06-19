@@ -457,4 +457,6 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
 
     fun getMomentInfo() = momentDetailInfo.value?.peekContent()
     fun isMomentExpired() = momentDetailInfo.value?.peekContent()?.isExpired == true
+
+    fun getMomentList() = momentList.value?.peekContent()?.momentList
 }

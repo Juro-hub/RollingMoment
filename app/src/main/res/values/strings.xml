@@ -145,6 +145,7 @@
     <string name="moment_category_co">고백</string>
     <string name="moment_category_pr">칭찬</string>
     <string name="moment_category_ce">축하</string>
+    <string name="moment_category_all">전체</string>
 
     <!-- 메인 화면 -->
     <string name="bottom_menu_home">홈</string>
