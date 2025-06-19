@@ -42,7 +42,7 @@ data class ResponseMomentSimpleInfo(
 data class MomentSimpleInfo(
     val title: String = "",
 
-    val expireType: NetworkConstants.MomentExpireType = NetworkConstants.MomentExpireType.SEVEN_DAYS_LATER,
+    val expireType: Int = -1,
 
     val category: NetworkConstants.MomentCategory? = null,
 
@@ -63,7 +63,7 @@ data class MomentSimpleInfo(
 
 fun ResponseMomentSimpleInfo.toEntity() = MomentSimpleInfo(
     title = title,
-    expireType = NetworkConstants.MomentExpireType.getType(deadline.toString()),
+    expireType = deadline,
     category = NetworkConstants.MomentCategory.getCategory(category),
     comment = comment,
     isPublic = isPublic,
