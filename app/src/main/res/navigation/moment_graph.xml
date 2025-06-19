@@ -226,6 +226,11 @@
         <argument
             android:name="enterType"
             app:argType="kr.co.rolling.moment.library.data.MomentResultType" />
+        <action
+            android:id="@+id/action_MomentResultFragment_to_MomentDetailFragment"
+            app:popUpTo="@id/MomentResultFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/MomentDetailFragment" />
     </fragment>
 
     <dialog
