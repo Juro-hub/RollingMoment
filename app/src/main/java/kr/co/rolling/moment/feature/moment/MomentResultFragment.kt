@@ -86,7 +86,7 @@ class MomentResultFragment : BaseFragment(R.layout.fragment_moment_result) {
 
             binding.layoutMoment.apply {
                 ivMore.hide()
-                tvDeadline.text = getString(it.expireType.textId)
+                tvDeadline.text = getString(R.string.moment_result_date, it.expireType)
                 if (it.isExpired) {
                     tvDeadline.setBackgroundResource(R.drawable.shape_4_e7f5e7)
                     tvDeadline.setTextColor(requireContext().getColor(R.color.C00BF40))

@@ -135,6 +135,7 @@
     <string name="moment_result_message">메시지</string>
     <string name="moment_result_share">링크 공유</string>
     <string name="moment_result_copy">링크 복사</string>
+    <string name="moment_result_date">%d일 후</string>
     <string name="moment_kakao_title">Rollin`Moment 에서 롤링페이퍼가 도착했어요!\n모두의 마음이 담긴 순간, Rollin`Moment 에서 확인해보세요</string>
     <string name="moment_kakao_button">확인하러 가기</string>
 
