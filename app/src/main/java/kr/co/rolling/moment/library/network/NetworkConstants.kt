@@ -5,12 +5,28 @@ import android.os.Parcelable
 import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 import kr.co.rolling.moment.R
+import kr.co.rolling.moment.library.data.Deploy
 
 /**
  * Network 관련 상수 모음
  */
 object NetworkConstants {
-    var BASE_URL: String = "https://rollinmoment.n-e.kr"
+    var BASE_URL: String = ""
+
+    private const val DEVELOP_URL = "https://rollinmoment.store:3000"
+    private const val PROD_URL = "https://rollinmoment.com:3300"
+
+    fun init(){
+        when(Deploy.SERVER){
+            Deploy.ServerType.DEVELOP -> {
+                BASE_URL = DEVELOP_URL
+            }
+
+            Deploy.ServerType.RELEASE ->{
+                BASE_URL = PROD_URL
+            }
+        }
+    }
 
     /** API_CONNECT_TIMEOUT Timeout 3초 */
     const val API_CONNECT_TIMEOUT: Long = 10

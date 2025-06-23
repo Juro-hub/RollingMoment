@@ -21,9 +21,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
+import java.security.SecureRandom
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 /** 기본 API 서비스 통신 */
 @Qualifier
@@ -90,7 +94,33 @@ object NetworkModule {
         headerInterceptor: HeaderInterceptor,
         httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
+        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+            override fun checkClientTrusted(
+                chain: Array<out java.security.cert.X509Certificate>?,
+                authType: String?
+            ) {
+
+            }
+
+            override fun checkServerTrusted(
+                chain: Array<out java.security.cert.X509Certificate>?,
+                authType: String?
+            ) {
+
+            }
+
+            override fun getAcceptedIssuers(): Array<out java.security.cert.X509Certificate>? {
+                return arrayOf()
+            }
+        })
+
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+        val sslSocketFactory = sslContext.socketFactory
+
         return OkHttpClient.Builder()
+            .sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+            .hostnameVerifier { hostname, session -> true }
             .connectTimeout(NetworkConstants.API_CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(NetworkConstants.API_WRITE_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(NetworkConstants.API_READ_TIMEOUT, TimeUnit.SECONDS)
