@@ -43,6 +43,15 @@ class TraceAlignmentAdapter : ListAdapter<TraceTextAlign, BaseViewHolder<TraceTe
         itemClickListener = click
     }
 
+    fun setItem(traceAlign: TraceTextAlign) {
+        val position = currentList.indexOfFirst { it == traceAlign }
+        if (position != -1) {
+            selectedPosition = position
+            itemClickListener?.invoke(traceAlign)
+            notifyDataSetChanged()
+        }
+    }
+
     inner class ViewHolder(private val binding: ItemTextAlignBinding) : BaseViewHolder<TraceTextAlign>(binding.root) {
 
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")

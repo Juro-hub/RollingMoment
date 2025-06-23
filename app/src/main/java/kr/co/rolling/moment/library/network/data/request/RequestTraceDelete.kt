@@ -5,13 +5,10 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 /**
- * 흔적 리액션 변경
+ * 흔적 작성
  */
 @Parcelize
-data class RequestTraceCode(
+data class RequestTraceDelete (
     @SerializedName("traceCode")
-    val traceCode: String,
-
-    @SerializedName("reactionType")
-    val reactionType: String = "heart"
-) : Parcelable
+    val traceCode : String,
+): Parcelable

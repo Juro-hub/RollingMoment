@@ -111,6 +111,10 @@
             android:name="momentCode"
             app:argType="string"
             app:nullable="false" />
+        <argument
+            android:name="traceInfo"
+            app:argType="kr.co.rolling.moment.library.network.data.response.MomentTraceInfo"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_TraceCreateFragment_to_FontSelectBottomSheetFragment"
             app:destination="@id/FontSelectBottomSheetFragment" />
@@ -262,5 +266,8 @@
             android:name="traceCode"
             android:defaultValue=""
             app:argType="string" />
+        <argument
+            android:name="isOwner"
+            app:argType="boolean"/>
     </dialog>
 </navigation>

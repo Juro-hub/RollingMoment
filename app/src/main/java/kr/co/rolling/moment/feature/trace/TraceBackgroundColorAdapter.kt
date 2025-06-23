@@ -41,6 +41,14 @@ class TraceBackgroundColorAdapter : ListAdapter<TraceBackgroundColor, BaseViewHo
         itemClickListener = click
     }
 
+    fun setItem(backgroundColor: TraceBackgroundColor) {
+        val position = currentList.indexOfFirst { it == backgroundColor }
+        if (position != -1) {
+            selectedPosition = position
+            itemClickListener?.invoke(backgroundColor)
+            notifyDataSetChanged()
+        }
+    }
     inner class ViewHolder(private val binding: ItemTraceBackgroundBinding) : BaseViewHolder<TraceBackgroundColor>(binding.root) {
 
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
