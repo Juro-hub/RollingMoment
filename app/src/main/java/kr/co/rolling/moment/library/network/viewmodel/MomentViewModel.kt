@@ -253,6 +253,32 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
         }
     }
 
+    fun requestMomentListAdmin() {
+        viewModelScope.launch {
+            repository.requestMomentListAdmin(
+                onStart = {
+                    isLoading.postValue(SingleEvent(true))
+                },
+                onError = {
+                    error.postValue(SingleEvent(it))
+                },
+                onComplete = {
+                    isLoading.postValue(SingleEvent(false))
+                }
+            ).collect {
+                when (it.meta.resCode) {
+                    ErrorType.SUCCESS.errorCode -> {
+                        momentList.postValue(SingleEvent(it.body.toEntity(context = context)))
+                    }
+
+                    else -> {
+                        error.postValue(SingleEvent(getError(it.meta.resCode, it.meta.resMessage)))
+                    }
+                }
+            }
+        }
+    }
+
     fun requestMomentDelete(code: String) {
         viewModelScope.launch {
             repository.requestMomentDelete(

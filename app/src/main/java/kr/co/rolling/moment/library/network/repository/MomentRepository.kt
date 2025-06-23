@@ -138,6 +138,23 @@ class MomentRepository @Inject constructor() : Repository {
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
     @WorkerThread
+    fun requestMomentListAdmin(
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (CustomError) -> Unit
+    ) = flow {
+        val response = apiService.requestMomentListAdmin()
+
+        response.suspendOnSuccess {
+            emit(data)
+        }.onError {
+            onError(CustomError(ErrorType.HTTP_EXCEPTION, "${statusCode.code}"))
+        }.onException {
+            onError(makeException(exception, message))
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
     fun requestMomentDelete(
         requestData: RequestMomentCode,
         onStart: () -> Unit,
