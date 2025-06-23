@@ -16,6 +16,7 @@ import dagger.hilt.android.HiltAndroidApp
 import kr.co.rolling.moment.BuildConfig
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.ActivityLoadingPopupBinding
+import kr.co.rolling.moment.library.network.NetworkConstants
 import kr.co.rolling.moment.library.util.PreferenceManager
 import timber.log.Timber
 import javax.inject.Inject
@@ -39,6 +40,8 @@ class MomentApplication @Inject constructor() : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+
+        NetworkConstants.init()
 
         /**
          * SNS Login 관련 Initialize
