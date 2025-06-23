@@ -96,6 +96,37 @@ object Constants {
         }
     }
 
+    /** 흔적 작성 시 백그라운드 색상 */
+    enum class TraceTextColor(@ColorRes val color: Int, val type: String) {
+        BLACK(R.color.C333333, "black"),
+
+        GRAY(R.color.C7F7F7F, "gray"),
+
+        BLUE(R.color.C0045DA, "blue"),
+
+        NAVY(R.color.C00205C, "navy"),
+
+        GREEN(R.color.C006347, "green"),
+
+        LAVENDER(R.color.C874FFF, "lavender"),
+
+        PURPLE(R.color.C4D1DB5, "purple"),
+
+        PINK(R.color.CE600BB, "pink"),
+
+        ORANGE(R.color.CF75408, "orange"),
+
+        BROWN(R.color.C684400, "brown");
+
+        companion object {
+            fun getColor(type: String): TraceTextColor {
+                return entries.find {
+                    it.type == type
+                } ?: BLACK
+            }
+        }
+    }
+
     /** 모먼트 생성 완료 / 마감 후 결과 공유 */
     enum class MomentShareType(@DrawableRes val drawableRes: Int, @StringRes val stringRes: Int) {
         KAKAO(R.drawable.ic_kakao, R.string.moment_result_kakao),

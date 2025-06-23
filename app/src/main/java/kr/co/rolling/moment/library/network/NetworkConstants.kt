@@ -80,7 +80,7 @@ object NetworkConstants {
     const val API_AI_RECOMMEND = "api/v1/trace/ai"
 
     // 흔적 작성
-    const val API_TRACE_CREATE = "api/v1/trace"
+    const val API_TRACE_CREATE = "api/v2/trace"
 
     // 모먼트 상세 조회
     const val API_MOMENT_DETAIL = "api/v1/moment"

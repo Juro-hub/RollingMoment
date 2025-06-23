@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import kr.co.rolling.moment.feature.base.BaseViewModel
+import kr.co.rolling.moment.library.data.Constants
 import kr.co.rolling.moment.library.data.Constants.MOMENT_EDIT_SUCCESS
 import kr.co.rolling.moment.library.network.data.CustomError
 import kr.co.rolling.moment.library.network.data.ErrorType
@@ -433,6 +434,7 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
                                     color = item.color,
                                     alignment = item.alignment,
                                     date = item.date,
+                                    textColor = item.textColor,
                                     reactions = item.reactions?.map { reactions ->
                                         ReactionInfo(
                                             count = if (reactions.isClicked) {

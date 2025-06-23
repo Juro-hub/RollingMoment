@@ -11,6 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentTraceCreateBinding
@@ -74,11 +78,12 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     private fun initUI() {
         var font = TraceFontType.DEFAULT
         var backgroundColor = Constants.TraceBackgroundColor.NONE
         var alignment = Constants.TraceTextAlign.LEFT_ALIGN
+        var textColor = Constants.TraceTextColor.BLACK
 
         binding.layoutToolBar.ivBack.setOnSingleClickListener { finishFragment() }
         binding.layoutToolBar.tvToolbarTitle.text = getString(R.string.trace_create_toolbar)
@@ -124,7 +129,9 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
                 content = binding.etTrace.text.toString(),
                 bgColor = backgroundColor.type,
                 fontType = font.type,
-                fontAlign = alignment.type
+                fontAlign = alignment.type,
+                isAnonymous = binding.cbAnonymous.isChecked,
+                textColor = textColor.type
             )
             viewModel.requestTraceCreate(data)
         }
@@ -134,8 +141,7 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
             binding.layoutTrace.setBackgroundColor(ContextCompat.getColor(requireContext(), it.color))
             backgroundColor = it
         }
-        val data = Constants.TraceBackgroundColor.entries
-        colorAdapter.submitList(data)
+        colorAdapter.submitList(Constants.TraceBackgroundColor.entries)
         binding.rvBackgroundColor.adapter = colorAdapter
         binding.rvBackgroundColor.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_12), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_10), spanCount = 5))
 
@@ -147,7 +153,31 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
         val alignments = Constants.TraceTextAlign.entries
         alignmentAdapter.submitList(alignments)
 
+        val textColorAdapter = TraceTextColorAdapter()
+        textColorAdapter.setClickListener {
+            binding.etTrace.setTextColor(requireContext().getColor(it.color))
+            textColor = it
+        }
+        textColorAdapter.submitList(Constants.TraceTextColor.entries)
+        binding.rvTextColor.adapter = textColorAdapter
+        binding.rvTextColor.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_12), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_10), spanCount = 5))
+
         binding.rvAlign.adapter = alignmentAdapter
         binding.rvAlign.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_20), spanCount = 3))
+
+        val emojiAdapter = TraceEmojiAdapter()
+        emojiAdapter.submitList(resources.getStringArray(R.array.trace_create_emoji_list).toMutableList())
+        emojiAdapter.setClickListener {
+            binding.etTrace.setText(binding.etTrace.text.toString()+it)
+            binding.etTrace.setSelection(binding.etTrace.text.length)
+        }
+        val layoutManager = FlexboxLayoutManager(context).apply {
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.FLEX_START
+            flexWrap = FlexWrap.WRAP
+        }
+        binding.rvEmoji.layoutManager = layoutManager
+        binding.rvEmoji.adapter = emojiAdapter
+        binding.rvEmoji.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_12), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_10), spanCount = 3))
     }
 }

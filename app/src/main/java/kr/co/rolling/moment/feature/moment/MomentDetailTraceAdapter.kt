@@ -61,6 +61,7 @@ class MomentDetailTraceAdapter : ListAdapter<MomentTraceInfo, BaseViewHolder<Mom
             binding.tvContent.text = item.content
             binding.tvContent.typeface = ResourcesCompat.getFont(binding.root.context, item.font.fontRes)
             binding.tvContent.gravity = item.alignment.gravity
+            binding.tvContent.setTextColor(root.context.getColor(item.textColor.color))
 
             binding.tvCount.text = (item.reactions?.get(0)?.count ?: 0).toString()
             if (item.reactions?.get(0)?.isClicked == true) {

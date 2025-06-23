@@ -66,7 +66,10 @@ data class ResponseTrace(
     val alignment: String,
 
     @SerializedName("date")
-    val date: String, // yyyy.MM.dd HH:mm
+    val date: String, // yyyy.MM.dd HH:mm,
+
+    @SerializedName("textcolor")
+    val textColor : String? = null,
 
     @SerializedName("reactions")
     val reactions: List<ResponseReaction>
@@ -123,6 +126,8 @@ data class MomentTraceInfo(
 
     val date: String = "",
 
+    val textColor: Constants.TraceTextColor = Constants.TraceTextColor.BLACK,
+
     val reactions: List<ReactionInfo>? = null
 ) : Parcelable
 
@@ -155,6 +160,7 @@ fun ResponseTrace.toEntity() = MomentTraceInfo(
     color = Constants.TraceBackgroundColor.getColor(color),
     alignment = Constants.TraceTextAlign.getAlign(alignment),
     date = date,
+    textColor = Constants.TraceTextColor.getColor(textColor ?: ""),
     reactions = reactions.map { it.toEntity() }
 )
 

@@ -169,4 +169,5 @@ dependencies {
 
     // Recycler View
     implementation (libs.androidx.recyclerview)
+    implementation (libs.flexbox)
 }
