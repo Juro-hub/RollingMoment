@@ -17,15 +17,24 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.whenStateAtLeast
+import androidx.lifecycle.withResumed
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMomentDetailBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.feature.main.MomentEditBottomSheetFragment
 import kr.co.rolling.moment.feature.main.TraceMoreBottomSheetFragment
+import kr.co.rolling.moment.feature.main.TraceMoreBottomSheetFragment.TraceMoreResultType
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_DETAIL
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_EXPIRED
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_OWNER
@@ -38,6 +47,7 @@ import kr.co.rolling.moment.library.network.data.response.MomentDetailInfo
 import kr.co.rolling.moment.library.network.data.response.MomentTraceInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
+import kr.co.rolling.moment.library.util.getParcelableCompat
 import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.library.util.showToast
@@ -75,11 +85,20 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
         viewLifecycleOwner.observeEvent(viewModel.momentDetailInfo, ::handleMomentDetail)
         viewLifecycleOwner.observeEvent(viewModel.momentTraceInfo, ::handleTraceInfo)
         viewLifecycleOwner.observeEvent(viewModel.momentReportInfo, ::handleReportInfo)
+        viewLifecycleOwner.observeEvent(viewModel.traceDeleteInfo, ::handleTraceDeleteInfo)
         viewLifecycleOwner.observeEvent(viewModel.momentDelete, ::handleMomentDelete)
         viewModel.requestMomentDetail(RequestMomentCode(args.momentCode))
     }
 
-    private fun handleMomentDelete(event: SingleEvent<Boolean>){
+    private fun handleTraceDeleteInfo(event: SingleEvent<Boolean>) {
+        event.getContentIfNotHandled()?.let {
+            Timber.d("handleTraceDeleteInfo: data = ${it}")
+
+            viewModel.requestMomentDetail(RequestMomentCode(args.momentCode))
+        }
+    }
+
+    private fun handleMomentDelete(event: SingleEvent<Boolean>) {
         event.getContentIfNotHandled()?.let {
             Timber.d("handleMomentDelete: data = ${it}")
 
@@ -88,7 +107,7 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
         }
     }
 
-    private fun handleReportInfo(event : SingleEvent<Boolean>){
+    private fun handleReportInfo(event: SingleEvent<Boolean>) {
         event.getContentIfNotHandled()?.let {
             Timber.d("handleReportInfo: data = ${it}")
 
@@ -144,8 +163,8 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
             adapter.setClickListener {
                 viewModel.requestTraceReaction(it)
             }
-            adapter.setReportListener{
-                findNavController().navigateSafe(MomentDetailFragmentDirections.actionMomentDetailFragmentToTraceMoreBottomSheetFragment(it.code))
+            adapter.setReportListener {
+                findNavController().navigateSafe(MomentDetailFragmentDirections.actionMomentDetailFragmentToTraceMoreBottomSheetFragment(traceCode = it.code, isOwner = it.isOwner))
             }
             adapter.submitList(data.traces)
 
@@ -162,7 +181,7 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
         binding.rvTrace.adapter = adapter
 
         binding.btnPlusTrace.setOnSingleClickListener {
-            findNavController().navigateSafe(MomentDetailFragmentDirections.actionMomentDetailFragmentToTraceCreateFragment(args.momentCode))
+            findNavController().navigateSafe(MomentDetailFragmentDirections.actionMomentDetailFragmentToTraceCreateFragment(momentCode = args.momentCode, traceInfo = null))
         }
 
         binding.btnTraceInvite.setOnSingleClickListener {
@@ -181,12 +200,31 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
         binding.layoutToolBar.ivClose.show()
 
         setFragmentResultListener(TraceMoreBottomSheetFragment.BUNDLE_KEY_MORE) { _, bundle ->
-            val isReport = bundle.getBoolean(TraceMoreBottomSheetFragment.BUNDLE_KEY_REPORT)
+            val resultType = bundle.getParcelableCompat(TraceMoreBottomSheetFragment.BUNDLE_KEY_RESULT, TraceMoreResultType::class.java)
             val code = bundle.getString(TraceMoreBottomSheetFragment.BUNDLE_KEY_MORE_CODE) ?: return@setFragmentResultListener
+            when (resultType) {
+                TraceMoreResultType.EDIT -> {
+                    var listener: NavController.OnDestinationChangedListener? = null
+                    val navController = findNavController()
+                    listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
+                        if (destination.id == R.id.MomentDetailFragment) {
+                            listener?.let { controller.removeOnDestinationChangedListener(it) }
+                            findNavController().navigateSafe(MomentDetailFragmentDirections.actionMomentDetailFragmentToTraceCreateFragment(momentCode = code, traceInfo = viewModel.getTraceInfo(code)))
+                        }
+                    }
 
-            if (isReport) {
-                report(code, NetworkConstants.ReportType.TRACE)
-                return@setFragmentResultListener
+                    navController.addOnDestinationChangedListener(listener)
+                }
+
+                TraceMoreResultType.REPORT -> {
+                    report(code, NetworkConstants.ReportType.TRACE)
+                }
+
+                TraceMoreResultType.DELETE -> {
+                    viewModel.requestTraceDelete(code)
+                }
+
+                else -> {}
             }
         }
 
@@ -277,19 +315,20 @@ class MomentDetailFragment : BaseFragment(R.layout.fragment_moment_detail) {
         }
     }
 
-    private fun report(code: String, reportType: NetworkConstants.ReportType){
-        showDialog(CommonDialogData(
-            title = getString(R.string.moment_report_title),
-            contents = getString(R.string.moment_report_description),
-            positiveText = getString(R.string.moment_report_positive),
-            negativeText = getString(R.string.no)
-        ), positiveCallback = {
-            viewModel.requestMomentReport(
-                RequestMomentReport(
-                    contentType = reportType.type,
-                    code = code
+    private fun report(code: String, reportType: NetworkConstants.ReportType) {
+        showDialog(
+            CommonDialogData(
+                title = getString(R.string.moment_report_title),
+                contents = getString(R.string.moment_report_description),
+                positiveText = getString(R.string.moment_report_positive),
+                negativeText = getString(R.string.no)
+            ), positiveCallback = {
+                viewModel.requestMomentReport(
+                    RequestMomentReport(
+                        contentType = reportType.type,
+                        code = code
+                    )
                 )
-            )
-        })
+            })
     }
 }

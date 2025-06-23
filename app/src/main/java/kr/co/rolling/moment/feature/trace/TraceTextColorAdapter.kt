@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.ItemTraceBackgroundBinding
 import kr.co.rolling.moment.feature.base.BaseViewHolder
+import kr.co.rolling.moment.library.data.Constants.TraceTextAlign
 import kr.co.rolling.moment.library.data.Constants.TraceTextColor
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 
@@ -43,6 +44,15 @@ class TraceTextColorAdapter :
 
     fun setClickListener(click: ((color: TraceTextColor) -> Unit)) {
         itemClickListener = click
+    }
+
+    fun setItem(textColor: TraceTextColor) {
+        val position = currentList.indexOfFirst { it == textColor }
+        if (position != -1) {
+            selectedPosition = position
+            itemClickListener?.invoke(textColor)
+            notifyDataSetChanged()
+        }
     }
 
     inner class ViewHolder(private val binding: ItemTraceBackgroundBinding) :

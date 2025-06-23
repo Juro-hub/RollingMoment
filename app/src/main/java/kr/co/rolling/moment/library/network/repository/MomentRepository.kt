@@ -17,7 +17,9 @@ import kr.co.rolling.moment.library.network.data.request.RequestMomentCreate
 import kr.co.rolling.moment.library.network.data.request.RequestMomentEdit
 import kr.co.rolling.moment.library.network.data.request.RequestMomentReport
 import kr.co.rolling.moment.library.network.data.request.RequestTrace
-import kr.co.rolling.moment.library.network.data.request.RequestTraceCode
+import kr.co.rolling.moment.library.network.data.request.RequestTraceDelete
+import kr.co.rolling.moment.library.network.data.request.RequestTraceEdit
+import kr.co.rolling.moment.library.network.data.request.RequestTraceReaction
 import kr.co.rolling.moment.library.network.di.DefaultApiService
 import javax.inject.Inject
 
@@ -173,7 +175,7 @@ class MomentRepository @Inject constructor() : Repository {
 
     @WorkerThread
     fun requestTraceReaction(
-        requestData: RequestTraceCode,
+        requestData: RequestTraceReaction,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (CustomError) -> Unit
@@ -251,6 +253,42 @@ class MomentRepository @Inject constructor() : Repository {
         onError: (CustomError) -> Unit
     ) = flow {
         val response = apiService.requestMomentReport(requestData)
+
+        response.suspendOnSuccess {
+            emit(data)
+        }.onError {
+            onError(CustomError(ErrorType.HTTP_EXCEPTION, "${statusCode.code}"))
+        }.onException {
+            onError(makeException(exception, message))
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun requestTraceDelete(
+        requestData: RequestTraceDelete,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (CustomError) -> Unit
+    ) = flow {
+        val response = apiService.requestTraceDelete(requestData)
+
+        response.suspendOnSuccess {
+            emit(data)
+        }.onError {
+            onError(CustomError(ErrorType.HTTP_EXCEPTION, "${statusCode.code}"))
+        }.onException {
+            onError(makeException(exception, message))
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun requestTraceEdit(
+        requestData: RequestTraceEdit,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (CustomError) -> Unit
+    ) = flow {
+        val response = apiService.requestTraceEdit(requestData)
 
         response.suspendOnSuccess {
             emit(data)

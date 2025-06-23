@@ -128,6 +128,12 @@ object NetworkConstants {
     // 모먼트 / 흔적 신고
     const val API_MOMENT_REPORT ="api/v1/report"
 
+    // 흔적 삭제
+    const val API_TRACE_DELETE = "api/v1/trace/delete"
+
+    // 흔적 수정
+    const val API_TRACE_EDIT = "api/v1/trace/update"
+
     /**
      * SNS 로그인 유형
      */
