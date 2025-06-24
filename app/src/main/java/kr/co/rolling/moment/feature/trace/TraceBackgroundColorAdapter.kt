@@ -1,9 +1,13 @@
 package kr.co.rolling.moment.feature.trace
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -53,20 +57,24 @@ class TraceBackgroundColorAdapter : ListAdapter<TraceBackgroundColor, BaseViewHo
 
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
         override fun bind(item: TraceBackgroundColor) = with(binding) {
-            val drawable = if ((absoluteAdapterPosition == selectedPosition) || (absoluteAdapterPosition == 0 && selectedPosition == RecyclerView.NO_POSITION)) {
+            val baseDrawable = if (item.color != null) {
                 GradientDrawable().apply {
                     shape = GradientDrawable.RECTANGLE
-                    setStroke(2, binding.root.context.getColor(R.color.C171719))
                     cornerRadius = 8f
                     setColor(binding.root.context.getColor(item.color))
                 }
             } else {
-                GradientDrawable().apply {
-                    shape = GradientDrawable.RECTANGLE
-                    cornerRadius = 8f // 원하는 radius
-                    setColor(root.context.getColor(item.color)) // 아이템 색상
-                }
+                ContextCompat.getDrawable(binding.root.context, item.thumbnail ?: R.drawable.bg_heart)
             }
+
+            val isSelected = (absoluteAdapterPosition == selectedPosition) ||
+                    (absoluteAdapterPosition == 0 && selectedPosition == RecyclerView.NO_POSITION)
+
+            val drawable = createBackgroundWithOptionalStroke(
+                baseDrawable = baseDrawable,
+                showStroke = isSelected,
+                strokeColor = binding.root.context.getColor(R.color.C171719)
+            )
 
             binding.root.background = drawable
 
@@ -77,6 +85,26 @@ class TraceBackgroundColorAdapter : ListAdapter<TraceBackgroundColor, BaseViewHo
 
                 itemClickListener?.invoke(item)
             }
+        }
+    }
+
+    private fun createBackgroundWithOptionalStroke(
+        baseDrawable: Drawable?,
+        showStroke: Boolean,
+        strokeColor: Int = Color.TRANSPARENT,
+    ): Drawable? {
+        if (baseDrawable == null) return null
+        val strokeDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            setStroke(2, strokeColor)
+            this.cornerRadius = 8f
+            setColor(Color.TRANSPARENT)
+        }
+
+        return if (showStroke) {
+            LayerDrawable(arrayOf(baseDrawable, strokeDrawable))
+        } else {
+            baseDrawable
         }
     }
 
