@@ -68,7 +68,7 @@ data class ResponseTrace(
     @SerializedName("date")
     val date: String, // yyyy.MM.dd HH:mm,
 
-    @SerializedName("textcolor")
+    @SerializedName("textColor")
     val textColor : String? = null,
 
     @SerializedName("owner")
