@@ -57,7 +57,7 @@ class MomentResultFragment : BaseFragment(R.layout.fragment_moment_result) {
     override fun initViewBinding(view: View) {
         binding = FragmentMomentResultBinding.bind(view)
 
-        val randomColor = Constants.TraceBackgroundColor.entries.random().color
+        val randomColor = Constants.TraceBackgroundColor.entries.filter { it.color != null }.random().color ?: R.color.CDDEFFB
         binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), randomColor))
 
         binding.layoutToolBar.ivBack.hide()

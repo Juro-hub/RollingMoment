@@ -170,8 +170,16 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
         }
 
         backgroundColorAdapter.setClickListener {
-            binding.layoutTrace.setBackgroundColor(ContextCompat.getColor(requireContext(), it.color))
-            backgroundColor = it
+            if(it.color != null){
+                binding.layoutTrace.setBackgroundColor(ContextCompat.getColor(requireContext(), it.color))
+                backgroundColor = it
+            }else{
+                it.drawable?.let { drawable ->
+                    binding.layoutTrace.setBackgroundResource(drawable)
+                    backgroundColor = it
+                }
+            }
+
         }
         backgroundColorAdapter.submitList(Constants.TraceBackgroundColor.entries)
         binding.rvBackgroundColor.adapter = backgroundColorAdapter
