@@ -11,7 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.ActivityMomentBinding
 import kr.co.rolling.moment.feature.base.BaseActivity
-import kr.co.rolling.moment.feature.main.MyInfoFragment
 import kr.co.rolling.moment.library.data.Constants.MOMENT_PUSH_DATA_KEY
 import kr.co.rolling.moment.library.data.NavigationData
 import kr.co.rolling.moment.library.network.NetworkConstants.NETWORK_KEY_MOMENT_CODE
@@ -102,7 +101,9 @@ class MomentActivity : BaseActivity() {
                 ErrorType.EXPIRED_TOKEN -> {
                     showDialog(CommonDialogData(it.message, positiveText = getString(R.string.confirm)), positiveCallback = {
                         preferenceManager.setTokenInfo(SplashInfo("", ""))
-                        findNavController(R.id.nav_host_fragment).navigate(R.id.IntroFragment, NavOptions.Builder().setPopUpTo<MyInfoFragment>(true).build())
+                        findNavController(R.id.nav_host_fragment).navigate(
+                            R.id.IntroFragment, null, NavOptions.Builder().setPopUpTo(findNavController(R.id.nav_host_fragment).graph.startDestinationId, true).build()
+                        )
                     })
                 }
 
