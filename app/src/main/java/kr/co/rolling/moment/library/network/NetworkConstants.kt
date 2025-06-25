@@ -135,7 +135,7 @@ object NetworkConstants {
     const val API_TRACE_EDIT = "api/v1/trace/update"
 
     // 비공개 모먼트 전체조회
-    const val API_ADMIN_MOMENT = "api/v1/moment/admin"
+    const val API_ADMIN_MOMENT = "api/v1/admin/moment"
 
     /**
      * SNS 로그인 유형
