@@ -165,4 +165,7 @@ interface ApiService {
     suspend fun requestTraceEdit(
         @Body requestTrace: RequestTraceEdit
     ): ApiResponse<BaseResponseData>
+
+    @GET(NetworkConstants.API_ADMIN_MOMENT)
+    suspend fun requestMomentListAdmin(): ApiResponse<MomentListResponse>
 }

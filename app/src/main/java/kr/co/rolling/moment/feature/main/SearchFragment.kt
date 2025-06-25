@@ -49,7 +49,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     override fun observeViewModel() {
-        viewModel.requestMomentList()
+            viewModel.requestMomentListAdmin()
+//            viewModel.requestMomentList()
 
         viewLifecycleOwner.observeEvent(viewModel.momentList, ::handleMomentList)
         viewLifecycleOwner.observeEvent(viewModel.momentDelete, ::handleMomentListDelete)
