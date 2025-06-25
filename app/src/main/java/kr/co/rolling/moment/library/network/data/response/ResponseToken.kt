@@ -16,7 +16,7 @@ data class ResponseToken(
     val isUpdate: Boolean = false,
 
     @SerializedName("message")
-    val message: String = ""
+    val message: List<String>? = null
 ) : Parcelable
 
 @Parcelize
@@ -24,7 +24,7 @@ data class SplashInfo(
     val accessToken: String = "",
     val refreshToken: String = "",
     val isUpdate: Boolean = false,
-    val updateMessage: String = "'"
+    val updateMessage: List<String>? = listOf<String>()
 ) : Parcelable
 
 fun ResponseToken.toEntity(): SplashInfo {
