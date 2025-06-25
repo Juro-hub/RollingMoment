@@ -67,9 +67,15 @@ android {
     productFlavors {
         create("dev") {
             buildConfigField("kr.co.rolling.moment.library.data.Deploy.ServerType", "SERVER_TYPE", "kr.co.rolling.moment.library.data.Deploy.ServerType.DEVELOP")
+            buildConfigField("boolean", "ADMIN", "false")
         }
         create("prod") {
             buildConfigField("kr.co.rolling.moment.library.data.Deploy.ServerType", "SERVER_TYPE", "kr.co.rolling.moment.library.data.Deploy.ServerType.RELEASE")
+            buildConfigField("boolean", "ADMIN", "false")
+        }
+        create("admin") {
+            buildConfigField("kr.co.rolling.moment.library.data.Deploy.ServerType", "SERVER_TYPE", "kr.co.rolling.moment.library.data.Deploy.ServerType.DEVELOP")
+            buildConfigField("boolean", "ADMIN", "true")
         }
     }
 
