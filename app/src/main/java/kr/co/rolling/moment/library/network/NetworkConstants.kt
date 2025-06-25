@@ -66,7 +66,7 @@ object NetworkConstants {
     const val API_PATH_SIGN_UP = "api/v1/auth/signup"
 
     // 스플래시
-    const val API_SPLASH = "api/v1/splash"
+    const val API_SPLASH = "api/v2/splash"
 
     // SNS 로그인
     const val API_SNS_LOGIN = "api/v1/auth/sns"

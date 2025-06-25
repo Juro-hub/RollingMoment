@@ -35,7 +35,7 @@ class UpdateDialog : DialogFragment(R.layout.dialog_update) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view: View = inflater.inflate(R.layout.dialog_common, container, false)
+        val view: View = inflater.inflate(R.layout.dialog_update, container, false)
 
         if (dialog != null && dialog?.window != null) {
             dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -65,12 +65,12 @@ class UpdateDialog : DialogFragment(R.layout.dialog_update) {
                 requireContext().moveToMarket()
             }
 
-            if(data.updateMessage.isNotEmpty()){
-                binding.layoutUpdateInfo.show()
-
-                //TODO
+            if(data.updateMessage?.isNotEmpty() == true){
+                binding.layoutUpdate.show()
+                val adapter = UpdateInfoAdapter()
+                binding.rvUpdateInfo.adapter = adapter
+                adapter.submitList(data.updateMessage)
             }
-
         } else {
             dismiss()
         }
