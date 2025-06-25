@@ -16,12 +16,14 @@ android {
     namespace = "kr.co.rolling.moment"
     compileSdk = 35
 
+    var baseVersionCode = 24062500  // Define your base version code
+
     defaultConfig {
         applicationId = "kr.co.rolling.moment"
         minSdk = 26
         targetSdk = 35
-        versionCode = 24042401
-        versionName = "1.0.0"
+        versionCode = baseVersionCode
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -66,14 +68,17 @@ android {
 
     productFlavors {
         create("dev") {
+            versionCode = baseVersionCode
             buildConfigField("kr.co.rolling.moment.library.data.Deploy.ServerType", "SERVER_TYPE", "kr.co.rolling.moment.library.data.Deploy.ServerType.DEVELOP")
             buildConfigField("boolean", "ADMIN", "false")
         }
         create("prod") {
+            versionCode = baseVersionCode + 20
             buildConfigField("kr.co.rolling.moment.library.data.Deploy.ServerType", "SERVER_TYPE", "kr.co.rolling.moment.library.data.Deploy.ServerType.RELEASE")
             buildConfigField("boolean", "ADMIN", "false")
         }
         create("admin") {
+            versionCode = baseVersionCode + 40
             buildConfigField("kr.co.rolling.moment.library.data.Deploy.ServerType", "SERVER_TYPE", "kr.co.rolling.moment.library.data.Deploy.ServerType.DEVELOP")
             buildConfigField("boolean", "ADMIN", "true")
         }
