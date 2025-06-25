@@ -14,6 +14,7 @@ import kr.co.rolling.moment.library.data.Constants
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_EXPIRED
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_OWNER
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
+import kr.co.rolling.moment.library.network.NetworkConstants
 import kr.co.rolling.moment.library.network.data.response.MomentInfo
 import kr.co.rolling.moment.library.network.data.response.MomentListInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
@@ -62,7 +63,14 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             binding.rvFilter.isVisible = !it.momentList.isNullOrEmpty()
             binding.layoutEmpty.isVisible = it.momentList.isNullOrEmpty()
 
-            adapter.submitList(it.momentList?.sortedByDescending { it.deadLine })
+            var list = it.momentList?.sortedByDescending { it.deadLine }
+            val currentCategory = filterAdapter.getCurrentCategory()
+            list = if(currentCategory != Constants.MomentCategory.ALL){
+                list?.filter { it.category?.code == currentCategory.code }
+            }else{
+                list
+            }
+            adapter.submitList(list)
         }
     }
 
