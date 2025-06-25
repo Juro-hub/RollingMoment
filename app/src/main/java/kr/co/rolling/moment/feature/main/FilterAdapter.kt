@@ -17,7 +17,7 @@ import kr.co.rolling.moment.ui.util.setOnSingleClickListener
  */
 class FilterAdapter : ListAdapter<MomentCategory, BaseViewHolder<MomentCategory>>(DiffCallback()) {
     private var rootClickListener: ((item: MomentCategory) -> Unit)? = null
-    private var selectedPosition: Int = RecyclerView.NO_POSITION
+    private var selectedPosition: Int = 0
 
     init {
         setHasStableIds(true)
@@ -40,11 +40,13 @@ class FilterAdapter : ListAdapter<MomentCategory, BaseViewHolder<MomentCategory>
         rootClickListener = click
     }
 
+    fun getCurrentCategory() =  currentList[selectedPosition]
+
     inner class ViewHolder(private val binding: ItemCategoryFilterBinding) : BaseViewHolder<MomentCategory>(binding.root) {
 
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
         override fun bind(item: MomentCategory) = with(binding) {
-            if ((absoluteAdapterPosition == selectedPosition) || (absoluteAdapterPosition == 0 && selectedPosition == RecyclerView.NO_POSITION)) {
+            if ((absoluteAdapterPosition == selectedPosition) || (absoluteAdapterPosition == 0 && selectedPosition == 0)) {
                 tvCategory.setBackgroundResource(R.drawable.shape_20_171719)
                 tvCategory.setTextColor(root.context.getColor(R.color.CFFFFFF))
             } else {
