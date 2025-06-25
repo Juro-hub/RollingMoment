@@ -87,15 +87,15 @@ object Constants {
 
         NAVY(R.color.CD8E2F3, "navy"),
 
-        STAR(null, "star", R.drawable.bg_star, R.drawable.bg_star_main),
+        STAR(null, "star", R.drawable.bg_star, R.drawable.bg_star_crop),
 
-        DOT(null, "dot", R.drawable.bg_dot, R.drawable.bg_dot_main),
+        DOT(null, "dot", R.drawable.bg_dot, R.drawable.bg_dot_crop),
 
-        HEART(null, "heart", R.drawable.bg_heart, R.drawable.bg_heart_main),
+        HEART(null, "heart", R.drawable.bg_heart, R.drawable.bg_heart_crop),
 
-        CLOVER(null, "clover", R.drawable.bg_clover, R.drawable.bg_clover_main),
+        CLOVER(null, "clover", R.drawable.bg_clover, R.drawable.bg_clover_crop),
 
-        TOMATO(null, "tomato", R.drawable.bg_tomato, R.drawable.bg_tomato_main);
+        TOMATO(null, "tomato", R.drawable.bg_tomato, R.drawable.bg_tomato_crop);
 
         companion object {
             fun getColor(type: String): TraceBackgroundColor {

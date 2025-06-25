@@ -59,7 +59,7 @@ class MomentDetailTraceAdapter : ListAdapter<MomentTraceInfo, BaseViewHolder<Mom
                     setColor(binding.root.context.getColor(item.color.color))
                 }
             } else {
-                ContextCompat.getDrawable(binding.root.context, item.color.drawable ?: R.drawable.bg_heart_main)
+                ContextCompat.getDrawable(binding.root.context, item.color.drawable ?: R.drawable.bg_heart_crop)
             }
 
             binding.layoutTrace.background = baseDrawable
