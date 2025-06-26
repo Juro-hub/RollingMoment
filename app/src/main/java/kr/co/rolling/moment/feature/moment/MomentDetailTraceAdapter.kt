@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.co.rolling.moment.R
@@ -68,6 +69,7 @@ class MomentDetailTraceAdapter : ListAdapter<MomentTraceInfo, BaseViewHolder<Mom
             binding.tvContent.typeface = ResourcesCompat.getFont(binding.root.context, item.font.fontRes)
             binding.tvContent.gravity = item.alignment.gravity
             binding.tvContent.setTextColor(root.context.getColor(item.textColor.color))
+            binding.tvMine.isVisible = item.isOwner
 
             binding.tvCount.text = (item.reactions?.get(0)?.count ?: 0).toString()
             if (item.reactions?.get(0)?.isClicked == true) {
