@@ -139,6 +139,7 @@
     <string name="moment_detail_empty_title">흔적을 작성해보세요!</string>
     <string name="moment_detail_expired">공유하기</string>
     <string name="moment_detail_delete_done">모먼트가 삭제되었습니다.</string>
+    <string name="moment_detail_trace_mine">내흔적</string>
 
     <!-- 모먼트 종료 -->
     <string name="moment_result_title">작성 기간이 마감되었어요!\n모먼트를 공유해보세요</string>
