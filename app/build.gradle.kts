@@ -16,7 +16,7 @@ android {
     namespace = "kr.co.rolling.moment"
     compileSdk = 35
 
-    var baseVersionCode = 24062600  // Define your base version code
+    var baseVersionCode = 24063000  // Define your base version code
 
     defaultConfig {
         applicationId = "kr.co.rolling.moment"
