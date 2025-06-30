@@ -1,7 +1,9 @@
 package kr.co.rolling.moment.library.util
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Spanned
@@ -103,4 +105,19 @@ fun String.decodeUnicodeString(): String {
 
 fun BaseFragment.showToast(msg:String){
     Toast.makeText(requireContext(),msg, Toast.LENGTH_SHORT).show()
+}
+
+fun Context.moveToMarket(){
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        data = ("market://details?id=" + this@moveToMarket.packageName).toUri()
+        setPackage("com.android.vending") // Play Store 앱에서 열도록 설정
+    }
+    if (intent.resolveActivity(this.packageManager) != null) {
+        this.startActivity(intent)
+    } else {
+        // Play Store 앱이 없으면 웹으로 이동
+        val webIntent = Intent(Intent.ACTION_VIEW,
+            ("https://play.google.com/store/apps/details?id" + this.packageName).toUri())
+        this.startActivity(webIntent)
+    }
 }

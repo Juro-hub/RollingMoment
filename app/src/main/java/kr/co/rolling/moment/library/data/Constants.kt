@@ -31,8 +31,8 @@ object Constants {
     const val MOMENT_PUSH_DATA_KEY = "MOMENT_PUSH_DATA_KEY"
 
     const val MOMENT_PUSH_KEY_TITLE = "title"
-    const val MOMENT_PUSH_KEY_BODY= "body"
-    const val MOMENT_PUSH_KEY_PAYLOAD= "payload"
+    const val MOMENT_PUSH_KEY_BODY = "body"
+    const val MOMENT_PUSH_KEY_PAYLOAD = "payload"
 
     /** Enum 영역 */
 
@@ -66,7 +66,7 @@ object Constants {
     }
 
     /** 흔적 작성 시 백그라운드 색상 */
-    enum class TraceBackgroundColor(@ColorRes val color: Int, val type: String) {
+    enum class TraceBackgroundColor(@ColorRes val color: Int? = null, val type: String, @DrawableRes val thumbnail: Int? = null, @DrawableRes val drawable: Int? = null) {
         NONE(R.color.CF6F6F6, "gray"),
 
         RED(R.color.CFBD4D4, "red"),
@@ -85,13 +85,54 @@ object Constants {
 
         PURPLE(R.color.CE3E1EF, "purple"),
 
-        NAVY(R.color.CD8E2F3, "navy");
+        NAVY(R.color.CD8E2F3, "navy"),
+
+        STAR(null, "star", R.drawable.bg_star, R.drawable.bg_star_crop),
+
+        DOT(null, "dot", R.drawable.bg_dot, R.drawable.bg_dot_crop),
+
+        HEART(null, "heart", R.drawable.bg_heart, R.drawable.bg_heart_crop),
+
+        CLOVER(null, "clover", R.drawable.bg_clover, R.drawable.bg_clover_crop),
+
+        TOMATO(null, "tomato", R.drawable.bg_tomato, R.drawable.bg_tomato_crop);
 
         companion object {
             fun getColor(type: String): TraceBackgroundColor {
                 return entries.find {
                     it.type == type
                 } ?: NONE
+            }
+        }
+    }
+
+    /** 흔적 작성 시 백그라운드 색상 */
+    enum class TraceTextColor(@ColorRes val color: Int, val type: String) {
+        BLACK(R.color.C333333, "black"),
+
+        GRAY(R.color.C7F7F7F, "gray"),
+
+        BLUE(R.color.C0045DA, "blue"),
+
+        NAVY(R.color.C00205C, "navy"),
+
+        GREEN(R.color.C006347, "green"),
+
+        LAVENDER(R.color.C874FFF, "lavender"),
+
+        PURPLE(R.color.C4D1DB5, "purple"),
+
+        PINK(R.color.CE600BB, "pink"),
+
+        ORANGE(R.color.CF75408, "orange"),
+
+        BROWN(R.color.C684400, "brown");
+
+        companion object {
+            fun getColor(type: String): TraceTextColor {
+                return entries.find {
+                    it.type == type
+                } ?: BLACK
             }
         }
     }
@@ -105,5 +146,30 @@ object Constants {
         SHARE(R.drawable.ic_shared, R.string.moment_result_share),
 
         COPY(R.drawable.ic_copy, R.string.moment_result_copy)
+    }
+
+    @Parcelize
+    enum class MomentCategory(val code: String, @StringRes val textId: Int) : Parcelable {
+        ALL("all", R.string.moment_category_all),
+        WEDDING("we", R.string.moment_category_we),
+        BIRTHDAY("bi", R.string.moment_category_bi),
+        FIRST_BIRTHDAY("fi", R.string.moment_category_fi),
+        GRADUATION("gr", R.string.moment_category_gr),
+        FAREWELL("fa", R.string.moment_category_fa),
+        CHRISTMAS("ch", R.string.moment_category_ch),
+        TEACHERS_DAY("te", R.string.moment_category_te),
+        APPRECIATION("ap", R.string.moment_category_ap),
+        CHEERING("che", R.string.moment_category_che),
+        CONFESSION("co", R.string.moment_category_co),
+        PRAISE("pr", R.string.moment_category_pr),
+        CELEBRATION("ce", R.string.moment_category_ce);
+
+        companion object {
+            fun getCategory(code: String): MomentCategory? {
+                return entries.find {
+                    it.code == code
+                }
+            }
+        }
     }
 }

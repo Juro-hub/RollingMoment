@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:paddingBottom="24dp"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -48,8 +47,24 @@
         android:layout_marginTop="8dp"
         android:text="@string/moment_detail_trace_date_user"
         android:textColor="@color/C7F7F7F"
+        tools:text="정민석 "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutTrace" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tvInfo"
+        android:id="@+id/tvMine"
+        app:layout_constraintBottom_toBottomOf="@id/tvInfo"
+        app:layout_constraintStart_toEndOf="@id/tvInfo"
+        android:text="@string/moment_detail_trace_mine"
+        android:background="@drawable/shape_4_e0e0e2_ffffff"
+        android:paddingVertical="2dp"
+        android:paddingHorizontal="5dp"
+        android:layout_marginStart="4dp"
+        style="@style/L1011Medium"
+        android:textColor="@color/C7F7F7F"/>
 
     <ImageView
         android:layout_width="wrap_content"

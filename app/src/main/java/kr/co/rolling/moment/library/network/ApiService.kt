@@ -10,7 +10,9 @@ import kr.co.rolling.moment.library.network.data.request.RequestSignUp
 import kr.co.rolling.moment.library.network.data.request.RequestSnsLogin
 import kr.co.rolling.moment.library.network.data.request.RequestSplash
 import kr.co.rolling.moment.library.network.data.request.RequestTrace
-import kr.co.rolling.moment.library.network.data.request.RequestTraceCode
+import kr.co.rolling.moment.library.network.data.request.RequestTraceDelete
+import kr.co.rolling.moment.library.network.data.request.RequestTraceEdit
+import kr.co.rolling.moment.library.network.data.request.RequestTraceReaction
 import kr.co.rolling.moment.library.network.data.response.BaseResponseData
 import kr.co.rolling.moment.library.network.data.response.HomeResponse
 import kr.co.rolling.moment.library.network.data.response.MomentCreateResponse
@@ -120,7 +122,7 @@ interface ApiService {
 
     @POST(NetworkConstants.API_TRACE_REACTION)
     suspend fun requestTraceReaction(
-        @Body code: RequestTraceCode
+        @Body code: RequestTraceReaction
     ): ApiResponse<MomentDeleteResponse>
 
     @POST(NetworkConstants.API_LOGOUT)
@@ -151,4 +153,19 @@ interface ApiService {
     suspend fun requestMomentReport(
         @Body requestReport: RequestMomentReport
     ): ApiResponse<BaseResponseData>
+
+    // 흔적 삭제
+    @PATCH(NetworkConstants.API_TRACE_DELETE)
+    suspend fun requestTraceDelete(
+        @Body requestReport: RequestTraceDelete
+    ): ApiResponse<BaseResponseData>
+
+    // 흔적 수정
+    @PATCH(NetworkConstants.API_TRACE_EDIT)
+    suspend fun requestTraceEdit(
+        @Body requestTrace: RequestTraceEdit
+    ): ApiResponse<BaseResponseData>
+
+    @GET(NetworkConstants.API_ADMIN_MOMENT)
+    suspend fun requestMomentListAdmin(): ApiResponse<MomentListResponse>
 }

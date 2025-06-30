@@ -44,7 +44,7 @@ class MomentEnrollFragment : BaseFragment(R.layout.fragment_moment_enroll) {
     override fun initViewBinding(view: View) {
         binding = FragmentMomentEnrollBinding.bind(view)
 
-        val randomColor = Constants.TraceBackgroundColor.entries.random().color
+        val randomColor = Constants.TraceBackgroundColor.entries.filter { it.color != null }.random().color ?: R.color.CDDEFFB
         binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), randomColor))
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), randomColor)
 

@@ -7,9 +7,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kr.co.rolling.moment.BuildConfig
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentSearchBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
+import kr.co.rolling.moment.library.data.Constants
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_EXPIRED
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_IS_OWNER
 import kr.co.rolling.moment.library.data.Constants.NAVIGATION_KEY_MOMENT_CODE
@@ -20,6 +22,8 @@ import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.library.util.showToast
+import kr.co.rolling.moment.ui.util.hide
+import kr.co.rolling.moment.ui.util.show
 import timber.log.Timber
 
 /**
@@ -27,6 +31,9 @@ import timber.log.Timber
  */
 @AndroidEntryPoint
 class SearchFragment : BaseFragment(R.layout.fragment_search) {
+    private val filterAdapter by lazy {
+        FilterAdapter()
+    }
     private val viewModel by activityViewModels<MomentViewModel>()
     private var clickItem = MomentInfo()
 
@@ -42,7 +49,11 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     override fun observeViewModel() {
-        viewModel.requestMomentList()
+        if (BuildConfig.ADMIN) {
+            viewModel.requestMomentListAdmin()
+        } else {
+            viewModel.requestMomentList()
+        }
 
         viewLifecycleOwner.observeEvent(viewModel.momentList, ::handleMomentList)
         viewLifecycleOwner.observeEvent(viewModel.momentDelete, ::handleMomentListDelete)
@@ -53,9 +64,17 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             Timber.d("handleMomentList: data = ${it}")
 
             binding.rvMomentList.isVisible = !it.momentList.isNullOrEmpty()
+            binding.rvFilter.isVisible = !it.momentList.isNullOrEmpty()
             binding.layoutEmpty.isVisible = it.momentList.isNullOrEmpty()
 
-            adapter.submitList(it.momentList)
+            var list = it.momentList?.sortedByDescending { it.deadLine }
+            val currentCategory = filterAdapter.getCurrentCategory()
+            list = if (currentCategory != Constants.MomentCategory.ALL) {
+                list?.filter { it.category?.code == currentCategory.code }
+            } else {
+                list
+            }
+            adapter.submitList(list)
         }
     }
 
@@ -71,6 +90,30 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun initUI() {
+        binding.rvFilter.adapter = filterAdapter
+        filterAdapter.submitList(Constants.MomentCategory.entries.toList())
+        binding.rvFilter.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_8), spanCount = 1))
+        filterAdapter.setClickListener { category ->
+            val list = if (category == Constants.MomentCategory.ALL) {
+                viewModel.getMomentList()
+            } else {
+                viewModel.getMomentList()?.filter { moment ->
+                    moment.category?.code == category.code
+                }
+            }
+
+            if (list.isNullOrEmpty()) {
+                binding.rvMomentList.hide()
+                binding.layoutEmpty.show()
+                return@setClickListener
+            }
+
+
+            binding.layoutEmpty.hide()
+            binding.rvMomentList.show()
+            adapter.submitList(list.sortedByDescending { it.deadLine })
+        }
+
         binding.rvMomentList.adapter = adapter
         binding.rvMomentList.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_24), horizontalMargin = 0, spanCount = 1))
 

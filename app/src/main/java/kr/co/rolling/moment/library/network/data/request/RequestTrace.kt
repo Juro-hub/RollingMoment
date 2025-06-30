@@ -23,4 +23,10 @@ data class RequestTrace (
 
     @SerializedName("fontAlign")
     val fontAlign : String,
+
+    @SerializedName("isAnonymous")
+    val isAnonymous: Boolean,
+
+    @SerializedName("textColor")
+    val textColor: String
 ): Parcelable

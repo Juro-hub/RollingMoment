@@ -5,12 +5,28 @@ import android.os.Parcelable
 import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 import kr.co.rolling.moment.R
+import kr.co.rolling.moment.library.data.Deploy
 
 /**
  * Network 관련 상수 모음
  */
 object NetworkConstants {
-    var BASE_URL: String = "https://rollinmoment.n-e.kr"
+    var BASE_URL: String = ""
+
+    private const val DEVELOP_URL = "https://rollinmoment.store:3000"
+    private const val PROD_URL = "https://rollinmoment.com:3300"
+
+    fun init(){
+        when(Deploy.SERVER){
+            Deploy.ServerType.DEVELOP -> {
+                BASE_URL = DEVELOP_URL
+            }
+
+            Deploy.ServerType.RELEASE ->{
+                BASE_URL = PROD_URL
+            }
+        }
+    }
 
     /** API_CONNECT_TIMEOUT Timeout 3초 */
     const val API_CONNECT_TIMEOUT: Long = 10
@@ -50,7 +66,7 @@ object NetworkConstants {
     const val API_PATH_SIGN_UP = "api/v1/auth/signup"
 
     // 스플래시
-    const val API_SPLASH = "api/v1/splash"
+    const val API_SPLASH = "api/v2/splash"
 
     // SNS 로그인
     const val API_SNS_LOGIN = "api/v1/auth/sns"
@@ -80,7 +96,7 @@ object NetworkConstants {
     const val API_AI_RECOMMEND = "api/v1/trace/ai"
 
     // 흔적 작성
-    const val API_TRACE_CREATE = "api/v1/trace"
+    const val API_TRACE_CREATE = "api/v2/trace"
 
     // 모먼트 상세 조회
     const val API_MOMENT_DETAIL = "api/v1/moment"
@@ -111,6 +127,15 @@ object NetworkConstants {
 
     // 모먼트 / 흔적 신고
     const val API_MOMENT_REPORT ="api/v1/report"
+
+    // 흔적 삭제
+    const val API_TRACE_DELETE = "api/v1/trace/delete"
+
+    // 흔적 수정
+    const val API_TRACE_EDIT = "api/v1/trace/update"
+
+    // 비공개 모먼트 전체조회
+    const val API_ADMIN_MOMENT = "api/v1/admin/moment"
 
     /**
      * SNS 로그인 유형

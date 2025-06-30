@@ -8,7 +8,7 @@ import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentSignInBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
 import kr.co.rolling.moment.library.network.data.request.RequestLogin
-import kr.co.rolling.moment.library.network.data.response.TokenInfo
+import kr.co.rolling.moment.library.network.data.response.SplashInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.SignViewModel
 import kr.co.rolling.moment.library.util.navigateSafe
@@ -46,10 +46,10 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     }
 
     override fun observeViewModel() {
-        viewLifecycleOwner.observeEvent(viewModel.tokenInfo, ::handleLogin)
+        viewLifecycleOwner.observeEvent(viewModel.splashInfo, ::handleLogin)
     }
 
-    private fun handleLogin(event: SingleEvent<TokenInfo>) {
+    private fun handleLogin(event: SingleEvent<SplashInfo>) {
         event.getContentIfNotHandled()?.let { data ->
             preferenceManager.setTokenInfo(data)
 

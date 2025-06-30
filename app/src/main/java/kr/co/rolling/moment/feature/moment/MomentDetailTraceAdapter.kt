@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.co.rolling.moment.R
@@ -51,16 +53,23 @@ class MomentDetailTraceAdapter : ListAdapter<MomentTraceInfo, BaseViewHolder<Mom
 
         @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
         override fun bind(item: MomentTraceInfo) = with(binding) {
-            val drawable = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = root.context.resources.getDimensionPixelSize(R.dimen.spacing_8).toFloat()
-                setColor(root.context.getColor(item.color.color))
+            val baseDrawable = if (item.color.color != null) {
+                GradientDrawable().apply {
+                    shape = GradientDrawable.RECTANGLE
+                    cornerRadius = 8f
+                    setColor(binding.root.context.getColor(item.color.color))
+                }
+            } else {
+                ContextCompat.getDrawable(binding.root.context, item.color.drawable ?: R.drawable.bg_heart_crop)
             }
-            binding.layoutTrace.background = drawable
+
+            binding.layoutTrace.background = baseDrawable
 
             binding.tvContent.text = item.content
             binding.tvContent.typeface = ResourcesCompat.getFont(binding.root.context, item.font.fontRes)
             binding.tvContent.gravity = item.alignment.gravity
+            binding.tvContent.setTextColor(root.context.getColor(item.textColor.color))
+            binding.tvMine.isVisible = item.isOwner
 
             binding.tvCount.text = (item.reactions?.get(0)?.count ?: 0).toString()
             if (item.reactions?.get(0)?.isClicked == true) {

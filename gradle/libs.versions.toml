@@ -8,6 +8,7 @@ converterGson = "2.9.0"
 espressoIdlingResource = "3.6.1"
 firebaseBom = "33.10.0"
 firebaseMessaging = "24.1.1"
+flexbox = "3.0.0"
 gson = "2.12.1"
 hiltAndroid = "2.53.1"
 hiltAndroidCompiler = "2.53.1"
@@ -54,6 +55,7 @@ androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fr
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
 glide-compier = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshi" }

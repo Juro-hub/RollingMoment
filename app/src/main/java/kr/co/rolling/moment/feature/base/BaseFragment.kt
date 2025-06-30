@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
 import androidx.navigation.fragment.findNavController
+import kr.co.rolling.moment.BuildConfig
 import kr.co.rolling.moment.library.util.AndroidInfo
 import kr.co.rolling.moment.library.util.EncryptManager
 import kr.co.rolling.moment.library.util.PreferenceManager
+import kr.co.rolling.moment.library.util.showToast
 import javax.inject.Inject
 
 /**
@@ -60,6 +62,10 @@ abstract class BaseFragment(
 
         if (!ignoreBackPressedCallback()) {
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+        }
+
+        if (BuildConfig.ADMIN) {
+            showToast("어드민 App 입니다. 주의해주세요.")
         }
     }
 

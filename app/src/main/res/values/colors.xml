@@ -62,4 +62,13 @@
     <color name="CE3E1EF">#E3E1EF</color>
     <color name="CD8E2F3">#D8E2F3</color>
     <color name="CFCECEC">#FCECEC</color>
+
+    <!-- Trace Text Color -->
+    <color name="C0045DA">#0045DA</color>
+    <color name="C00205C">#00205C</color>
+    <color name="C006347">#006347</color>
+    <color name="C4D1DB5">#4D1DB5</color>
+    <color name="CE600BB">#E600BB</color>
+    <color name="CF75408">#F75408</color>
+    <color name="C684400">#684400</color>
 </resources>

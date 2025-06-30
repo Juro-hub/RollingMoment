@@ -8,6 +8,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +22,6 @@ import com.kakao.sdk.template.model.Button
 import com.kakao.sdk.template.model.Content
 import com.kakao.sdk.template.model.FeedTemplate
 import com.kakao.sdk.template.model.Link
-import kr.co.rolling.moment.BuildConfig
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMomentResultBinding
 import kr.co.rolling.moment.feature.base.BaseFragment
@@ -33,6 +33,7 @@ import kr.co.rolling.moment.library.network.data.response.MomentSimpleInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MomentViewModel
 import kr.co.rolling.moment.library.util.CommonGridItemDecorator
+import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.util.hide
 import kr.co.rolling.moment.ui.util.setOnSingleClickListener
@@ -56,14 +57,11 @@ class MomentResultFragment : BaseFragment(R.layout.fragment_moment_result) {
     override fun initViewBinding(view: View) {
         binding = FragmentMomentResultBinding.bind(view)
 
-        val randomColor = Constants.TraceBackgroundColor.entries.random().color
+        val randomColor = Constants.TraceBackgroundColor.entries.filter { it.color != null }.random().color ?: R.color.CDDEFFB
         binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), randomColor))
 
         binding.layoutToolBar.ivBack.hide()
         binding.layoutToolBar.ivClose.show()
-        binding.layoutToolBar.ivClose.setOnSingleClickListener {
-            finishFragment()
-        }
 
         val gridLayoutManager = GridLayoutManager(context, 4, LinearLayoutManager.VERTICAL, false)
         val data = Constants.MomentShareType.entries
@@ -84,9 +82,13 @@ class MomentResultFragment : BaseFragment(R.layout.fragment_moment_result) {
         event.getContentIfNotHandled()?.let {
             Timber.d("handleMomentEnroll: data = ${it}")
 
+            binding.layoutToolBar.ivClose.setOnSingleClickListener { click ->
+                findNavController().navigateSafe(MomentResultFragmentDirections.actionMomentResultFragmentToMomentDetailFragment(args.momentCode))
+            }
+
             binding.layoutMoment.apply {
                 ivMore.hide()
-                tvDeadline.text = getString(it.expireType.textId)
+                tvDeadline.text = getString(R.string.moment_result_date, it.expireType)
                 if (it.isExpired) {
                     tvDeadline.setBackgroundResource(R.drawable.shape_4_e7f5e7)
                     tvDeadline.setTextColor(requireContext().getColor(R.color.C00BF40))

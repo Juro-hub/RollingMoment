@@ -15,7 +15,9 @@ import kr.co.rolling.moment.library.network.data.request.RequestMomentCreate
 import kr.co.rolling.moment.library.network.data.request.RequestMomentEdit
 import kr.co.rolling.moment.library.network.data.request.RequestMomentReport
 import kr.co.rolling.moment.library.network.data.request.RequestTrace
-import kr.co.rolling.moment.library.network.data.request.RequestTraceCode
+import kr.co.rolling.moment.library.network.data.request.RequestTraceDelete
+import kr.co.rolling.moment.library.network.data.request.RequestTraceEdit
+import kr.co.rolling.moment.library.network.data.request.RequestTraceReaction
 import kr.co.rolling.moment.library.network.data.response.CreateTraceInfo
 import kr.co.rolling.moment.library.network.data.response.MomentCreateInfo
 import kr.co.rolling.moment.library.network.data.response.MomentCreateResultInfo
@@ -77,6 +79,12 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
         private set
 
     var momentReportInfo: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
+        private set
+
+    var traceDeleteInfo: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
+        private set
+
+    var traceEditInfo: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
         private set
 
     fun requestMomentCreateInfo() {
@@ -222,6 +230,32 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
     fun requestMomentList() {
         viewModelScope.launch {
             repository.requestMomentList(
+                onStart = {
+                    isLoading.postValue(SingleEvent(true))
+                },
+                onError = {
+                    error.postValue(SingleEvent(it))
+                },
+                onComplete = {
+                    isLoading.postValue(SingleEvent(false))
+                }
+            ).collect {
+                when (it.meta.resCode) {
+                    ErrorType.SUCCESS.errorCode -> {
+                        momentList.postValue(SingleEvent(it.body.toEntity(context = context)))
+                    }
+
+                    else -> {
+                        error.postValue(SingleEvent(getError(it.meta.resCode, it.meta.resMessage)))
+                    }
+                }
+            }
+        }
+    }
+
+    fun requestMomentListAdmin() {
+        viewModelScope.launch {
+            repository.requestMomentListAdmin(
                 onStart = {
                     isLoading.postValue(SingleEvent(true))
                 },
@@ -407,10 +441,65 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
         }
     }
 
+    fun requestTraceDelete(code: String) {
+        viewModelScope.launch {
+            repository.requestTraceDelete(
+                requestData = RequestTraceDelete(code),
+                onStart = {
+                    isLoading.postValue(SingleEvent(true))
+                },
+                onError = {
+                    error.postValue(SingleEvent(it))
+                },
+                onComplete = {
+                    isLoading.postValue(SingleEvent(false))
+                }
+            ).collect {
+                when (it.meta.resCode) {
+                    ErrorType.SUCCESS.errorCode -> {
+                        traceDeleteInfo.postValue(SingleEvent(true))
+                    }
+
+                    else -> {
+                        error.postValue(SingleEvent(getError(it.meta.resCode, it.meta.resMessage)))
+                    }
+                }
+            }
+        }
+    }
+
+    fun requestTraceEdit(data: RequestTraceEdit) {
+        viewModelScope.launch {
+            repository.requestTraceEdit(
+                requestData = data,
+                onStart = {
+                    isLoading.postValue(SingleEvent(true))
+                },
+                onError = {
+                    error.postValue(SingleEvent(it))
+                },
+                onComplete = {
+                    isLoading.postValue(SingleEvent(false))
+                }
+            ).collect {
+                when (it.meta.resCode) {
+                    ErrorType.SUCCESS.errorCode -> {
+                        traceEditInfo.postValue(SingleEvent(true))
+                    }
+
+                    else -> {
+                        error.postValue(SingleEvent(getError(it.meta.resCode, it.meta.resMessage)))
+                    }
+                }
+            }
+        }
+    }
+
+
     fun requestTraceReaction(item: MomentTraceInfo) {
         viewModelScope.launch {
             repository.requestTraceReaction(
-                requestData = RequestTraceCode(item.code),
+                requestData = RequestTraceReaction(item.code),
                 onStart = {
                     isLoading.postValue(SingleEvent(true))
                 },
@@ -433,6 +522,7 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
                                     color = item.color,
                                     alignment = item.alignment,
                                     date = item.date,
+                                    textColor = item.textColor,
                                     reactions = item.reactions?.map { reactions ->
                                         ReactionInfo(
                                             count = if (reactions.isClicked) {
@@ -457,4 +547,9 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
 
     fun getMomentInfo() = momentDetailInfo.value?.peekContent()
     fun isMomentExpired() = momentDetailInfo.value?.peekContent()?.isExpired == true
+    fun getTraceInfo(code : String) = momentDetailInfo.value?.peekContent()?.traces?.find {
+        it.code == code
+    }
+
+    fun getMomentList() = momentList.value?.peekContent()?.momentList
 }
