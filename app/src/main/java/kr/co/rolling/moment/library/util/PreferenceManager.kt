@@ -3,9 +3,12 @@ package kr.co.rolling.moment.library.util
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import kr.co.rolling.moment.library.network.data.response.SplashInfo
+import java.security.KeyStore
+import androidx.core.content.edit
 
 /**
  * Encrypted Preference Manager
@@ -79,6 +82,15 @@ object PreferenceManager {
             .Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
+        return try{
+            createSharedPreference(context, masterKeyAlias)
+        }catch (e: Exception){
+            deleteSharedPreference(context)
+            createSharedPreference(context, masterKeyAlias)
+        }
+    }
+
+    private fun createSharedPreference(context : Context, masterKeyAlias : MasterKey) : SharedPreferences{
         return EncryptedSharedPreferences.create(
             context,
             FILENAME,
@@ -86,6 +98,27 @@ object PreferenceManager {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
+    }
+
+    private fun deleteSharedPreference(context: Context) {
+        try {
+            context.deleteSharedPreferences(FILENAME)
+
+            clearSharedPreference(context)
+
+            val keyStore = KeyStore.getInstance("AndroidKeyStore")
+            keyStore.load(null)
+            keyStore.deleteEntry(MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+        } catch (e: Exception) {
+            Log.d("EncrytedSharedPref", "Error occured while deleting sharedPref")
+        }
+    }
+
+    private fun clearSharedPreference(context: Context) {
+        context.getSharedPreferences(
+            FILENAME,
+            Context.MODE_PRIVATE
+        ).edit() { clear() }
     }
 
     fun setTokenInfo(splashInfo: SplashInfo) {
