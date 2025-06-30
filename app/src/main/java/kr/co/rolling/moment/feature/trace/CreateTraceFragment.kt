@@ -216,7 +216,7 @@ class CreateTraceFragment : BaseFragment(R.layout.fragment_trace_create) {
         }
         binding.rvEmoji.layoutManager = layoutManager
         binding.rvEmoji.adapter = emojiAdapter
-        binding.rvEmoji.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_12), horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_10), spanCount = 3))
+        binding.rvEmoji.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_10), spanCount = 1))
     }
 
     private fun initSetData(){

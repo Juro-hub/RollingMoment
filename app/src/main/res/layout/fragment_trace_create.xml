@@ -172,7 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="18dp"
                 android:text="@string/trace_create_alignment_title"
                 android:textColor="@color/C4C4C4C"
                 app:layout_constraintStart_toStartOf="parent"
