@@ -79,21 +79,6 @@
             tools:text="딜런의 퇴사를 축하합니다!!🎉 " />
 
         <TextView
-            android:id="@+id/tvContent"
-            style="@style/L414Medium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/C4C4C4C"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvEndDate"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle"
-            tools:text="모두 딜런에게 마지막 한마디 남겨주세요 ㅎㅎ" />
-
-        <TextView
             android:id="@+id/tvInfo"
             style="@style/L612Medium"
             android:layout_width="wrap_content"
@@ -102,7 +87,7 @@
             android:paddingBottom="3dp"
             android:textColor="@color/C7F7F7F"
             app:layout_constraintStart_toStartOf="@id/tvTitle"
-            app:layout_constraintTop_toBottomOf="@id/tvContent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
             tools:text="참여자 100・흔적 100・" />
 
         <TextView

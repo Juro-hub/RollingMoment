@@ -12,6 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.ItemMomentExpiredBinding
+import kr.co.rolling.moment.databinding.ItemPopularMomentBinding
 import kr.co.rolling.moment.feature.base.BaseViewHolder
 import kr.co.rolling.moment.library.network.data.response.MomentInfo
 import kr.co.rolling.moment.ui.util.BorderTransformation
@@ -21,9 +22,9 @@ import kr.co.rolling.moment.ui.util.show
 
 
 /**
- * 홈 탭 내 모먼트 목록(만료) 어댑터
+ * 탐색 내 인기 목록 어댑터
  */
-class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(DiffCallback()) {
+class PopularMomentAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(DiffCallback()) {
     private var rootClickListener: ((item: MomentInfo) -> Unit)? = null
     private var moreClickListener: ((item: MomentInfo) -> Unit)? = null
 
@@ -36,7 +37,7 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<MomentInfo> {
-        val view = ItemMomentExpiredBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = ItemPopularMomentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
 
@@ -52,11 +53,11 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
         moreClickListener = click
     }
 
-    inner class ViewHolder(private val binding: ItemMomentExpiredBinding) : BaseViewHolder<MomentInfo>(binding.root) {
+    inner class ViewHolder(private val binding: ItemPopularMomentBinding) : BaseViewHolder<MomentInfo>(binding.root) {
 
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
         override fun bind(item: MomentInfo) = with(binding) {
-            Glide.with(ivImage)
+            Glide.with(ivCover)
                 .load(item.coverImgUrl)
                 .transform(
                     MultiTransformation(
@@ -65,7 +66,7 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
                         RoundedCorners(root.resources.getDimensionPixelSize(R.dimen.spacing_8))
                     )
                 )
-                .into(ivImage)
+                .into(ivCover)
 
             tvEndDate.text = item.deadLineText
             item.category?.let { category ->
@@ -74,9 +75,8 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
             }
 
             tvTitle.text = item.title
-
+            tvInfo.text = item.traceCnt
             ivMore.isVisible = item.isOwner
-            tvPeriod.isVisible = !item.isPublic
 
             when (item.deadLine) {
                 -1 -> {

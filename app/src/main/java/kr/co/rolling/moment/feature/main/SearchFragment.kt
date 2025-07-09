@@ -34,11 +34,15 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private val filterAdapter by lazy {
         FilterAdapter()
     }
+
     private val viewModel by activityViewModels<MomentViewModel>()
-    private var clickItem = MomentInfo()
 
     private val adapter by lazy {
         HomeExpiredAdapter()
+    }
+
+    private val popularAdapter by lazy {
+        PopularMomentAdapter()
     }
 
     private lateinit var binding: FragmentSearchBinding
@@ -75,6 +79,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                 list
             }
             adapter.submitList(list)
+            popularAdapter.submitList(it.popularList)
         }
     }
 
@@ -92,7 +97,14 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private fun initUI() {
         binding.rvFilter.adapter = filterAdapter
         filterAdapter.submitList(Constants.MomentCategory.entries.toList())
-        binding.rvFilter.addItemDecoration(CommonGridItemDecorator(verticalMargin = 0, horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_8), spanCount = 1))
+        binding.rvFilter.addItemDecoration(
+            CommonGridItemDecorator(
+                verticalMargin = 0,
+                horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_8),
+                spanCount = Constants.MomentCategory.entries.size,
+                startMargin = resources.getDimensionPixelSize(R.dimen.spacing_20)
+            )
+        )
         filterAdapter.setClickListener { category ->
             val list = if (category == Constants.MomentCategory.ALL) {
                 viewModel.getMomentList()
@@ -117,6 +129,16 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         binding.rvMomentList.adapter = adapter
         binding.rvMomentList.addItemDecoration(CommonGridItemDecorator(verticalMargin = resources.getDimensionPixelSize(R.dimen.spacing_24), horizontalMargin = 0, spanCount = 1))
 
+        binding.rvPopularMomentList.adapter = popularAdapter
+        binding.rvPopularMomentList.addItemDecoration(
+            CommonGridItemDecorator(
+                verticalMargin = 0,
+                horizontalMargin = resources.getDimensionPixelSize(R.dimen.spacing_12),
+                spanCount = 3,
+                startMargin = resources.getDimensionPixelSize(R.dimen.spacing_20)
+            )
+        )
+
         val navController = requireActivity().findNavController(R.id.nav_host_fragment)
 
         setFragmentResultListener(MomentEditBottomSheetFragment.BUNDLE_KEY_EDIT) { _, bundle ->
@@ -131,30 +153,35 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
 
         adapter.setInfoClickListener {
-            clickItem = MomentInfo(
-                code = it.code,
-                coverImgUrl = it.coverImgUrl,
-                title = it.title,
-                comment = it.comment,
-                deadLineText = it.deadLineText,
-                deadLine = it.deadLine,
-                category = it.category,
-                isPublic = it.isPublic,
-                isOwner = it.isOwner,
-                traceCnt = it.traceCnt,
-                isExpired = it.isExpired
-            )
-            val bottomSheet = MomentEditBottomSheetFragment()
-            bottomSheet.arguments = bundleOf(NAVIGATION_KEY_MOMENT_CODE to it.code, NAVIGATION_KEY_IS_EXPIRED to it.isExpired, NAVIGATION_KEY_IS_OWNER to it.isOwner)
-            bottomSheet.show(parentFragmentManager, "MomentEditBottomSheet")
+            moveToMomentInfo(it)
         }
 
         adapter.setClickListener {
-            if (it.isOwner) {
-                navController.navigate(R.id.MomentDetailFragment, bundleOf(NAVIGATION_KEY_MOMENT_CODE to it.code))
-            } else {
-                navController.navigate(R.id.MomentEnrollFragment, bundleOf(NAVIGATION_KEY_MOMENT_CODE to it.code))
-            }
+            moveToMomentDetail(it)
+        }
+
+        popularAdapter.setInfoClickListener {
+            moveToMomentInfo(it)
+        }
+
+        popularAdapter.setClickListener {
+            moveToMomentDetail(it)
+        }
+    }
+
+    private fun moveToMomentInfo(info: MomentInfo) {
+        val bottomSheet = MomentEditBottomSheetFragment()
+        bottomSheet.arguments = bundleOf(NAVIGATION_KEY_MOMENT_CODE to info.code, NAVIGATION_KEY_IS_EXPIRED to info.isExpired, NAVIGATION_KEY_IS_OWNER to info.isOwner)
+        bottomSheet.show(parentFragmentManager, "MomentEditBottomSheet")
+    }
+
+    private fun moveToMomentDetail(info: MomentInfo) {
+        val navController = requireActivity().findNavController(R.id.nav_host_fragment)
+
+        if (info.isOwner) {
+            navController.navigate(R.id.MomentDetailFragment, bundleOf(NAVIGATION_KEY_MOMENT_CODE to info.code))
+        } else {
+            navController.navigate(R.id.MomentEnrollFragment, bundleOf(NAVIGATION_KEY_MOMENT_CODE to info.code))
         }
     }
 }

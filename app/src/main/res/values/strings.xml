@@ -177,6 +177,7 @@
     <string name="moment_expired_soon">마감임박</string>
     <string name="moment_user_trace_count">흔적 %d</string>
     <string name="moment_public">공개된 모먼트</string>
+    <string name="moment_popular">인기 모먼트</string>
     <string name="moment_edit">수정하기</string>
     <string name="moment_save">이미지로 저장하기</string>
     <string name="moment_delete">삭제하기</string>
