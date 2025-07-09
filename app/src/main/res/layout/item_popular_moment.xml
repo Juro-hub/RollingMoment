@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/shape_8_e0e0e2"
+    android:paddingVertical="17dp"
+    android:layout_width="280dp"
+    android:paddingHorizontal="16dp"
+    android:layout_height="310dp">
+
+    <TextView
+        android:id="@+id/tvEndDate"
+        style="@style/L910Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_4_e7f5e7"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/C00BF40"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/process_end" />
+
+    <TextView
+        android:id="@+id/tvCategory"
+        style="@style/L910Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/shape_4_e0e0e2_ffffff"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/C4C4C4C"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/tvEndDate"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="생일" />
+
+    <ImageView
+        android:id="@+id/ivMore"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_horizontal_dots"
+        app:layout_constraintBottom_toBottomOf="@id/tvEndDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvEndDate" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvEndDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/L718Bold"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/C171719"
+        tools:text="인기 타이틀 입니다."
+        android:id="@+id/tvTitle"/>
+
+    <TextView
+        android:id="@+id/tvInfo"
+        style="@style/L612Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:paddingBottom="3dp"
+        android:textColor="@color/C7F7F7F"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:text="참여자 100・흔적 100・" />
+    
+    <ImageView
+        android:layout_width="240dp"
+        android:layout_height="192dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvInfo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="12dp"
+        android:id="@+id/ivCover"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

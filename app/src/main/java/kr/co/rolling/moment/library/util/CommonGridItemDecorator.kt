@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 class CommonGridItemDecorator(
     private val verticalMargin: Int,
     private val horizontalMargin: Int,
-    private val spanCount: Int
+    private val spanCount: Int,
+    private val startMargin: Int = 0
 ) : RecyclerView.ItemDecoration() {
 
     @Override
@@ -31,7 +32,7 @@ class CommonGridItemDecorator(
         when {
             // 맨 왼쪽 열
             itemPosition % spanCount == 0 -> {
-                outRect.left = 0
+                outRect.left = startMargin
                 outRect.right = horizontalMargin / 2
             }
 
