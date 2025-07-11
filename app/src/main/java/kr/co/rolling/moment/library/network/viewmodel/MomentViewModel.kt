@@ -25,6 +25,7 @@ import kr.co.rolling.moment.library.network.data.response.MomentDetailInfo
 import kr.co.rolling.moment.library.network.data.response.MomentEditInfo
 import kr.co.rolling.moment.library.network.data.response.MomentEnrollInfo
 import kr.co.rolling.moment.library.network.data.response.MomentListInfo
+import kr.co.rolling.moment.library.network.data.response.MomentListSearchInfo
 import kr.co.rolling.moment.library.network.data.response.MomentSimpleInfo
 import kr.co.rolling.moment.library.network.data.response.MomentTraceInfo
 import kr.co.rolling.moment.library.network.data.response.ReactionInfo
@@ -61,6 +62,9 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
         private set
 
     var momentList: MutableLiveData<SingleEvent<MomentListInfo>> = MutableLiveData()
+        private set
+
+    var momentSearchList: MutableLiveData<SingleEvent<MomentListSearchInfo>> = MutableLiveData()
         private set
 
     var momentDelete: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
@@ -535,6 +539,33 @@ class MomentViewModel @Inject constructor(@ApplicationContext private val contex
                                     }
                                 )
                             ))
+                    }
+
+                    else -> {
+                        error.postValue(SingleEvent(getError(it.meta.resCode, it.meta.resMessage)))
+                    }
+                }
+            }
+        }
+    }
+
+    fun requestSearch(text: String){
+        viewModelScope.launch {
+            repository.requestMomentSearch(
+                requestData = text,
+                onStart = {
+                    isLoading.postValue(SingleEvent(true))
+                },
+                onError = {
+                    error.postValue(SingleEvent(it))
+                },
+                onComplete = {
+                    isLoading.postValue(SingleEvent(false))
+                }
+            ).collect {
+                when (it.meta.resCode) {
+                    ErrorType.SUCCESS.errorCode -> {
+                        momentSearchList.postValue(SingleEvent(it.body.toEntity(context = context)))
                     }
 
                     else -> {

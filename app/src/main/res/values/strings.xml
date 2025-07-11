@@ -193,6 +193,7 @@
     <string name="moment_delete_positive">네, 삭제 할래요</string>
     <string name="moment_search_empty_title">아직 공개 모먼트가 없어요</string>
     <string name="moment_search_empty_description">모먼트로 특별한 순간을 나눠보세요!</string>
+    <string name="moment_search_hint">모먼트 제목 검색</string>
 
     <!-- 알림함 -->
     <string name="notification_title">알림</string>
@@ -215,4 +216,12 @@
     <string name="moment_report_description">검토까지는 최대 24시간 소요됩니다.</string>
     <string name="moment_report_positive">네, 신고할래요</string>
     <string name="moment_report_done">신고가 접수되었습니다.</string>
+
+    <!-- 검색 -->
+    <string name="moment_search_recent_title">최근 검색</string>
+    <string name="moment_search_recent_delete">전체 삭제</string>
+    <string name="moment_search_empty">‘%s’에 대한 검색 결과가 없어요</string>
+    <string name="moment_search_empty_content">검색어를 다시 입력해주세요.</string>
+    <string name="moment_search_count_title">%d개</string>
+    <string name="moment_search_title">의 검색된 모먼트</string>
 </resources>

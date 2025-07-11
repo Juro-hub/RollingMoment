@@ -237,6 +237,11 @@
             app:destination="@id/MomentDetailFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/MomentSearchFragment"
+        android:name="kr.co.rolling.moment.feature.main.MomentSearchFragment"
+        tools:layout="@layout/fragment_moment_search"/>
+
     <dialog
         android:id="@+id/MomentEditBottomSheetFragment"
         android:name="kr.co.rolling.moment.feature.main.MomentEditBottomSheetFragment"

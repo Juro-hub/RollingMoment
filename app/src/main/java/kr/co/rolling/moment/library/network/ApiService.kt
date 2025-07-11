@@ -22,6 +22,7 @@ import kr.co.rolling.moment.library.network.data.response.MomentDetailResponse
 import kr.co.rolling.moment.library.network.data.response.MomentEditInfoResponse
 import kr.co.rolling.moment.library.network.data.response.MomentEnrollResponse
 import kr.co.rolling.moment.library.network.data.response.MomentListResponse
+import kr.co.rolling.moment.library.network.data.response.MomentListSearchResponse
 import kr.co.rolling.moment.library.network.data.response.MomentSimpleInfoResponse
 import kr.co.rolling.moment.library.network.data.response.MyPageResponse
 import kr.co.rolling.moment.library.network.data.response.PushResponse
@@ -165,6 +166,12 @@ interface ApiService {
     suspend fun requestTraceEdit(
         @Body requestTrace: RequestTraceEdit
     ): ApiResponse<BaseResponseData>
+
+    // 모먼트 조회
+    @GET(NetworkConstants.API_MOMENT_SEARCH)
+    suspend fun requestMomentSearch(
+        @Query("searchText") requestSearch: String
+    ): ApiResponse<MomentListSearchResponse>
 
     @GET(NetworkConstants.API_ADMIN_MOMENT)
     suspend fun requestMomentListAdmin(): ApiResponse<MomentListResponse>

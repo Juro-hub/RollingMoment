@@ -315,4 +315,22 @@ class MomentRepository @Inject constructor() : Repository {
             onError(makeException(exception, message))
         }
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun requestMomentSearch(
+        requestData: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (CustomError) -> Unit
+    ) = flow {
+        val response = apiService.requestMomentSearch(requestData)
+
+        response.suspendOnSuccess {
+            emit(data)
+        }.onError {
+            onError(CustomError(ErrorType.HTTP_EXCEPTION, "${statusCode.code}"))
+        }.onException {
+            onError(makeException(exception, message))
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 }

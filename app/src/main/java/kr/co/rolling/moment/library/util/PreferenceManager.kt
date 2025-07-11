@@ -9,6 +9,7 @@ import androidx.security.crypto.MasterKey
 import kr.co.rolling.moment.library.network.data.response.SplashInfo
 import java.security.KeyStore
 import androidx.core.content.edit
+import org.json.JSONArray
 
 /**
  * Encrypted Preference Manager
@@ -23,7 +24,7 @@ object PreferenceManager {
     private const val KEY_USER_ID = "RollinMoment_KEY_USER_ID"
     private const val KEY_ALARM_PERMISSION = "RollinMoment_KEY_ALARM_PERMISSION"
     private const val KEY_MOMENT_CODE = "RollinMoment_KEY_MOMENT_CODE"
-
+    private const val KEY_MOMENT_RECENT_SEARCH = "RollinMoment_KEY_MOMENT_RECENT_SEARCH"
 
     fun init(context: Context) {
         preference = initEncPreference(context)
@@ -75,6 +76,24 @@ object PreferenceManager {
 
     fun getMomentCode(): String {
         return read(KEY_MOMENT_CODE, "")
+    }
+
+    fun setRecentSearch(recent: List<String>){
+        val list = JSONArray(recent.distinct())
+        write(KEY_MOMENT_RECENT_SEARCH, list.toString())
+    }
+
+    fun getRecentSearch(): List<String>{
+        val list = read(KEY_MOMENT_RECENT_SEARCH, "")
+        val restoredList = mutableListOf<String>()
+        if(list.isNotEmpty()){
+            val jsonArray = JSONArray(list)
+            for(i in 0 until jsonArray.length()){
+                restoredList.add(jsonArray.getString(i))
+            }
+        }
+
+        return restoredList
     }
 
     private fun initEncPreference(context: Context): SharedPreferences {

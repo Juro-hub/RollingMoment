@@ -58,6 +58,17 @@
                 android:textColor="@color/C171719"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/viewDivider" />
+            
+            <kr.co.rolling.moment.ui.component.CommonEditText
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                android:id="@+id/etSearch"
+                app:iconDrawable="@drawable/ic_find"
+                app:isClickable="true"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                app:hintText="@string/moment_search_hint"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFilter"
@@ -66,7 +77,7 @@
                 android:layout_marginTop="12dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/etSearch"
                 tools:listitem="@layout/item_category_filter" />
 
             <androidx.constraintlayout.widget.ConstraintLayout

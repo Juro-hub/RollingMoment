@@ -101,3 +101,8 @@ data class MomentEditInfoResponse(
 data class MomentSimpleInfoResponse(
     val body: ResponseMomentSimpleInfo
 ) : BaseResponseData()
+
+/** 모먼트 검색 목록 조회 DTO */
+data class MomentListSearchResponse(
+    val body: ResponseMomentSearchList
+) : BaseResponseData()

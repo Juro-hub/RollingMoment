@@ -137,6 +137,9 @@ object NetworkConstants {
     // 비공개 모먼트 전체조회
     const val API_ADMIN_MOMENT = "api/v1/admin/moment"
 
+    // 모먼트 조회
+    const val API_MOMENT_SEARCH = "api/v1/moment/search"
+
     /**
      * SNS 로그인 유형
      */
