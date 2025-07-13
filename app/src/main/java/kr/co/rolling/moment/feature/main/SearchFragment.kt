@@ -23,6 +23,7 @@ import kr.co.rolling.moment.library.util.CommonGridItemDecorator
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.library.util.showToast
 import kr.co.rolling.moment.ui.util.hide
+import kr.co.rolling.moment.ui.util.setOnSingleClickListener
 import kr.co.rolling.moment.ui.util.show
 import timber.log.Timber
 
@@ -67,10 +68,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         event.getContentIfNotHandled()?.let {
             Timber.d("handleMomentList: data = ${it}")
 
-            binding.rvMomentList.isVisible = !it.momentList.isNullOrEmpty()
-            binding.rvFilter.isVisible = !it.momentList.isNullOrEmpty()
-            binding.layoutEmpty.isVisible = it.momentList.isNullOrEmpty()
-
             var list = it.momentList?.sortedByDescending { it.deadLine }
             val currentCategory = filterAdapter.getCurrentCategory()
             list = if (currentCategory != Constants.MomentCategory.ALL) {
@@ -78,6 +75,11 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             } else {
                 list
             }
+
+            binding.rvMomentList.isVisible = !list.isNullOrEmpty()
+            binding.rvFilter.isVisible = !it.momentList.isNullOrEmpty()
+            binding.layoutEmpty.isVisible = list.isNullOrEmpty()
+
             adapter.submitList(list)
             popularAdapter.submitList(it.popularList)
         }
@@ -171,6 +173,11 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         binding.etSearch.setClickListener {
             val navController = requireActivity().findNavController(R.id.nav_host_fragment)
             navController.navigate(R.id.MomentSearchFragment)
+        }
+
+        binding.btnMomentCreate.setOnSingleClickListener{
+            val navController = requireActivity().findNavController(R.id.nav_host_fragment)
+            navController.navigate(R.id.MomentCreateFragment)
         }
     }
 

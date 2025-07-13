@@ -191,7 +191,7 @@
     <string name="moment_delete_title">모먼트를 정말 삭제하시겠어요?</string>
     <string name="moment_delete_description">삭제된 모먼트는 다시 복구되지 않아요!</string>
     <string name="moment_delete_positive">네, 삭제 할래요</string>
-    <string name="moment_search_empty_title">아직 공개 모먼트가 없어요</string>
+    <string name="moment_search_empty_title">이 조건에 맞는 모먼트가 없어요.\n직접 하나 만들어보는 건 어때요?</string>
     <string name="moment_search_empty_description">모먼트로 특별한 순간을 나눠보세요!</string>
     <string name="moment_search_hint">모먼트 제목 검색</string>
 

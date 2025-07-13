@@ -93,36 +93,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
-                    android:src="@drawable/empty_img_04"
+                    android:src="@drawable/empty_img_07"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvEmptyTitle"
-                    style="@style/T222Bold"
+                    style="@style/B116Medium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/moment_search_empty_title"
                     android:textAlignment="center"
-                    android:textColor="@color/C171719"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivEmpty" />
-
-                <TextView
-                    style="@style/L414Medium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/moment_search_empty_description"
-                    android:textAlignment="center"
                     android:textColor="@color/C7F7F7F"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvEmptyTitle" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toBottomOf="@id/ivEmpty" />
+                
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="112dp"
+                    android:layout_height="43dp"
+                    style="@style/L414Medium"
+                    android:textColor="@color/C171719"
+                    android:background="@drawable/shape_6_f0f0f0"
+                    android:text="@string/moment_create_button"
+                    app:layout_constraintTop_toBottomOf="@id/tvEmptyTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="12dp"
+                    android:id="@+id/btnMomentCreate"/>
+           </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMomentList"
