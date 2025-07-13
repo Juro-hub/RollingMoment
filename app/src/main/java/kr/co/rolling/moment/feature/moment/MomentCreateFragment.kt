@@ -123,6 +123,7 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
                 binding.etCategory.setText(getString(category.textId))
             }
             binding.cbPrivate.isChecked = !it.isPublic
+            binding.cbSecret.isChecked = !it.isSecret
             category = it.category
             image = it.coverImage
             binding.btnCreate.text = getString(R.string.moment_edit_confirm)
@@ -149,6 +150,9 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
     private fun initUI() {
         var coverImageUri: Uri? = null
 
+        binding.cbSecret.isClickable = args.momentCode.isEmpty()
+        binding.cbPrivate.isClickable = args.momentCode.isEmpty()
+
         binding.etTitle.setTextChangeListener {
             isValidButton()
         }
@@ -156,7 +160,7 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
         binding.rgDeadline.setOnCheckedChangeListener { group, checkId ->
             isValidButton()
 
-            for(view in group.children){
+            for (view in group.children) {
                 if (view is RadioButton) {
                     view.setTypeface(null, if (view.id == checkId) Typeface.BOLD else Typeface.NORMAL)
                 }
@@ -243,10 +247,9 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
                     expireType = NetworkConstants.MomentExpireType.getExpireDate(requireContext(), expireDate),
                     category = category?.code ?: "",
                     comment = binding.etMemo.text.toString(),
-                    isPublic = !binding.cbPrivate.isChecked,
                     coverImgId = coverImage?.code ?: "",
                     coverImgFileKey = coverImage?.url ?: "",
-                    momentCode = args.momentCode
+                    momentCode = args.momentCode,
                 )
                 viewModel.requestMomentEdit(data)
             } else {
@@ -257,7 +260,8 @@ class MomentCreateFragment : BaseFragment(R.layout.fragment_moment_create) {
                     comment = binding.etMemo.text.toString(),
                     isPublic = !binding.cbPrivate.isChecked,
                     coverImgId = image?.code ?: "",
-                    coverImgFileKey = getCoverImage(coverImageUri)
+                    coverImgFileKey = getCoverImage(coverImageUri),
+                    isAnonymous = binding.cbSecret.isChecked
                 )
                 viewModel.requestMomentCreate(data)
             }

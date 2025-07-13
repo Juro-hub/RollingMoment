@@ -3,6 +3,7 @@ package kr.co.rolling.moment.library.network.data.request
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import java.io.Serial
 
 /**
  * 모먼트 생성 요청
@@ -29,4 +30,7 @@ data class RequestMomentCreate(
 
     @SerializedName("isPublic")
     val isPublic: Boolean = false,
+
+    @SerializedName("isAnonymous")
+    val isAnonymous: Boolean = false
 ) : Parcelable

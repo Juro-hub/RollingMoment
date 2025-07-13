@@ -89,6 +89,8 @@
     <string name="moment_create_cover_category_5">기본 커버 이미지</string>
     <string name="moment_edit_confirm">수정 완료</string>
     <string name="moment_edit_done">수정이 완료되었습니다</string>
+    <string name="moment_create_secret_title">익명으로 작성</string>
+    <string name="moment_create_secret_content">내 이름 대신 \'익명\'으로 표시됩니다.</string>
 
     <!-- 권한 안내 팝업 -->
     <string name="permission_title_camera">카메라에 대한 접근 권한 필요</string>
@@ -140,6 +142,7 @@
     <string name="moment_detail_expired">공유하기</string>
     <string name="moment_detail_delete_done">모먼트가 삭제되었습니다.</string>
     <string name="moment_detail_trace_mine">내흔적</string>
+    <string name="moment_detail_user_nick_name">%s ・</string>
 
     <!-- 모먼트 종료 -->
     <string name="moment_result_title">작성 기간이 마감되었어요!\n모먼트를 공유해보세요</string>

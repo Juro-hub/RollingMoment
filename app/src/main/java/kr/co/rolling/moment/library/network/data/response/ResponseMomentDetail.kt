@@ -41,6 +41,9 @@ data class ResponseMomentDetail(
     @SerializedName("isOwner")
     val isOwner: Boolean,
 
+    @SerializedName("nickname")
+    val nickname: String? = null,
+
     @SerializedName("traces")
     val traces: List<ResponseTrace>
 ) : Parcelable
@@ -111,6 +114,8 @@ data class MomentDetailInfo(
     val isOwner: Boolean = false,
 
     val traces: List<MomentTraceInfo>? = null,
+
+    val userNickName: String = ""
 ) : Parcelable
 
 @Parcelize
@@ -154,6 +159,7 @@ fun ResponseMomentDetail.toEntity(context: Context) = MomentDetailInfo(
     period = period,
     isPublic = isPublic,
     isOwner = isOwner,
+    userNickName = context.getString(R.string.moment_detail_user_nick_name, nickname ?: ""),
     traces = traces.map { it.toEntity() }
 )
 

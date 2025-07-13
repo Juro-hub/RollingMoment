@@ -27,9 +27,6 @@ data class RequestMomentEdit(
     @SerializedName("comment")
     val comment: String = "",
 
-    @SerializedName("isPublic")
-    val isPublic: Boolean = false,
-
     @SerializedName("momentCode")
-    val momentCode: String = "'"
+    val momentCode: String = ""
 ) : Parcelable

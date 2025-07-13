@@ -22,11 +22,15 @@ data class ResponseMomentEditInfo(
     @SerializedName("isPublic")
     val isPublic: Boolean,
 
+    @SerializedName("isAnonymous")
+    val isAnonymous: Boolean? = false,
+
     @SerializedName("coverImgUrl")
     val coverImgUrl: String,
 
     @SerializedName("coverImgId")
-    val coverImageId: Int
+    val coverImageId: Int,
+
 ) : Parcelable
 
 @Parcelize
@@ -41,6 +45,8 @@ data class MomentEditInfo(
 
     val isPublic: Boolean = false,
 
+    val isSecret: Boolean = false,
+
     val coverImage: MomentImageInfo? = null
 ) : Parcelable
 
@@ -50,6 +56,7 @@ fun ResponseMomentEditInfo.toEntity() = MomentEditInfo(
     category = NetworkConstants.MomentCategory.getCategory(category),
     comment = comment,
     isPublic = isPublic,
+    isSecret = isAnonymous == true,
     coverImage = MomentImageInfo(
         url = coverImgUrl,
         code = coverImageId.toString()

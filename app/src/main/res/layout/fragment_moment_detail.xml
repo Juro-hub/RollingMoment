@@ -91,13 +91,25 @@
                 tools:text="모두 딜런에게 마지막 한마디 남겨주세요 ㅎㅎ 소개글이 길어지면 두줄까지 노출하고, 나머지 영역은 더보기눌러... 하지만 나는 더 길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???길고싶단말이에요???" />
 
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvContent"
+                android:layout_marginTop="10dp"
+                style="@style/L612Medium"
+                tools:text="최대한 길게 20자를 제가 작성해 보도록 하겠습니다."
+                android:textColor="@color/C7F7F7F"
+                app:layout_constraintStart_toStartOf="@id/tvDeadline"
+                android:id="@+id/tvNickName"/>
+
+            <TextView
                 android:id="@+id/tvDate"
                 style="@style/L612Medium"
-                android:layout_width="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/C7F7F7F"
-                app:layout_constraintStart_toStartOf="@id/tvDeadline"
+                app:layout_constraintStart_toEndOf="@id/tvNickName"
                 app:layout_constraintTop_toBottomOf="@id/tvContent"
                 tools:text="2025.03.01-25.03.03" />
 
