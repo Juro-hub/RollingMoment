@@ -68,6 +68,8 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
     /** 전체영역 클릭 리스너 */
     private var rootClickListener: ((View) -> Unit)? = null
 
+    private var iconClickListener: (() -> Unit)? = null
+
     /**
      * EditText 클릭 시 동작
      */
@@ -84,6 +86,9 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
 
     /** Text Change Listener */
     private var textChangeListener: (data: String) -> Unit = {}
+
+    /** Text Action Done Listener */
+    private var actionDoneListener: (data: String) -> Unit = {}
 
     private var isValid = false
 
@@ -136,6 +141,7 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         binding.root.setOnSingleClickListener(viewClickListener)
         binding.tvHint.setOnSingleClickListener(viewClickListener)
         binding.etData.setOnSingleClickListener(viewClickListener)
+        binding.layoutInput.setOnSingleClickListener(viewClickListener)
 
         binding.etData.text.clear()
         binding.etData.addTextChangedListener {
@@ -149,6 +155,10 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         }
 
         binding.ivCancel.setOnSingleClickListener {
+            if(iconClickListener != null){
+                iconClickListener?.invoke()
+                return@setOnSingleClickListener
+            }
             binding.etData.setText("")
             setError(false)
         }
@@ -157,8 +167,9 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
     @SuppressLint("Recycle", "CustomViewStyleable")
     private fun initLayoutSetting(context: Context, attrs: AttributeSet) {
         val attribute = context.obtainStyledAttributes(attrs, R.styleable.CommonEditTextAttributes)
-
-        binding.tvHelper.text = attribute.getString(R.styleable.CommonEditTextAttributes_helperText)
+        val helperText = attribute.getString(R.styleable.CommonEditTextAttributes_helperText)
+        binding.tvHelper.text = helperText
+        binding.tvHelper.isVisible = helperText?.isNotEmpty() == true
         binding.tvHint.text = attribute.getString(R.styleable.CommonEditTextAttributes_hintText)
         binding.tvError.text = attribute.getString(R.styleable.CommonEditTextAttributes_errorMessage)
 
@@ -177,8 +188,17 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         }
 
         // imeOption 설정
-        binding.etData.imeOptions = when (ImeOptions.entries[attribute.getInt(R.styleable.CommonEditTextAttributes_inputImeOptions, ImeOptions.ACTION_NEXT.value)]) {
+        val imeOptions = ImeOptions.entries[attribute.getInt(R.styleable.CommonEditTextAttributes_inputImeOptions, ImeOptions.ACTION_NEXT.value)]
+        binding.etData.imeOptions = when (imeOptions) {
             ImeOptions.ACTION_DONE -> {
+                binding.etData.setOnEditorActionListener { v, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        actionDoneListener(binding.etData.text.toString())
+                        true  // 이벤트 소비
+                    } else {
+                        false // 다른 액션은 기본 처리
+                    }
+                }
                 EditorInfo.IME_ACTION_DONE
             }
 
@@ -295,5 +315,12 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
         binding.etData.typeface = ResourcesCompat.getFont(binding.root.context, font.fontRes)
     }
 
+    fun setActionDoneListener(listener: (data: String) -> Unit) {
+        actionDoneListener = listener
+    }
+
+    fun setIconClickListener(listener: () -> Unit){
+        iconClickListener = listener
+    }
     fun isValid() = isValid
 }

@@ -167,6 +167,11 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         popularAdapter.setClickListener {
             moveToMomentDetail(it)
         }
+
+        binding.etSearch.setClickListener {
+            val navController = requireActivity().findNavController(R.id.nav_host_fragment)
+            navController.navigate(R.id.MomentSearchFragment)
+        }
     }
 
     private fun moveToMomentInfo(info: MomentInfo) {

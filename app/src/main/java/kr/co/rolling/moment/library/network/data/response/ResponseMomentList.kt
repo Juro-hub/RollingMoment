@@ -13,10 +13,10 @@ import kr.co.rolling.moment.library.network.NetworkConstants
 @Parcelize
 data class ResponseMomentList(
     @SerializedName("moments")
-    val momentList: List<ResponseMoment>,
+    val momentList: List<ResponseMoment>? = null,
 
     @SerializedName("popularMoments")
-    val popularList : List<ResponseMoment>
+    val popularList : List<ResponseMoment>? = null
 ) : Parcelable
 
 @Parcelize
@@ -82,7 +82,7 @@ data class MomentInfo(
 ) : Parcelable
 
 fun ResponseMomentList.toEntity(context: Context) = MomentListInfo(
-    momentList = this.momentList.map {
+    momentList = this.momentList?.map {
         MomentInfo(
             code = it.code,
             coverImgUrl = it.coverImgUrl,
@@ -103,7 +103,7 @@ fun ResponseMomentList.toEntity(context: Context) = MomentListInfo(
             isExpired = it.deadline == -1
         )
     },
-    popularList = this.popularList.map {
+    popularList = this.popularList?.map {
         MomentInfo(
             code = it.code,
             coverImgUrl = it.coverImgUrl,

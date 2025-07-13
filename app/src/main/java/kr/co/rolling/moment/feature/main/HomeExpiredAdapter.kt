@@ -74,6 +74,7 @@ class HomeExpiredAdapter : ListAdapter<MomentInfo, BaseViewHolder<MomentInfo>>(D
             }
 
             tvTitle.text = item.title
+            tvInfo.text = item.traceCnt
 
             ivMore.isVisible = item.isOwner
             tvPeriod.isVisible = !item.isPublic
