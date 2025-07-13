@@ -217,6 +217,19 @@
             app:destination="@id/IntroFragment"
             app:popUpTo="@id/MyInfoFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_MyInfoFragment_to_InfoEditFragment"
+            app:destination="@id/InfoEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/InfoEditFragment"
+        android:name="kr.co.rolling.moment.feature.main.InfoEditFragment"
+        tools:layout="@layout/fragment_info_edit">
+        <argument
+            android:name="url"
+            android:defaultValue=""
+            app:argType="string"/>
     </fragment>
 
     <fragment

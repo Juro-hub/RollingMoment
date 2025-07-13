@@ -19,6 +19,6 @@
     <fragment
         android:id="@+id/MyInfoFragment"
         android:name="kr.co.rolling.moment.feature.main.MyInfoFragment"
-        tools:layout="@layout/fragment_my_info" />
-
+        tools:layout="@layout/fragment_my_info" >
+    </fragment>
 </navigation>

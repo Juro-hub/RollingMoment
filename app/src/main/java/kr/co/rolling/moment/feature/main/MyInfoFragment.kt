@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kr.co.rolling.moment.R
 import kr.co.rolling.moment.databinding.FragmentMyInfoBinding
@@ -14,6 +15,7 @@ import kr.co.rolling.moment.library.network.data.response.SplashInfo
 import kr.co.rolling.moment.library.network.util.SingleEvent
 import kr.co.rolling.moment.library.network.viewmodel.MainViewModel
 import kr.co.rolling.moment.library.util.landingOutLink
+import kr.co.rolling.moment.library.util.navigateSafe
 import kr.co.rolling.moment.library.util.observeEvent
 import kr.co.rolling.moment.ui.component.CommonDialogData
 import kr.co.rolling.moment.ui.util.hide
@@ -82,6 +84,11 @@ class MyInfoFragment : BaseFragment(R.layout.fragment_my_info) {
             binding.tvEmail.text = data.userId
             binding.tvNickName.text = data.nickName
             binding.layoutAlarm.cbAlarm.isChecked = data.isAlarmOn
+
+            binding.layoutWithdraw.root.setOnSingleClickListener {
+                (requireActivity() as? BaseActivity)?.landingOutLink("https://web.rollinmoment.com:3300/withdraw")
+                (requireActivity()).finishAffinity()
+            }
         }
     }
 
@@ -111,10 +118,9 @@ class MyInfoFragment : BaseFragment(R.layout.fragment_my_info) {
             })
         }
 
-        binding.layoutWithdraw.root.setOnSingleClickListener {
-            showDialog(CommonDialogData(title = getString(R.string.my_info_withdraw_dialog_title), positiveText = getString(R.string.my_info_withdraw_dialog_positive), negativeText = getString(R.string.no)), positiveCallback = {
-                viewModel.requestWithDraw()
-            })
+        binding.layoutMyInfo.setOnSingleClickListener{
+            val navController = requireActivity().findNavController(R.id.nav_host_fragment)
+            navController.navigate(R.id.InfoEditFragment)
         }
     }
 }

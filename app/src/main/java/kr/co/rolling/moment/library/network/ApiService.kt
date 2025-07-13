@@ -13,6 +13,7 @@ import kr.co.rolling.moment.library.network.data.request.RequestTrace
 import kr.co.rolling.moment.library.network.data.request.RequestTraceDelete
 import kr.co.rolling.moment.library.network.data.request.RequestTraceEdit
 import kr.co.rolling.moment.library.network.data.request.RequestTraceReaction
+import kr.co.rolling.moment.library.network.data.request.RequestUserInfo
 import kr.co.rolling.moment.library.network.data.response.BaseResponseData
 import kr.co.rolling.moment.library.network.data.response.HomeResponse
 import kr.co.rolling.moment.library.network.data.response.MomentCreateResponse
@@ -26,11 +27,13 @@ import kr.co.rolling.moment.library.network.data.response.MomentListSearchRespon
 import kr.co.rolling.moment.library.network.data.response.MomentSimpleInfoResponse
 import kr.co.rolling.moment.library.network.data.response.MyPageResponse
 import kr.co.rolling.moment.library.network.data.response.PushResponse
+import kr.co.rolling.moment.library.network.data.response.ResponseUserInfo
 import kr.co.rolling.moment.library.network.data.response.SignUpResponse
 import kr.co.rolling.moment.library.network.data.response.SnsLoginResponse
 import kr.co.rolling.moment.library.network.data.response.TokenResponse
 import kr.co.rolling.moment.library.network.data.response.TraceAiResponse
 import kr.co.rolling.moment.library.network.data.response.TraceCreateResponse
+import kr.co.rolling.moment.library.network.data.response.UserInfoResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
@@ -172,6 +175,16 @@ interface ApiService {
     suspend fun requestMomentSearch(
         @Query("searchText") requestSearch: String
     ): ApiResponse<MomentListSearchResponse>
+
+    // 사용자 정보 조회
+    @GET(NetworkConstants.API_USER_INFO)
+    suspend fun requestUserInfo(): ApiResponse<UserInfoResponse>
+
+    // 사용자 정보 수정
+    @PATCH(NetworkConstants.API_USER_INFO_UPDATE)
+    suspend fun requestUserInfoUpdate(
+        @Body requestData : RequestUserInfo
+    ): ApiResponse<BaseResponseData>
 
     @GET(NetworkConstants.API_ADMIN_MOMENT)
     suspend fun requestMomentListAdmin(): ApiResponse<MomentListResponse>
