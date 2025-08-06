@@ -65,17 +65,17 @@ class IntroFragment : BaseFragment(R.layout.fragment_intro) {
 
     private fun handleSplash(event: SingleEvent<SplashInfo>) {
         event.getContentIfNotHandled()?.let { data ->
-            // 강제 업데이트 팝업 노출
-            if (data.isUpdate) {
-                val bundle = Bundle()
-                bundle.putParcelable(UpdateDialog.ARG_DIALOG_DATA, data)
-
-                val updateDialog = UpdateDialog()
-
-                updateDialog.arguments = bundle
-                updateDialog.show(childFragmentManager, "updateAlert")
-                return
-            }
+//            // 강제 업데이트 팝업 노출
+//            if (data.isUpdate) {
+//                val bundle = Bundle()
+//                bundle.putParcelable(UpdateDialog.ARG_DIALOG_DATA, data)
+//
+//                val updateDialog = UpdateDialog()
+//
+//                updateDialog.arguments = bundle
+//                updateDialog.show(childFragmentManager, "updateAlert")
+//                return
+//            }
             // 자동 로그인 사용자
             if (data.accessToken.isNotEmpty()) {
                 preferenceManager.setTokenInfo(data)

@@ -9,9 +9,11 @@ import kotlinx.coroutines.launch
 import kr.co.rolling.moment.feature.base.BaseViewModel
 import kr.co.rolling.moment.library.network.data.CustomError
 import kr.co.rolling.moment.library.network.data.ErrorType
+import kr.co.rolling.moment.library.network.data.request.RequestUserInfo
 import kr.co.rolling.moment.library.network.data.response.HomeInfo
 import kr.co.rolling.moment.library.network.data.response.MyPageInfo
 import kr.co.rolling.moment.library.network.data.response.PushItem
+import kr.co.rolling.moment.library.network.data.response.UserInfo
 import kr.co.rolling.moment.library.network.data.response.toEntity
 import kr.co.rolling.moment.library.network.repository.MainRepository
 import kr.co.rolling.moment.library.network.util.SingleEvent
@@ -41,6 +43,12 @@ class MainViewModel @Inject constructor(@ApplicationContext private val context:
         private set
 
     var isWithdraw: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
+        private set
+
+    var userInfo: MutableLiveData<SingleEvent<UserInfo>> = MutableLiveData()
+        private set
+
+    var isUserInfoUpdate: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
         private set
 
     fun requestHomeInfo() {
@@ -191,6 +199,59 @@ class MainViewModel @Inject constructor(@ApplicationContext private val context:
                 when (it.meta.resCode) {
                     ErrorType.SUCCESS.errorCode -> {
                         isLogout.postValue(SingleEvent(true))
+                    }
+
+                    else -> {
+                        error.postValue(SingleEvent(getError(it.meta.resCode, it.meta.resMessage)))
+                    }
+                }
+            }
+        }
+    }
+
+    fun requestUserInfo() {
+        viewModelScope.launch {
+            repository.requestUserInfo(
+                onStart = {
+                    isLoading.postValue(SingleEvent(true))
+                },
+                onError = {
+                    error.postValue(SingleEvent(it))
+                },
+                onComplete = {
+                    isLoading.postValue(SingleEvent(false))
+                }
+            ).collect {
+                when (it.meta.resCode) {
+                    ErrorType.SUCCESS.errorCode -> {
+                        userInfo.postValue(SingleEvent(it.body.toEntity()))
+                    }
+
+                    else -> {
+                        error.postValue(SingleEvent(getError(it.meta.resCode, it.meta.resMessage)))
+                    }
+                }
+            }
+        }
+    }
+
+    fun requestUserInfoUpdate(data: RequestUserInfo) {
+        viewModelScope.launch {
+            repository.requestUserInfoUpdate(
+                requestData = data,
+                onStart = {
+                    isLoading.postValue(SingleEvent(true))
+                },
+                onError = {
+                    error.postValue(SingleEvent(it))
+                },
+                onComplete = {
+                    isLoading.postValue(SingleEvent(false))
+                }
+            ).collect {
+                when (it.meta.resCode) {
+                    ErrorType.SUCCESS.errorCode -> {
+                        isUserInfoUpdate.postValue(SingleEvent(true))
                     }
 
                     else -> {

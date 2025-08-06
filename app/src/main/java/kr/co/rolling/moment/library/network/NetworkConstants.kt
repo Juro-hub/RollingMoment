@@ -140,6 +140,12 @@ object NetworkConstants {
     // 모먼트 조회
     const val API_MOMENT_SEARCH = "api/v1/moment/search"
 
+    // 사용자 정보 조회
+    const val API_USER_INFO = "api/v1/userlist"
+
+    // 사용자 정보 업데이트
+    const val API_USER_INFO_UPDATE = "api/v1/update"
+
     /**
      * SNS 로그인 유형
      */
@@ -165,6 +171,12 @@ object NetworkConstants {
             fun getGender(context: Context, type: String): GenderType {
                 return entries.find {
                     context.getString(it.textId) == type
+                } ?: NONE
+            }
+
+            fun getType(type: String) : GenderType {
+                return entries.find {
+                    it.type == type
                 } ?: NONE
             }
         }

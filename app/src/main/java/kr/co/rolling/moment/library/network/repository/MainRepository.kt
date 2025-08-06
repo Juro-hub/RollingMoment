@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.onStart
 import kr.co.rolling.moment.library.network.ApiService
 import kr.co.rolling.moment.library.network.data.CustomError
 import kr.co.rolling.moment.library.network.data.ErrorType
+import kr.co.rolling.moment.library.network.data.request.RequestUserInfo
 import kr.co.rolling.moment.library.network.di.DefaultApiService
 import javax.inject.Inject
 
@@ -115,6 +116,41 @@ class MainRepository @Inject constructor() : Repository {
         onError: (CustomError) -> Unit
     ) = flow {
         val response = apiService.requestLogOut()
+
+        response.suspendOnSuccess {
+            emit(data)
+        }.onError {
+            onError(CustomError(ErrorType.HTTP_EXCEPTION, "${statusCode.code}"))
+        }.onException {
+            onError(makeException(exception, message))
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun requestUserInfo(
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (CustomError) -> Unit
+    ) = flow {
+        val response = apiService.requestUserInfo()
+
+        response.suspendOnSuccess {
+            emit(data)
+        }.onError {
+            onError(CustomError(ErrorType.HTTP_EXCEPTION, "${statusCode.code}"))
+        }.onException {
+            onError(makeException(exception, message))
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    fun requestUserInfoUpdate(
+        requestData : RequestUserInfo,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (CustomError) -> Unit
+    ) = flow {
+        val response = apiService.requestUserInfoUpdate(requestData)
 
         response.suspendOnSuccess {
             emit(data)

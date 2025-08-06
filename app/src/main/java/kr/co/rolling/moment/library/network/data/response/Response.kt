@@ -106,3 +106,9 @@ data class MomentSimpleInfoResponse(
 data class MomentListSearchResponse(
     val body: ResponseMomentSearchList
 ) : BaseResponseData()
+
+
+/** 사용자 정보 조회 */
+data class UserInfoResponse(
+    val body: ResponseUserInfo
+) : BaseResponseData()
