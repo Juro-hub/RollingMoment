@@ -16,14 +16,14 @@ android {
     namespace = "kr.co.rolling.moment"
     compileSdk = 35
 
-    var baseVersionCode = 24070200  // Define your base version code
+    var baseVersionCode = 24080600  // Define your base version code
 
     defaultConfig {
         applicationId = "kr.co.rolling.moment"
         minSdk = 26
         targetSdk = 35
         versionCode = baseVersionCode
-        versionName = "1.0.3r"
+        versionName = "1.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
