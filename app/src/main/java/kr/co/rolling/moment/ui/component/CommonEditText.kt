@@ -224,7 +224,15 @@ class CommonEditText : ConstraintLayout, OnFocusChangeListener {
             binding.ivCancel.setImageDrawable(it)
         }
 
+        val isDisable = attribute.getBoolean(R.styleable.CommonEditTextAttributes_isDisable, false)
+        if(isDisable){
+            binding.root.isClickable = false
+            binding.etData.isEnabled = false
+            rootClickListener = null
+            binding.etData.setTextColor(binding.root.context.getColor(R.color.C171719))
+            binding.layoutInput.setBackgroundResource(R.drawable.shape_8_e8e8ea_f6f6f6)
 
+        }
         val inputType = TextInputType.entries[attribute.getInt(R.styleable.CommonEditTextAttributes_inputTypes, TextInputType.TEXT.value)]
         setEditTextInputType(inputType)
     }
